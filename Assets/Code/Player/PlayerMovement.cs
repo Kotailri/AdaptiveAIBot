@@ -15,6 +15,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        rb.velocity = (inputs.InputVec.normalized) * PlayerConfig.g_PlayerMovespeed;
+        rb.velocity = (inputs.InputVec.normalized) * GameConfig.c_PlayerMovespeed;
     }
 }

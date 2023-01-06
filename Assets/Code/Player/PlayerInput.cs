@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public PlayerConfig.ControlType ControlType;
+    public GameConfig.ControlType ControlType;
 
     private int InputHori = 0;
     private int InputVert = 0;
@@ -23,7 +23,7 @@ public class PlayerInput : MonoBehaviour
         InputHori = 0;
         InputVert = 0;
 
-        if (ControlType == PlayerConfig.ControlType.WASD) // Handles Input for WASD controls
+        if (ControlType == GameConfig.ControlType.WASD) // Handles Input for WASD controls
         {
             // Handle Horizontal
             if (Input.GetKey(KeyCode.A))
@@ -50,7 +50,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if (ControlType == PlayerConfig.ControlType.ARROWS) // Handles Input for Arrow Key controls
+        if (ControlType == GameConfig.ControlType.ARROWS) // Handles Input for Arrow Key controls
         {
             // Handle Horizontal
             if (Input.GetKey(KeyCode.LeftArrow))
