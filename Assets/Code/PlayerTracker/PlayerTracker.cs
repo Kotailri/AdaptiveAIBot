@@ -8,16 +8,18 @@ public class PlayerTracker : MonoBehaviour
     public GameObject Bot;
 
     // Distance
-    private float DistanceTrackingTimer = 1.0f;
+    private float DistanceTrackingTimer;
     private float CurrDistanceTrackingTimer = 0.0f;
 
     private int NumDistanceSamples = 0;
     private double SampleDistanceSum = 0.0;
 
+    [Space(5.0f)]
     public double AverageDistance = 0.0f;
 
     private void Awake()
     {
+        DistanceTrackingTimer = GameConfig.c_DistanceTrackingTimer;
         UpdateAverageDistance();
     }
 

@@ -8,11 +8,12 @@ public class BulletCollision : MonoBehaviour
     private Vector2 SpawnLocation;
 
     public float MaxDist;
+    public bool isBig = false;
+    public PlayerType playerType = PlayerType.None;
 
     private void OnEnable()
     {
         SpawnLocation = transform.position;
-        //GetComponent<Collider2D>().enabled = false;
     }
 
     private void Update()
@@ -31,6 +32,18 @@ public class BulletCollision : MonoBehaviour
 
         if (collision.gameObject.tag == "Wall")
         {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Player" && playerType == PlayerType.Bot)
+        {
+            collision.gameObject.GetComponent<Health>().UpdateHealth(isBig? -GameConfig.c_BulletDamage_big : - GameConfig.c_BulletDamage);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Bot" && playerType == PlayerType.Player)
+        {
+            collision.gameObject.GetComponent<Health>().UpdateHealth(isBig ? -GameConfig.c_BulletDamage_big : -GameConfig.c_BulletDamage);
             Destroy(gameObject);
         }
     }

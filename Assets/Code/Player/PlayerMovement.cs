@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput inputs;
     private Rigidbody2D rb;
 
+    private bool canMove = true;
+
     void Start()
     {
         inputs = GetComponent<PlayerInput>();
@@ -15,6 +17,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!canMove)
+            return;
+
         rb.velocity = (inputs.InputVec.normalized) * GameConfig.c_PlayerMovespeed;
+    }
+
+    public void EnableMovement(bool enabled)
+    {
+        if (!enabled)
+            rb.velocity = Vector2.zero;
+
+        canMove = enabled;
     }
 }
