@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     {
         inputs = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(6, 7);
+        Physics2D.IgnoreLayerCollision(7, 6);
     }
 
     void Update()

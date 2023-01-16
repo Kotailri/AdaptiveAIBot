@@ -9,6 +9,16 @@ public enum PlayerType
     None
 }
 
+public enum ActionState
+{ 
+    Wander,
+    Attack,
+    Flee,
+    CollectItem,
+    UseItem
+}
+
+
 public static class Global
 {
 

@@ -20,4 +20,15 @@ public interface IAction
     /// </summary>
     /// <returns></returns>
     public float GetActionChance();
+
+    /// <summary>
+    /// Returns the action state associated with the action
+    /// </summary>
+    /// <returns></returns>
+    public ActionState GetActionState();
+
+    /// <summary>
+    /// Cleans up for when action state is changed
+    /// </summary>
+    public void Cleanup();
 }

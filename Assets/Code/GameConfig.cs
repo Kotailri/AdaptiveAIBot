@@ -17,11 +17,11 @@ public static class GameConfig
 
     public static float c_WindupDelay = 0.35f;
 
-    public static int c_BulletDamage = 5;
-    public static int c_BulletDamage_big = 15;
+    public static int c_BulletDamage = 15;
+    public static int c_BulletDamage_big = 25;
 
     // Distance
-    public static float c_MaxProjectileDistance = 15.0f;
+    public static float c_MaxProjectileDistance = 250.0f;
     #endregion
 
     public static float c_DistanceTrackingTimer = 1.0f;
