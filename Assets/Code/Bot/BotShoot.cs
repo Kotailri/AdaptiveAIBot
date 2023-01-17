@@ -21,6 +21,9 @@ public class BotShoot : MonoBehaviour, IAction
     public bool canShoot = true;
     public bool canShoot_big = true;
 
+    [Header("Debug")]
+    public bool debug = true;
+
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -31,14 +34,14 @@ public class BotShoot : MonoBehaviour, IAction
         Vector2 origin = transform.position;
         Vector2 direction = -transform.up;
         RaycastHit2D hit = Physics2D.CircleCast(origin, radius, direction, Mathf.Infinity, AimTargets);
-        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
+        if (debug) lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
         if (hit.collider == null)
         {
-            lineRenderer.SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
+            if (debug) lineRenderer.SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
             return false;
         }
 
-        lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
+        if (debug) lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
 
         if (hit.collider.CompareTag("Player"))
         {
@@ -74,11 +77,13 @@ public class BotShoot : MonoBehaviour, IAction
 
     private IEnumerator WindUpShoot()
     {
+        GetComponent<BotMove>().ToggleCanMove(false);
         GetComponent<SpriteRenderer>().color = UnityEngine.Color.black;
 
         yield return new WaitForSecondsRealtime(GameConfig.c_WindupDelay);
 
         GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1,0.36f, 0.315f, 1);
+        GetComponent<BotMove>().ToggleCanMove(true);
 
         GameObject proj = Instantiate(projectile_big, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
@@ -100,7 +105,11 @@ public class BotShoot : MonoBehaviour, IAction
     void IAction.ExecuteAction()
     {
         // compare distances, decide small or big shoot
-        ShootSmall();
+        float shootChance = Random.Range(0f, 1f);
+        if (shootChance > 0.3f)
+            ShootSmall();
+        else
+            ShootBig();
     }
 
     float IAction.GetActionChance()
