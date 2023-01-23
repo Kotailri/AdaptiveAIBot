@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public GameConfig.ControlType ControlType;
-
     private int InputHori = 0;
     private int InputVert = 0;
 
@@ -23,58 +21,26 @@ public class PlayerInput : MonoBehaviour
         InputHori = 0;
         InputVert = 0;
 
-        if (ControlType == GameConfig.ControlType.WASD) // Handles Input for WASD controls
+        // Handle Horizontal
+        if (Input.GetKey(KeyCode.A))
         {
-            // Handle Horizontal
-            if (Input.GetKey(KeyCode.A))
-            {
-                InputHori -= 1;
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                InputHori += 1;
-            }
-
-            // Handle Vertical
-            if (Input.GetKey(KeyCode.W))
-            {
-                InputVert += 1;
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                InputVert -= 1;
-            }
-
-            return;
+            InputHori -= 1;
         }
 
-        if (ControlType == GameConfig.ControlType.ARROWS) // Handles Input for Arrow Key controls
+        if (Input.GetKey(KeyCode.D))
         {
-            // Handle Horizontal
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                InputHori -= 1;
-            }
+            InputHori += 1;
+        }
 
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                InputHori += 1;
-            }
+        // Handle Vertical
+        if (Input.GetKey(KeyCode.W))
+        {
+            InputVert += 1;
+        }
 
-            // Handle Vertical
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                InputVert += 1;
-            }
-
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                InputVert -= 1;
-            }
-
-            return;
+        if (Input.GetKey(KeyCode.S))
+        {
+            InputVert -= 1;
         }
     }
 

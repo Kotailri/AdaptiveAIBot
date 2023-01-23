@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IResettable
 {
     private PlayerInput inputs;
     private Rigidbody2D rb;
@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         Physics2D.IgnoreLayerCollision(6, 7);
         Physics2D.IgnoreLayerCollision(7, 6);
+        InitResettable();
     }
 
     void Update()
@@ -31,5 +32,15 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector2.zero;
 
         canMove = enabled;
+    }
+
+    public void ResetObject()
+    {
+        transform.position = GameConfig.c_PlayerSpawnPosition;
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
     }
 }

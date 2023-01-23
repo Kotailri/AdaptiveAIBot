@@ -18,7 +18,7 @@ public static class GameConfig
     public static float c_WindupDelay = 0.35f;
 
     public static int c_BulletDamage = 15;
-    public static int c_BulletDamage_big = 25;
+    public static int c_BulletDamage_big = 35;
 
     // Distance
     public static float c_MaxProjectileDistance = 250.0f;
@@ -26,6 +26,8 @@ public static class GameConfig
 
     public static float c_DistanceTrackingTimer = 1.0f;
 
-    public enum ControlType { WASD, ARROWS}
+    // Spawn Position
+    public static Vector3 c_PlayerSpawnPosition = new Vector3(-11.9899998f, -5.63999987f, 0);
+    public static Vector3 c_BotSpawnPosition = new Vector3(11.5200005f, 3.333f, 0);
 
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletCollision : MonoBehaviour
+public class BulletCollision : MonoBehaviour, IResettable
 {
     private float DistanceTravelled = 0;
     private Vector2 SpawnLocation;
@@ -10,6 +10,11 @@ public class BulletCollision : MonoBehaviour
     public float MaxDist;
     public bool isBig = false;
     public PlayerType playerType = PlayerType.None;
+
+    private void Start()
+    {
+        InitResettable();
+    }
 
     private void OnEnable()
     {
@@ -46,5 +51,20 @@ public class BulletCollision : MonoBehaviour
             collision.gameObject.GetComponent<Health>().UpdateHealth(isBig ? -GameConfig.c_BulletDamage_big : -GameConfig.c_BulletDamage);
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        Global.resettables.Remove(this);
+    }
+
+    public void ResetObject()
+    {
+        Destroy(gameObject);
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
     }
 }

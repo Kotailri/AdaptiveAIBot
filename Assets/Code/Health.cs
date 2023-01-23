@@ -2,27 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IResettable
 {
     public int health;
-    public string nameString;
 
     [Space(5.0f)]
     public ProgressBar bar;
 
-    private void CheckDead()
+    private void Start()
     {
-        if (health <= 0)
-        {
-            print(nameString + " has perished");
-        }
+        InitResettable();
+    }
+
+    public bool CheckDead()
+    {
+        return health <= 0;
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
+    }
+
+    public void ResetObject()
+    {
+        health = 100;
+        bar.current = health;
     }
 
     public void UpdateHealth(int hp)
     {
         health += hp;
         bar.current = health;
-        print(nameString + "'s hp is now " + health);
-        CheckDead();
+        Global.gamemanager.UpdateGM();
     }
 }

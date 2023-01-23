@@ -11,7 +11,7 @@ public enum MoveState
     None
 }
 
-public class BotMove : MonoBehaviour
+public class BotMove : MonoBehaviour, IResettable
 {
     private Transform target;
     private NavMeshAgent agent;
@@ -49,6 +49,7 @@ public class BotMove : MonoBehaviour
 
     void Start()
     {
+        InitResettable();
         Physics2D.IgnoreLayerCollision(6, 7);
         Physics2D.IgnoreLayerCollision(7, 6);
         target = GameObject.Find("Player").transform;
@@ -87,5 +88,14 @@ public class BotMove : MonoBehaviour
                 break;
         }
         
+    }
+    public void ResetObject()
+    {
+        transform.position = GameConfig.c_BotSpawnPosition;
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
     }
 }
