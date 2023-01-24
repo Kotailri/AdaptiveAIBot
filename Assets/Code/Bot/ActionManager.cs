@@ -21,10 +21,75 @@ public class ActionManager : MonoBehaviour
         currentState = newState;
     }
 
-    // Update is called once per frame
+    private float stateSwapTimer = 0;
+    private float stateSwapTime = 2;
+    private void UpdateState()
+    {
+        if (Global.playertracker.CurrentDistance >= 20)
+        {
+            stateSwapTimer = 0;
+            ChangeStates(ActionState.Attack);
+        }
+
+        stateSwapTimer += Time.deltaTime;
+
+        if (stateSwapTimer >= stateSwapTime)
+        {
+            float stateChance = Random.Range(0f, 1f);
+            if (stateChance > 0.6)
+            {
+                ChangeStates(ActionState.Attack);
+            }
+                
+            else if (stateChance > 0.2 && Global.playertracker.CurrentDistance <= 10)
+            {
+                ChangeStates(ActionState.Flee);
+            }
+                
+            else
+            {
+                currentState = ActionState.Wander;
+                GetComponent<BotMove>().MoveRandom();
+            }
+                
+
+            stateSwapTimer = 0;
+        }
+    }
+
+    private void ExecuteActions()
+    {
+        foreach (IAction action in actions)
+        {
+            //if (action.GetActionState() != currentState)
+            //    continue;
+
+            if (!action.CheckAction())
+                continue;
+
+            float actionChance = Random.Range(0f, 1f);
+            if (actionChance < (1.0f - action.GetActionChance()))
+                continue;
+
+            action.ExecuteAction();
+        }
+    }
+
     void Update()
     {
-        #region Debug State Swapper
+        switch (currentState)
+        { 
+            case ActionState.Attack:
+                GetComponent<BotMove>().Attack();
+                break;
+
+            case ActionState.Flee:
+                GetComponent<BotMove>().Flee();
+                break;
+
+        }
+
+        #region State Swapper Test
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeStates(ActionState.Wander);
@@ -50,20 +115,7 @@ public class ActionManager : MonoBehaviour
             ChangeStates(ActionState.UseItem);
         }
         #endregion
-
-        foreach (IAction action in actions)
-        {
-            if (action.GetActionState() != currentState)
-                continue;
-
-            if (!action.CheckAction())
-                continue;
-
-            float actionChance = Random.Range(0f, 1f);
-            if (actionChance < (1.0f - action.GetActionChance()))
-                continue;
-
-            action.ExecuteAction();
-        }
+        UpdateState();
+        ExecuteActions();
     }
 }

@@ -16,9 +16,11 @@ public class PlayerTracker : MonoBehaviour
 
     [Space(5.0f)]
     public double AverageDistance = 0.0f;
+    public double CurrentDistance = 0.0f;
 
     private void Awake()
     {
+        Global.playertracker = this;
         DistanceTrackingTimer = GameConfig.c_DistanceTrackingTimer;
         UpdateAverageDistance();
     }
@@ -38,6 +40,8 @@ public class PlayerTracker : MonoBehaviour
         }
 
         #endregion
+
+        CurrentDistance = DistanceBetween();
     }
 
     #region Distance between Player and Bot

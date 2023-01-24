@@ -29,5 +29,4 @@ public static class GameConfig
     // Spawn Position
     public static Vector3 c_PlayerSpawnPosition = new Vector3(-11.9899998f, -5.63999987f, 0);
     public static Vector3 c_BotSpawnPosition = new Vector3(11.5200005f, 3.333f, 0);
-
 }

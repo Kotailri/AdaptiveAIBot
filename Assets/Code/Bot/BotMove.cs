@@ -47,6 +47,21 @@ public class BotMove : MonoBehaviour, IResettable
         moveState = MoveState.None;
     }
 
+    public void MoveRandom()
+    {
+        Vector2 worldBounds = new Vector2(11.0f, 6.0f);
+        while (true)
+        {
+            Vector2 position = new Vector2(Random.Range(-worldBounds.x, worldBounds.x), Random.Range(-worldBounds.y, worldBounds.y));
+            Collider2D wall = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Walls"));
+            if (wall == null)
+            {
+                SetMove(position.x, position.y);
+                return;
+            }
+        }
+    }
+
     void Start()
     {
         InitResettable();

@@ -16,7 +16,8 @@ public enum ActionState
     Attack,
     Flee,
     CollectItem,
-    UseItem
+    UseItem,
+    Idle
 }
 
 
@@ -24,6 +25,7 @@ public static class Global
 {
     public static List<IResettable> resettables = new List<IResettable>();
     public static GameManager gamemanager;
+    public static PlayerTracker playertracker;
 }
 
 
