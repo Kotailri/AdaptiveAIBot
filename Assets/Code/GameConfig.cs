@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class GameConfig
 {
-    public static float c_PlayerMovespeed = 8.0f;
+    public static float c_PlayerMovespeed = 6.0f;
+    public static float c_BotMovespeed = 4.0f;
 
     #region Shooting
     // Cooldown

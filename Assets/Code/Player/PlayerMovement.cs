@@ -18,12 +18,17 @@ public class PlayerMovement : MonoBehaviour, IResettable
         InitResettable();
     }
 
+    void OnDestroy()
+    {
+        OnDestroyAction();
+    }
+
     void Update()
     {
         if (!canMove)
             return;
 
-        rb.velocity = (inputs.InputVec.normalized) * GameConfig.c_PlayerMovespeed;
+        rb.velocity = (inputs.InputVec.normalized) * (GameConfig.c_PlayerMovespeed + Global.playerSpeedBoost);
     }
 
     public void EnableMovement(bool enabled)
@@ -42,5 +47,10 @@ public class PlayerMovement : MonoBehaviour, IResettable
     public void InitResettable()
     {
         Global.resettables.Add(this);
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }

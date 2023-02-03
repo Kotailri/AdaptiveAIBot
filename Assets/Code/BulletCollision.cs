@@ -11,6 +11,8 @@ public class BulletCollision : MonoBehaviour, IResettable
     public bool isBig = false;
     public PlayerType playerType = PlayerType.None;
 
+    public int damageBoost = 0;
+
     private void Start()
     {
         InitResettable();
@@ -40,22 +42,18 @@ public class BulletCollision : MonoBehaviour, IResettable
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.tag == "Player" && playerType == PlayerType.Bot)
+        if ((collision.gameObject.tag == "Player" && playerType == PlayerType.Bot) ||
+            (collision.gameObject.tag == "Bot" && playerType == PlayerType.Player))
         {
             collision.gameObject.GetComponent<Health>().UpdateHealth(isBig? -GameConfig.c_BulletDamage_big : - GameConfig.c_BulletDamage);
-            Destroy(gameObject);
-        }
-
-        if (collision.gameObject.tag == "Bot" && playerType == PlayerType.Player)
-        {
-            collision.gameObject.GetComponent<Health>().UpdateHealth(isBig ? -GameConfig.c_BulletDamage_big : -GameConfig.c_BulletDamage);
+            collision.gameObject.GetComponent<Health>().UpdateHealth(-damageBoost);
             Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        Global.resettables.Remove(this);
+        OnDestroyAction();
     }
 
     public void ResetObject()
@@ -66,5 +64,10 @@ public class BulletCollision : MonoBehaviour, IResettable
     public void InitResettable()
     {
         Global.resettables.Add(this);
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }

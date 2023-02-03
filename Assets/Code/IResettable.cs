@@ -13,5 +13,10 @@ public interface IResettable
     /// Global.resettables.Add(this);
     /// </summary>
     void InitResettable();
+    /// <summary>
+    /// Remove resettable object from resettable list, call on destroy.
+    /// Global.resettables.Remove(this);
+    /// </summary>
+    void OnDestroyAction();
 }
 

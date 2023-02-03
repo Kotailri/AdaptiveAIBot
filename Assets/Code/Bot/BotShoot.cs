@@ -62,6 +62,7 @@ public class BotShoot : MonoBehaviour, IAction
         GameObject proj = Instantiate(projectile, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
+        proj.GetComponent<BulletCollision>().damageBoost = Global.botDamageBoost;
     }
 
     private void ShootBig()
@@ -89,6 +90,7 @@ public class BotShoot : MonoBehaviour, IAction
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
         proj.GetComponent<BulletCollision>().isBig = true;
+        proj.GetComponent<BulletCollision>().damageBoost = Global.botDamageBoost_big;
     }
 
     private void Update()

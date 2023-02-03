@@ -14,6 +14,11 @@ public class Health : MonoBehaviour, IResettable
         InitResettable();
     }
 
+    private void OnDestroy()
+    {
+        OnDestroyAction();
+    }
+
     public bool CheckDead()
     {
         return health <= 0;
@@ -35,5 +40,10 @@ public class Health : MonoBehaviour, IResettable
         health += hp;
         bar.current = health;
         Global.gamemanager.UpdateGM();
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }

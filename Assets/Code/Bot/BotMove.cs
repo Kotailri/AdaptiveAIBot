@@ -13,6 +13,8 @@ public enum MoveState
 
 public class BotMove : MonoBehaviour, IResettable
 {
+    public bool Debug_NoMove;
+
     private Transform target;
     private NavMeshAgent agent;
 
@@ -62,6 +64,11 @@ public class BotMove : MonoBehaviour, IResettable
         }
     }
 
+    void OnDestroy()
+    {
+        OnDestroyAction();
+    }
+
     void Start()
     {
         InitResettable();
@@ -78,11 +85,13 @@ public class BotMove : MonoBehaviour, IResettable
 
     void Update()
     {
-        if (!canMove)
+        if (!canMove || Debug_NoMove)
         {
             agent.SetDestination(transform.position);
             return;
         }
+
+        agent.speed = GameConfig.c_BotMovespeed + Global.botSpeedBoost;
 
         switch (moveState)
         {
@@ -112,5 +121,10 @@ public class BotMove : MonoBehaviour, IResettable
     public void InitResettable()
     {
         Global.resettables.Add(this);
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }
