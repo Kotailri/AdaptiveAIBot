@@ -30,4 +30,9 @@ public static class GameConfig
     // Spawn Position
     public static Vector3 c_PlayerSpawnPosition = new Vector3(-11.9899998f, -5.63999987f, 0);
     public static Vector3 c_BotSpawnPosition = new Vector3(11.5200005f, 3.333f, 0);
+    public static Bounds c_WorldBounds = new Bounds(new Vector2(-12.4f, -6.4f), new Vector2(12.4f, 4.5f));
+
+    // Items
+    public static float c_ItemSpawnTime = 5.0f;
+    public static int c_MaxItemCount = 3;
 }

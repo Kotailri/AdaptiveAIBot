@@ -5,14 +5,16 @@ public class SpeedStatItem : MonoBehaviour, IItem, IResettable
     private string itemName = "speed_stat";
     private float speedBoostAmount = 2.0f;
 
-    private void Start()
+    private void OnEnable()
     {
         InitResettable();
+        Global.itemSpawner.currentItems.Add(gameObject);
     }
 
     void OnDestroy()
     {
         OnDestroyAction();
+        Global.itemSpawner.currentItems.Remove(gameObject);
     }
 
     public string GetItemName()

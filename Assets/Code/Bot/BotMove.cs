@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public enum MoveState
 {
@@ -23,6 +24,12 @@ public class BotMove : MonoBehaviour, IResettable
     private Vector2 destination;
     private bool canMove = true;
 
+    private void OnDrawGizmos()
+    {
+        if (target != null)
+            Gizmos.DrawWireSphere(target.position, 7.0f);
+    }
+
     public void ToggleCanMove(bool enabled)
     {
         canMove = enabled;
@@ -32,6 +39,24 @@ public class BotMove : MonoBehaviour, IResettable
     {
         moveState = MoveState.Move;
         destination = new Vector2(x, y);
+    }
+
+    public Vector2 AddMoveVariance(Vector2 original)
+    {
+        int maxIterations = 10;
+        float positionVariance = 7.0f;
+
+        Bounds worldBounds = GameConfig.c_WorldBounds;
+        for (int i = 0; i < maxIterations; i++)
+        {
+            Vector2 position = Math.RandomInRadius(original, positionVariance);
+            Collider2D wall = Physics2D.OverlapCircle(position, 0.3f, LayerMask.GetMask("Walls"));
+            if (wall == null)
+            {
+                return position;
+            }
+        }
+        return original;
     }
 
     public void Flee()
@@ -51,10 +76,10 @@ public class BotMove : MonoBehaviour, IResettable
 
     public void MoveRandom()
     {
-        Vector2 worldBounds = new Vector2(11.0f, 6.0f);
+        Bounds worldBounds = GameConfig.c_WorldBounds;
         while (true)
         {
-            Vector2 position = new Vector2(Random.Range(-worldBounds.x, worldBounds.x), Random.Range(-worldBounds.y, worldBounds.y));
+            Vector2 position = worldBounds.GenerateRandomPositionInBounds();
             Collider2D wall = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Walls"));
             if (wall == null)
             {
@@ -100,15 +125,15 @@ public class BotMove : MonoBehaviour, IResettable
                 break;
 
             case MoveState.Follow:
-                agent.SetDestination(target.transform.position);
+                agent.SetDestination(AddMoveVariance(target.transform.position));
                 break;
 
             case MoveState.Flee:
-                agent.SetDestination((transform.position - target.position).normalized * 15.0f);
+                agent.SetDestination(AddMoveVariance((transform.position - target.position).normalized * 15.0f));
                 break;
 
             case MoveState.None:
-                agent.SetDestination(transform.position);
+                agent.SetDestination(AddMoveVariance(transform.position));
                 break;
         }
         

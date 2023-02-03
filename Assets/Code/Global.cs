@@ -26,10 +26,38 @@ public enum ItemType
     StatBoost
 }
 
+public class Bounds
+{
+    public Vector2 botLeft;
+    public Vector2 topRight;
+
+    public Bounds(Vector2 botLeft_, Vector2 topRight_)
+    {
+        botLeft = botLeft_;
+        topRight = topRight_;
+    }
+
+    public bool IsPointInBounds(Vector2 point)
+    {
+        return point.x >= botLeft.x && point.x <= topRight.x &&
+               point.y >= botLeft.y && point.y <= topRight.y;
+    }
+
+    public Vector2 GenerateRandomPositionInBounds()
+    {
+        float randomX = Random.Range(botLeft.x, topRight.x);
+        float randomY = Random.Range(botLeft.y, topRight.y);
+        return new Vector2(randomX, randomY);
+    }
+}
+
+
 public static class Global
 {
     public static List<IResettable> resettables = new List<IResettable>();
+
     public static GameManager gamemanager;
+    public static ItemSpawner itemSpawner;
     public static PlayerTracker playertracker;
     public static StatTrackerUI statTrackerUI;
 

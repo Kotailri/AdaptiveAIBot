@@ -6,14 +6,16 @@ public class DamageStatItem : MonoBehaviour, IItem, IResettable
     private int damageBoostAmount = 5;
     private int damageBoostAmount_big = 10;
 
-    private void Start()
+    private void OnEnable()
     {
         InitResettable();
+        Global.itemSpawner.currentItems.Add(gameObject);
     }
 
     void OnDestroy()
     {
         OnDestroyAction();
+        Global.itemSpawner.currentItems.Remove(gameObject);
     }
 
     public string GetItemName()
