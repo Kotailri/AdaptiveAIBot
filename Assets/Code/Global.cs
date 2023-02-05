@@ -17,7 +17,8 @@ public enum ActionState
     Flee,
     CollectItem,
     UseItem,
-    Idle
+    Idle,
+    None
 }
 
 public enum ItemType

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class BotShoot : MonoBehaviour, IAction
+public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAction, IActionHasActionChance, IActionHasCleanup
 {
     [Header("Projectiles")]
     public GameObject projectile;
@@ -99,12 +99,12 @@ public class BotShoot : MonoBehaviour, IAction
         CurrentShootTimer_big += Time.deltaTime;
     }
 
-    bool IAction.CheckAction()
+    public bool CheckAction()
     {
         return Aim();
     }
 
-    void IAction.ExecuteAction()
+    public void ExecuteAction()
     {
         // compare distances, decide small or big shoot
         float shootChance = Random.Range(0f, 1f);
@@ -114,15 +114,11 @@ public class BotShoot : MonoBehaviour, IAction
             ShootBig();
     }
 
-    float IAction.GetActionChance()
+    public float GetActionChance()
     {
         // always shoot
+        // TODO get chance depending on difficulty level
         return 1;
-    }
-
-    public ActionState GetActionState()
-    {
-        return ActionState.Attack;
     }
 
     public void Cleanup()

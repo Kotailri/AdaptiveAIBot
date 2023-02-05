@@ -22,7 +22,11 @@ public class BotMove : MonoBehaviour, IResettable
     private MoveState moveState = MoveState.Follow;
 
     private Vector2 destination;
+    private Vector2 currentSetMoveDestination;
     private bool canMove = true;
+
+    [HideInInspector]
+    public bool destinationReached = false;
 
     private void OnDrawGizmos()
     {
@@ -33,12 +37,16 @@ public class BotMove : MonoBehaviour, IResettable
     public void ToggleCanMove(bool enabled)
     {
         canMove = enabled;
+        if (moveState == MoveState.Move)
+            agent.SetDestination(currentSetMoveDestination);
     }
 
     public void SetMove(float x, float y)
     {
+        destinationReached = false;
         moveState = MoveState.Move;
-        destination = new Vector2(x, y);
+        currentSetMoveDestination = new Vector2(x, y);
+        agent.SetDestination(currentSetMoveDestination);
     }
 
     public Vector2 AddMoveVariance(Vector2 original)
@@ -121,19 +129,22 @@ public class BotMove : MonoBehaviour, IResettable
         switch (moveState)
         {
             case MoveState.Move:
-                agent.SetDestination(destination);
+                if (Math.IsInRadius(currentSetMoveDestination, 3.0f, transform.position))
+                {
+                    destinationReached = true;
+                }
                 break;
 
             case MoveState.Follow:
-                agent.SetDestination(AddMoveVariance(target.transform.position));
+                agent.SetDestination(target.transform.position);
                 break;
 
             case MoveState.Flee:
-                agent.SetDestination(AddMoveVariance((transform.position - target.position).normalized * 15.0f));
+                agent.SetDestination((transform.position - target.position).normalized * 15.0f);
                 break;
 
             case MoveState.None:
-                agent.SetDestination(AddMoveVariance(transform.position));
+                agent.SetDestination(transform.position);
                 break;
         }
         
