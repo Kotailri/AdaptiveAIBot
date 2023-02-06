@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1221283862181177619}
   m_Layer: 0
   m_Name: Bullet_Big
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,6 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxDist: 1
+  isBig: 0
+  playerType: 2
+  damageBoost: 0
 --- !u!60 &-1221283862181177619
 PolygonCollider2D:
   m_ObjectHideFlags: 0

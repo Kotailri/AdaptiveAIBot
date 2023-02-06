@@ -35,4 +35,9 @@ public static class GameConfig
     // Items
     public static float c_ItemSpawnTime = 5.0f;
     public static int c_MaxItemCount = 3;
+
+    // Burst Shield
+    public static int c_BurstDamage = 30;
+    public static float c_BurstMaxSize = 4.0f;
+    public static float c_BurstGrowSpeedMultiplier = 18.0f;
 }

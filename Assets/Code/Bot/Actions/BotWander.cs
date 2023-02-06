@@ -13,7 +13,7 @@ public class BotWander : MonoBehaviour, IActionHasInitialAction, IActionRequired
 
     public void ExecuteAction()
     {
-        if (botMove.destinationReached)
+        if (botMove && botMove.destinationReached)
         {
             botMove.MoveRandom();
         }
