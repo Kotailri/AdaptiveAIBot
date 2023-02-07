@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ public class StatTrackerUI : MonoBehaviour
     [Space(5.0f)]
 
     public TextMeshProUGUI botDamageText;
-    public TextMeshProUGUI botSpeedTextText;
+    public TextMeshProUGUI botSpeedText;
 
     public void Awake()
     {
@@ -28,7 +26,7 @@ public class StatTrackerUI : MonoBehaviour
 
     public void UpdateBotStatUI(int botDamageLv, int botSpeedLv)
     {
-        botSpeedTextText.text = "x" + botSpeedLv;
+        botSpeedText.text = "x" + botSpeedLv;
         botDamageText.text = "x" + botDamageLv;
     }
 }

@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour, IResettable
 {
-    private Dictionary<string, int> consumables = new Dictionary<string, int>();
-    private Dictionary<string, int> statBoosts = new Dictionary<string, int>();
+    private Dictionary<ItemName, int> consumables = new Dictionary<ItemName, int>();
+    private Dictionary<ItemName, int> statBoosts = new Dictionary<ItemName, int>();
 
     public void Awake()
     {
-        consumables.Add("poison_consumable", 0);
-        consumables.Add("shield_consumable", 0);
+        consumables.Add(ItemName.PoisonConsumable, 0);
+        consumables.Add(ItemName.BurstConsumable, 0);
 
-        statBoosts.Add("speed_stat", 0);
-        statBoosts.Add("damage_stat", 0);
+        statBoosts.Add(ItemName.SpeedStat, 0);
+        statBoosts.Add(ItemName.DamageStat, 0);
     }
 
     void OnDestroy()
@@ -20,9 +20,21 @@ public class Inventory : MonoBehaviour, IResettable
         OnDestroyAction();
     }
 
+    public bool ConsumeItem(ItemName itemName)
+    {
+        if (consumables[itemName] > 0)
+        {
+            consumables[itemName]--;
+            UpdateInventoryUI();
+            return true;
+        }
+        return false;
+    }
+
     public void AddItem(IItem item, string recieverTag)
     {
-        item.OnInventoryAdd(recieverTag);
+        if (item is IOnInventoryAddEffect onInvAdd)
+            onInvAdd.OnInventoryAdd(recieverTag);
 
         if (item.GetItemType() == ItemType.Consumable)
         {
@@ -41,9 +53,14 @@ public class Inventory : MonoBehaviour, IResettable
     private void UpdateInventoryUI()
     {
         if (gameObject.tag == "Player")
-            Global.statTrackerUI.UpdatePlayerStatUI(statBoosts["damage_stat"], statBoosts["speed_stat"]);
+            Global.statTrackerUI.UpdatePlayerStatUI(statBoosts[ItemName.DamageStat], statBoosts[ItemName.SpeedStat]);
         if (gameObject.tag == "Bot")
-            Global.statTrackerUI.UpdateBotStatUI(statBoosts["damage_stat"], statBoosts["speed_stat"]);
+            Global.statTrackerUI.UpdateBotStatUI(statBoosts[ItemName.DamageStat], statBoosts[ItemName.SpeedStat]);
+
+        if (gameObject.tag == "Player")
+            Global.itemTrackerUI.UpdatePlayerItemUI(consumables[ItemName.PoisonConsumable], consumables[ItemName.BurstConsumable]);
+        if (gameObject.tag == "Bot")
+            Global.itemTrackerUI.UpdateBotItemUI(consumables[ItemName.PoisonConsumable], consumables[ItemName.BurstConsumable]);
     }
 
     public void InitResettable()
@@ -53,11 +70,11 @@ public class Inventory : MonoBehaviour, IResettable
 
     public void ResetObject()
     {
-        consumables["poison_consumable"] = 0;
-        consumables["shield_consumable"] = 0;
+        consumables[ItemName.PoisonConsumable] = 0;
+        consumables[ItemName.BurstConsumable] = 0;
 
-        statBoosts["speed_stat"] = 0;
-        statBoosts["damage_stat"] = 0;
+        statBoosts[ItemName.SpeedStat] = 0;
+        statBoosts[ItemName.DamageStat] = 0;
 
         Global.playerSpeedBoost = 0.0f;
         Global.botSpeedBoost = 0.0f;

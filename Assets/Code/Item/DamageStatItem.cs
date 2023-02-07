@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class DamageStatItem : MonoBehaviour, IItem, IResettable
+public class DamageStatItem : MonoBehaviour, IItem, IResettable, IOnInventoryAddEffect
 {
-    private string itemName = "damage_stat";
+    private ItemName itemName = ItemName.DamageStat;
     private int damageBoostAmount = 5;
     private int damageBoostAmount_big = 10;
 
@@ -18,7 +18,7 @@ public class DamageStatItem : MonoBehaviour, IItem, IResettable
         Global.itemSpawner.currentItems.Remove(gameObject);
     }
 
-    public string GetItemName()
+    public ItemName GetItemName()
     {
         return itemName;
     }

@@ -27,6 +27,14 @@ public enum ItemType
     StatBoost
 }
 
+public enum ItemName
+{
+    PoisonConsumable,
+    BurstConsumable,
+    SpeedStat,
+    DamageStat
+}
+
 public class Bounds
 {
     public Vector2 botLeft;
@@ -61,6 +69,7 @@ public static class Global
     public static ItemSpawner itemSpawner;
     public static PlayerTracker playertracker;
     public static StatTrackerUI statTrackerUI;
+    public static ItemTrackerUI itemTrackerUI;
 
     public static float playerSpeedBoost = 0.0f;
     public static float botSpeedBoost = 0.0f;

@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class SpeedStatItem : MonoBehaviour, IItem, IResettable, IOnInventoryAddEffect
+public class BurstConsumableItem : MonoBehaviour, IItem, IResettable
 {
-    private ItemName itemName = ItemName.SpeedStat;
-    private float speedBoostAmount = 2.0f;
+    private ItemName itemName = ItemName.BurstConsumable;
 
     private void OnEnable()
     {
@@ -24,25 +23,12 @@ public class SpeedStatItem : MonoBehaviour, IItem, IResettable, IOnInventoryAddE
 
     public ItemType GetItemType()
     {
-        return ItemType.StatBoost;
+        return ItemType.Consumable;
     }
 
     public void InitResettable()
     {
         Global.resettables.Add(this);
-    }
-
-    public void OnInventoryAdd(string recieverTag)
-    {
-        if (recieverTag == "Bot")
-        {
-            Global.botSpeedBoost += speedBoostAmount;
-        }
-
-        if (recieverTag == "Player")
-        {
-            Global.playerSpeedBoost += speedBoostAmount;
-        }
     }
 
     public void ResetObject()
@@ -54,4 +40,5 @@ public class SpeedStatItem : MonoBehaviour, IItem, IResettable, IOnInventoryAddE
     {
         Global.resettables.Remove(this);
     }
+
 }
