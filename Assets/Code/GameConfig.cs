@@ -37,7 +37,15 @@ public static class GameConfig
     public static int c_MaxItemCount = 6;
 
     // Burst Shield
+    public static KeyCode c_BurstKeyCode = KeyCode.E;
     public static int c_BurstDamage = 30;
     public static float c_BurstMaxSize = 4.0f;
     public static float c_BurstGrowSpeedMultiplier = 18.0f;
+
+    // Poison
+    public static KeyCode c_PoisonKeyCode = KeyCode.Q;
+    public static float c_PoisonTimer = 1.0f;
+    public static int c_PoisonTickDamage = 5;
+    public static int c_PoisonEnterDamage = 10;
+    public static float c_PoisonExpireTime = 3.0f;
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class BurstConsumableItem : MonoBehaviour, IItem, IResettable
+public class PoisonConsumableItem : MonoBehaviour, IItem, IResettable
 {
-    private ItemName itemName = ItemName.BurstConsumable;
+    private ItemName itemName = ItemName.PoisonConsumable;
 
     private void Start()
     {

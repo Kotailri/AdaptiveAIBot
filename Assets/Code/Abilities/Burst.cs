@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class Burst : MonoBehaviour
+public class Burst : MonoBehaviour, IResettable
 {
     public PlayerType owner;
 
@@ -76,5 +76,20 @@ public class Burst : MonoBehaviour
 
         if (currSize <= 0)
             Destroy(gameObject);
+    }
+
+    public void ResetObject()
+    {
+        Destroy(gameObject);
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }
