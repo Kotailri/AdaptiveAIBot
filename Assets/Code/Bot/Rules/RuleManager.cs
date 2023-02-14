@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class RuleManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject DifficultyManager;
+    public GameObject PlaystyleManager;
+
+    private List<IDifficultyRule> difficultyRules;
+    private List<IPlaystyleRule> playstyleRules;
+
+    private void Start()
     {
+        Global.ruleManager = this;
+        difficultyRules = new List<IDifficultyRule>();
+        difficultyRules.AddRange(DifficultyManager.GetComponents<IDifficultyRule>());
         
+        playstyleRules = new List<IPlaystyleRule>();
+        playstyleRules.AddRange(PlaystyleManager.GetComponents<IPlaystyleRule>());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateDifficulty(PlayerType winner)
     {
-        
+        foreach (IDifficultyRule rule in difficultyRules)
+        {
+            float difficultyChange = rule.GetDifficultyLevelChange(winner);
+            Global.difficultyLevel += difficultyChange;
+            print(rule.GetDifficultyActionName() + " updated difficulty: " + difficultyChange);
+        }
+        print("NEW DIFFICULTY: " + Global.difficultyLevel);
     }
 }

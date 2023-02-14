@@ -9,8 +9,8 @@ public class BotFollow : MonoBehaviour, IActionHasUpdateAction, IActionRequiredS
         GetComponent<BotMove>().Attack();
     }
 
-    public ActionState GetActionState()
+    public List<ActionState> GetActionStates()
     {
-        return ActionState.Attack;
+        return new List<ActionState>() { ActionState.Attack };
     }
 }

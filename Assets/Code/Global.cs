@@ -70,6 +70,7 @@ public static class Global
     public static PlayerTracker playertracker;
     public static StatTrackerUI statTrackerUI;
     public static ItemTrackerUI itemTrackerUI;
+    public static RuleManager ruleManager;
 
     public static float playerSpeedBoost = 0.0f;
     public static float botSpeedBoost = 0.0f;
@@ -78,6 +79,8 @@ public static class Global
     public static int playerDamageBoost_big = 0;
     public static int botDamageBoost = 0;
     public static int botDamageBoost_big = 0;
+
+    public static float difficultyLevel = 0.0f;
 }
 
 

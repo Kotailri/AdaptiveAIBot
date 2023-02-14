@@ -27,18 +27,23 @@ public class GameManager : MonoBehaviour
     
     public void UpdateGM()
     {
-        if (PlayerHealth.CheckDead())
+        bool BotWin = PlayerHealth.CheckDead();
+        bool PlayerWin = BotHealth.CheckDead();
+
+        if (BotWin)
         {
             BotScore++;
             botScoreText.text = BotScore.ToString();
             ResetObjects();
+            Global.ruleManager.UpdateDifficulty(PlayerType.Bot);
         }
 
-        if (BotHealth.CheckDead())
+        if (PlayerWin)
         {
             PlayerScore++;
             playerScoreText.text = PlayerScore.ToString();
             ResetObjects();
+            Global.ruleManager.UpdateDifficulty(PlayerType.Player);
         }
     }
 

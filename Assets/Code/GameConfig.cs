@@ -18,6 +18,7 @@ public static class GameConfig
 
     public static float c_WindupDelay = 0.35f;
 
+    // Damage
     public static int c_BulletDamage = 15;
     public static int c_BulletDamage_big = 35;
 
@@ -47,5 +48,11 @@ public static class GameConfig
     public static float c_PoisonTimer = 1.0f;
     public static int c_PoisonTickDamage = 5;
     public static int c_PoisonEnterDamage = 10;
-    public static float c_PoisonExpireTime = 3.0f;
+    public static float c_PoisonExpireTime = 15.0f;
+
+    // Difficulty Scaling Speed
+    public static float c_GlobalDifficultyScaling = 1.0f;
+    public static float c_WinRateDifficultyScaling = 0.2f;
+    public static float c_HealthDiffDifficultyScaling = 0.001f;
+
 }

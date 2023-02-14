@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAction, IActionHasActionChance, IActionHasCleanup
+public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAction, IActionHasActionChance, IActionHasCleanup, IActionExcludeState
 {
     [Header("Projectiles")]
     public GameObject projectile;
@@ -125,5 +125,10 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     {
         lineRenderer.SetPosition(0, Vector3.zero);
         lineRenderer.SetPosition(1, Vector3.zero);
+    }
+
+    public List<ActionState> GetExcludedActionStates()
+    {
+        return new List<ActionState>() { ActionState.Wander };
     }
 }

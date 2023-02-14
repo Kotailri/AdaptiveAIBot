@@ -14,8 +14,8 @@ public class BotFlee : MonoBehaviour, IActionHasUpdateAction, IActionRequiredSta
         GetComponent<BotMove>().Flee();
     }
 
-    public ActionState GetActionState()
+    public List<ActionState> GetActionStates()
     {
-        return ActionState.Flee;
+        return new List<ActionState>() { ActionState.Flee };
     }
 }

@@ -24,7 +24,7 @@ public class ActionManager : MonoBehaviour
                 
             if (action is IActionHasInitialAction initialAction)
             {
-                if (newState == initialAction.GetActionState())
+                if (initialAction.GetActionStates().Contains(newState))
                 {
                     initialAction.ExecuteInitialAction();
                 }
@@ -73,7 +73,13 @@ public class ActionManager : MonoBehaviour
         {
             if (action is IActionRequiredState actionRequiredState)
             {
-                if (actionRequiredState.GetActionState() != currentState)
+                if (!actionRequiredState.GetActionStates().Contains(currentState))
+                    continue;
+            }
+
+            if (action is IActionExcludeState actionExcludeState)
+            {
+                if (actionExcludeState.GetExcludedActionStates().Contains(currentState))
                     continue;
             }
 

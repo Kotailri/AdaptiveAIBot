@@ -1,11 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+public enum DifficultyRule
+{
+    WinRate,
+    WinTime,
+    HealthDiff,
+    AccuracityDiff,
+    DamageWander
+}
 
 public interface IDifficultyRule
 {
-    public string GetDifficultyActionName();
-    public int GetDifficultyActionChance();
-    public int GetDifficultyActionLevel();
-    public void UpdateDifficultyActionLevel(int levelUp);
+    public DifficultyRule GetDifficultyActionName();
+    public float GetDifficultyLevelChange(PlayerType winner);
 }
+

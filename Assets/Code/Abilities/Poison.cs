@@ -10,6 +10,11 @@ public class Poison : MonoBehaviour, IResettable
         Destroy(gameObject, GameConfig.c_PoisonExpireTime);
     }
 
+    private void Start()
+    {
+        InitResettable();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (owner == PlayerType.Player && collision.gameObject.CompareTag("Bot") 
@@ -31,11 +36,6 @@ public class Poison : MonoBehaviour, IResettable
         }
     }
 
-    private void Expire()
-    {
-        Destroy(gameObject);
-    }
-
     private void DamagePlayer()
     {
         if (playerInLava)
@@ -44,6 +44,11 @@ public class Poison : MonoBehaviour, IResettable
     public void ResetObject()
     {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        OnDestroyAction();
     }
 
     public void InitResettable()

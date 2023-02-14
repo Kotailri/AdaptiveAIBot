@@ -44,7 +44,7 @@ public interface IActionRequiredState : IAction
     /// Returns the action state associated with the action
     /// </summary>
     /// <returns></returns>
-    public ActionState GetActionState();
+    public List<ActionState> GetActionStates();
 }
 
 public interface IActionHasCleanup : IAction
@@ -53,4 +53,9 @@ public interface IActionHasCleanup : IAction
     /// Cleans up for when action state actions end
     /// </summary>
     public void Cleanup();
+}
+
+public interface IActionExcludeState : IAction
+{
+    public List<ActionState> GetExcludedActionStates();
 }

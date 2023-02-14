@@ -59,8 +59,8 @@ public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequir
         CollectItem();
     }
 
-    public ActionState GetActionState()
+    public List<ActionState> GetActionStates()
     {
-        return ActionState.CollectItem;
+        return new List<ActionState>() { ActionState.CollectItem };
     }
 }

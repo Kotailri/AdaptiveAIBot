@@ -24,8 +24,8 @@ public class BotWander : MonoBehaviour, IActionHasInitialAction, IActionRequired
         botMove.MoveRandom();
     }
 
-    public ActionState GetActionState()
+    public List<ActionState> GetActionStates()
     {
-        return ActionState.Wander;
+        return new List<ActionState>() { ActionState.Wander };
     }
 }

@@ -46,7 +46,6 @@ public class Inventory : MonoBehaviour, IResettable
             statBoosts[item.GetItemName()]++;
         }
 
-        print(recieverTag + " picked up " + item.GetItemName());
         UpdateInventoryUI();
     }
 
