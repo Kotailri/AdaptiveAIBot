@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 public static class Math
 {
@@ -14,5 +15,18 @@ public static class Math
         float randomX = center.x + randomRadius * Mathf.Cos(randomAngle);
         float randomY = center.y + randomRadius * Mathf.Sin(randomAngle);
         return new Vector2(randomX, randomY);
+    }
+
+    public static float AverageFloat(List<float> floats)
+    {
+        if (floats.Count == 0)
+            return 0.0f;
+
+        float num = 0;
+        foreach (float f in floats)
+        {
+            num += f;
+        }
+        return num / (float)floats.Count;
     }
 }

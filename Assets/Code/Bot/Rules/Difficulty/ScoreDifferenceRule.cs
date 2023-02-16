@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class WinRateRule : MonoBehaviour, IDifficultyRule
+public class ScoreDifferenceRule : MonoBehaviour, IDifficultyRule
 {
     private float prevDifficulty = 0.0f;
-    private int minimumRequiredGames = 0;
 
     public DifficultyRule GetDifficultyActionName()
     {
-        return DifficultyRule.WinRate;
+        return DifficultyRule.ScoreDifference;
     }
 
     public float GetDifficultyLevelChange(PlayerType winner)
     {
-        float difficulty = GetWinRate() * GameConfig.c_GlobalDifficultyScaling;
+        float difficulty = GetScoreDifference() * GameConfig.c_GlobalDifficultyScaling;
         if (difficulty == 0)
         {
             prevDifficulty = difficulty;
@@ -27,12 +26,12 @@ public class WinRateRule : MonoBehaviour, IDifficultyRule
         return newDifficulty;
     }
 
-    private float GetWinRate()
+    private float GetScoreDifference()
     {
         GameManager gm = Global.gamemanager;
         float winRate = gm.PlayerScore - gm.BotScore;
 
-        if ((gm.PlayerScore + gm.BotScore) < minimumRequiredGames)
+        if ((gm.PlayerScore + gm.BotScore) < GameConfig.c_ScoreDifferenceRoundCount)
             return 0.0f;
 
         return (float)winRate * GameConfig.c_WinRateDifficultyScaling;

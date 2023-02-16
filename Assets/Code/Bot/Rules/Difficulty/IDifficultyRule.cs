@@ -1,6 +1,6 @@
 public enum DifficultyRule
 {
-    WinRate,
+    ScoreDifference,
     WinTime,
     HealthDiff,
     AccuracityDiff,
