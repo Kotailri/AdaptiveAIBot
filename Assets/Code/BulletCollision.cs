@@ -39,12 +39,32 @@ public class BulletCollision : MonoBehaviour, IResettable
 
         if (collision.gameObject.tag == "Wall")
         {
+            if (playerType == PlayerType.Player)
+            {
+                Global.playertracker.PlayerHitsMissed++;
+            }
+
+            if (playerType == PlayerType.Bot)
+            {
+                Global.playertracker.BotHitsMissed++;
+            }
+
             Destroy(gameObject);
         }
 
         if ((collision.gameObject.tag == "Player" && playerType == PlayerType.Bot) ||
             (collision.gameObject.tag == "Bot" && playerType == PlayerType.Player))
         {
+            if (playerType == PlayerType.Player)
+            {
+                Global.playertracker.PlayerHitsLanded++;
+            }
+
+            if (playerType == PlayerType.Bot)
+            {
+                Global.playertracker.BotHitsLanded++;
+            }
+
             collision.gameObject.GetComponent<Health>().UpdateHealth(isBig? -GameConfig.c_BulletDamage_big : - GameConfig.c_BulletDamage);
             collision.gameObject.GetComponent<Health>().UpdateHealth(-damageBoost);
             Destroy(gameObject);

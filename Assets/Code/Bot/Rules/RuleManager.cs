@@ -25,6 +25,11 @@ public class RuleManager : MonoBehaviour
         foreach (IDifficultyRule rule in difficultyRules)
         {
             float difficultyChange = rule.GetDifficultyLevelChange(winner);
+            if (difficultyChange > GameConfig.c_MaxDifficultyIncrease)
+            {
+                difficultyChange = GameConfig.c_MaxDifficultyIncrease;
+            }
+
             Global.difficultyLevel += difficultyChange;
             print(rule.GetDifficultyActionName() + " updated difficulty: " + difficultyChange);
         }

@@ -11,6 +11,22 @@ public class BotWander : MonoBehaviour, IActionHasInitialAction, IActionRequired
         botMove = GetComponent<BotMove>();
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Global.playertracker.Bot.GetComponent<ActionManager>().currentState != ActionState.Wander)
+            return;
+
+        BulletCollision bulletCollision;
+        if (collision.gameObject.TryGetComponent<BulletCollision>(out bulletCollision))
+        {
+            if (bulletCollision.playerType == PlayerType.Player)
+            {
+                print("HIT DURING WANDER");
+                Global.playertracker.PlayerHitsDuringWander++;
+            }
+        }
+    }
+
     public void ExecuteAction()
     {
         if (botMove && botMove.destinationReached)

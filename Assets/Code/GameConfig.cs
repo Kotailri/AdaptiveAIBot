@@ -52,10 +52,15 @@ public static class GameConfig
 
     // Difficulty Scaling Speed
     public static float c_GlobalDifficultyScaling = 1.0f;
+    public static float c_MaxDifficultyIncrease = 1.0f;
+
     public static float c_WinRateDifficultyScaling = 0.2f;
     public static float c_WinTimeDifficultyScaling = 0.1f;
     public static float c_HealthDiffDifficultyScaling = 0.001f;
+    public static float c_DamageWanderDifficultyScaling = 0.3f;
+    public static float c_AccracyDiffDifficultyScaling = 1.0f;
 
+    // Difficulty Rule
     public static int c_WinTimeRoundCount = 2;
     public static int c_ScoreDifferenceRoundCount = 2;
 }

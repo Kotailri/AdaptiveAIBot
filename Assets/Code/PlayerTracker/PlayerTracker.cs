@@ -18,6 +18,14 @@ public class PlayerTracker : MonoBehaviour
     public double AverageDistance = 0.0f;
     public double CurrentDistance = 0.0f;
 
+    public int PlayerHitsLanded = 0;
+    public int PlayerHitsMissed = 0;
+
+    public int BotHitsLanded = 0;
+    public int BotHitsMissed = 0;
+
+    public int PlayerHitsDuringWander = 0;
+
     private void Awake()
     {
         Global.playertracker = this;
@@ -58,6 +66,8 @@ public class PlayerTracker : MonoBehaviour
         AverageDistance = (SampleDistanceSum / (double) NumDistanceSamples);
     }
 
+    #endregion
+
     public Vector2 GetPlayerPosition()
     {
         return Player.transform.position;
@@ -67,5 +77,5 @@ public class PlayerTracker : MonoBehaviour
     {
         return Bot.transform.position;
     }
-    #endregion
+    
 }

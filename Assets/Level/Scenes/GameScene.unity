@@ -4485,7 +4485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169f6d9418342c14c9ca0143b968895e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 1
 --- !u!114 &761895669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4558,6 +4558,8 @@ GameObject:
   - component: {fileID: 794329024}
   - component: {fileID: 794329025}
   - component: {fileID: 794329026}
+  - component: {fileID: 794329028}
+  - component: {fileID: 794329027}
   m_Layer: 0
   m_Name: DifficultyManager
   m_TagString: Untagged
@@ -4613,6 +4615,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f9af2106c68d4a4eb76ae7ab426c328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &794329027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794329022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648f13363805c5b42b5c8c6ff8912b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &794329028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794329022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a719105344f36324c943f6f5a04e5ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &799786600
@@ -10608,6 +10634,11 @@ MonoBehaviour:
   Bot: {fileID: 761895657}
   AverageDistance: 0
   CurrentDistance: 0
+  PlayerHitsLanded: 0
+  PlayerHitsMissed: 0
+  BotHitsLanded: 0
+  BotHitsMissed: 0
+  PlayerHitsDuringWander: 0
 --- !u!114 &2092360359
 MonoBehaviour:
   m_ObjectHideFlags: 0
