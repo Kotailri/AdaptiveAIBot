@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour, IResettable
 {
@@ -20,6 +21,11 @@ public class Inventory : MonoBehaviour, IResettable
         OnDestroyAction();
     }
 
+    public bool HasItem(ItemName itemName)
+    {
+        return consumables[itemName] > 0;
+    }
+
     public bool ConsumeItem(ItemName itemName)
     {
         if (consumables[itemName] > 0)
@@ -29,6 +35,12 @@ public class Inventory : MonoBehaviour, IResettable
             return true;
         }
         return false;
+    }
+
+    public void AddItem(ItemName itemName)
+    {
+        consumables[itemName]++;
+        UpdateInventoryUI();
     }
 
     public void AddItem(IItem item, string recieverTag)

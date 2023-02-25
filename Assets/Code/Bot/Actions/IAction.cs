@@ -32,7 +32,7 @@ public interface IActionHasUpdateAction : IAction
 public interface IActionHasActionChance : IAction
 {
     /// <summary>
-    /// Return the chance of the action being executed
+    /// Return the chance of the action being executed 0-1
     /// </summary>
     /// <returns></returns>
     public float GetActionChance();

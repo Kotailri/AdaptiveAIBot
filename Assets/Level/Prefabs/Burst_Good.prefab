@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 760333970491371869}
   - component: {fileID: 4350512905832938909}
   m_Layer: 0
-  m_Name: Burst
+  m_Name: Burst_Good
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

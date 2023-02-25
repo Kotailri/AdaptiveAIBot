@@ -42,6 +42,7 @@ public static class GameConfig
     public static int c_BurstDamage = 30;
     public static float c_BurstMaxSize = 4.0f;
     public static float c_BurstGrowSpeedMultiplier = 18.0f;
+    public static float c_BurstCooldown = 2.5f;
 
     // Poison
     public static KeyCode c_PoisonKeyCode = KeyCode.Q;
