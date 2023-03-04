@@ -50,6 +50,11 @@ public class BotBurst : MonoBehaviour, IActionHasUpdateAction
         {
             CreateBurst();
         }
+
+        else if (Global.playertracker.CurrentDistance <= 3)
+        {
+            CreateBurst();
+        }
     }
     private bool CheckDifficulty()
     {
@@ -63,16 +68,14 @@ public class BotBurst : MonoBehaviour, IActionHasUpdateAction
 
     private bool CheckPlayerBullets()
     {
-        foreach (GameObject bullet in scanner.playerBullets)
+        foreach (GameObject bullet in scanner.GetScannedPlayerBullets(4.0f))
         {
             if (!bullet.activeSelf)
                 continue;
 
-            // calculate the direction of the other Rigidbody2D's velocity
             Vector2 direction = bullet.GetComponent<Rigidbody2D>().velocity.normalized;
             Vector2 origin = bullet.transform.position;
 
-            // perform a raycast in the direction of the other Rigidbody2D's velocity
             RaycastHit2D hit = Physics2D.CircleCast(origin, 0.3f, direction, Mathf.Infinity, AimTargets);
 
             if (debug) GetComponent<LineRenderer>().SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
@@ -90,12 +93,5 @@ public class BotBurst : MonoBehaviour, IActionHasUpdateAction
             }
         }
         return false;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-            inv.AddItem(ItemName.BurstConsumable);
     }
 }

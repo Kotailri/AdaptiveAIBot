@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Poison : MonoBehaviour, IResettable
 {
@@ -8,6 +9,13 @@ public class Poison : MonoBehaviour, IResettable
     private void OnEnable()
     {
         Destroy(gameObject, GameConfig.c_PoisonExpireTime);
+        if (owner == PlayerType.Player)
+        {
+            if (Global.difficultyLevel < Random.Range(1, 10))
+            {
+                GetComponent<NavMeshObstacle>().enabled = false;
+            }
+        }
     }
 
     private void Start()

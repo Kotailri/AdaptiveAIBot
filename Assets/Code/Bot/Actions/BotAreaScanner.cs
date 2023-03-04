@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class BotAreaScanner : MonoBehaviour
 {
-    public List<GameObject> playerBullets = new List<GameObject>();
-    private float radius = 4.0f;
-
-    public List<GameObject> GetScannedPlayerBullets()
+    public List<GameObject> GetScannedPlayerBullets(float radius)
     {
-        return new List<GameObject>(playerBullets);
-    }
-
-    private void Update()
-    {
-        playerBullets.Clear();
+        List<GameObject> playerBullets = new List<GameObject>();
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D collider in colliders)
         {
@@ -24,5 +16,6 @@ public class BotAreaScanner : MonoBehaviour
                     playerBullets.Add(collider.gameObject);
             }
         }
+        return new List<GameObject>(playerBullets);
     }
 }

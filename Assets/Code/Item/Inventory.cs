@@ -9,11 +9,13 @@ public class Inventory : MonoBehaviour, IResettable
 
     public void Awake()
     {
-        consumables.Add(ItemName.PoisonConsumable, 0);
-        consumables.Add(ItemName.BurstConsumable, 0);
+        consumables.Add(ItemName.PoisonConsumable, 10);
+        consumables.Add(ItemName.BurstConsumable, 10);
 
         statBoosts.Add(ItemName.SpeedStat, 0);
         statBoosts.Add(ItemName.DamageStat, 0);
+
+        UpdateInventoryUI();
     }
 
     void OnDestroy()
@@ -40,6 +42,12 @@ public class Inventory : MonoBehaviour, IResettable
     public void AddItem(ItemName itemName)
     {
         consumables[itemName]++;
+        UpdateInventoryUI();
+    }
+
+    public void AddItems(ItemName itemName, int amount)
+    {
+        consumables[itemName] += amount;
         UpdateInventoryUI();
     }
 

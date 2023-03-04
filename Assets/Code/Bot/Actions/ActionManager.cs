@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class ActionManager : MonoBehaviour
+public class ActionManager : MonoBehaviour, IResettable
 {
     private List<IAction> actions = new List<IAction>();
     public ActionState currentState = ActionState.Wander;
 
+    private Inventory inv;
+    public bool isPaused = false;
+
     void Awake()
     {
         actions.AddRange(GetComponents<IAction>());
+        inv = GetComponent<Inventory>();
+        InitResettable();
         ExecuteActions();
     }
 
     public void ChangeStates(ActionState newState)
     {
+        print("State Change: " + newState);
         foreach (IAction action in actions)
         {
             if (action is IActionHasCleanup cleanupAction)
@@ -36,33 +43,43 @@ public class ActionManager : MonoBehaviour
 
     private float stateSwapTimer = 0.0f;
     private float stateSwapTime = 5.0f;
+
+    private ActionState SelectNewState()
+    {
+        float stateChance = Random.Range(0f, 1f);
+        if (stateChance > 0.6)
+        {
+            return ActionState.Attack;
+        }
+
+        else if (inv.HasItem(ItemName.PoisonConsumable))
+        {
+            return ActionState.UseItem;
+        }
+
+        else if (stateChance > 0.4 && Global.playertracker.CurrentDistance <= 10)
+        {
+            return ActionState.Flee;
+        }
+
+        else if (stateChance > 0.2)
+        {
+            return ActionState.CollectItem;
+        }
+
+        else
+        {
+            return ActionState.Wander;
+        }
+    }
+
     private void UpdateState()
     {
         stateSwapTimer += Time.deltaTime;
 
         if (stateSwapTimer >= stateSwapTime)
         {
-            float stateChance = Random.Range(0f, 1f);
-            if (stateChance > 0.7)
-            {
-                ChangeStates(ActionState.Attack);
-            }
-                
-            else if (stateChance > 0.4 && Global.playertracker.CurrentDistance <= 10)
-            {
-                ChangeStates(ActionState.Flee);
-            }
-                
-            else if (stateChance > 0.2)
-            {
-                ChangeStates(ActionState.CollectItem);
-            }
-
-            else
-            {
-                ChangeStates(ActionState.Wander);
-            }
-                
+            ChangeStates(SelectNewState());
             stateSwapTimer = 0;
         }
     }
@@ -100,38 +117,46 @@ public class ActionManager : MonoBehaviour
             {
                 actionWithUpdate.ExecuteAction();
             }
+
+            if (action is IActionHasStateCompletion actionWithCompletion)
+            {
+                if (actionWithCompletion.IsStateComplete())
+                {
+                    ChangeStates(SelectNewState());
+                    stateSwapTimer = 0;
+                }
+                    
+            }
         }
     }
 
     void Update()
     {
-        #region State Swapper Test
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeStates(ActionState.Wander);
-        }
+        if (isPaused)
+            return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeStates(ActionState.Attack);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeStates(ActionState.Flee);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ChangeStates(ActionState.CollectItem);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ChangeStates(ActionState.UseItem);
-        }
-        #endregion
         UpdateState();
         ExecuteActions();
+    }
+
+    public void ResetObject()
+    {
+        foreach (IAction action in actions)
+        {
+            if (action is IActionHasCleanup cleanupAction)
+            {
+                cleanupAction.Cleanup();
+            }
+        }
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }

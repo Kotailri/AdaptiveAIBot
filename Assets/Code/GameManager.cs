@@ -53,6 +53,13 @@ public class GameManager : MonoBehaviour
         {
             res.ResetObject();
         }
+        Invoke("ResetHealth", 0.5f);   
+    }
+
+    private void ResetHealth()
+    {
+        PlayerHealth.ResetObject();
+        BotHealth.ResetObject();
     }
 
     private void Awake()

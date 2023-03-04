@@ -20,6 +20,9 @@ public class AccuracyDiffRule : MonoBehaviour, IDifficultyRule
         tracker.PlayerHitsMissed = 0;
         tracker.BotHitsMissed = 0;
 
+        if (float.IsNaN(playerAccuracy) || float.IsNaN(botAccuracy))
+            return 0.0f;
+
         return (playerAccuracy - botAccuracy) * GameConfig.c_AccracyDiffDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;
     }
 }

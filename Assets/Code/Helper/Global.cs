@@ -60,6 +60,15 @@ public class Bounds
     }
 }
 
+public static class Utility
+{
+    public static void PrintCol(string print, string hexkey)
+    {
+        Debug.Log("<color=#" + hexkey + ">" + print + "</color>");
+    }
+}
+
+
 
 public static class Global
 {
@@ -68,6 +77,7 @@ public static class Global
     public static GameManager gamemanager;
     public static ItemSpawner itemSpawner;
     public static PlayerTracker playertracker;
+    public static DetectorManager playerDetectorManager;
     public static StatTrackerUI statTrackerUI;
     public static ItemTrackerUI itemTrackerUI;
     public static RuleManager ruleManager;
@@ -81,7 +91,7 @@ public static class Global
     public static int botDamageBoost = 0;
     public static int botDamageBoost_big = 0;
 
-    public static float difficultyLevel = 10.0f;
+    public static float difficultyLevel = 0.0f;
 }
 
 

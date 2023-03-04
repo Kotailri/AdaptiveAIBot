@@ -2,9 +2,8 @@ public class Timer
 {
     private float maxTimer;
     private float currentTimer;
-
-    private bool timerRunning;
-
+    private bool isTimerRunning;
+    
     public Timer(float time)
     {
         maxTimer = time;
@@ -14,22 +13,30 @@ public class Timer
 
     public bool IsAvailable()
     {
-        return !timerRunning;
+        return !isTimerRunning;
+    }
+
+    public float GetTimerPercent()
+    {
+        if (IsAvailable())
+            return 1.0f;
+
+        return (float)currentTimer / (float)maxTimer;
     }
 
     public void IncrementTime(float time)
     {
-        if (!timerRunning)
+        if (!isTimerRunning)
             return;
 
         currentTimer += time;
         if (currentTimer >= maxTimer)
-            timerRunning = false;
+            isTimerRunning = false;
     }
 
     public void ResetTimer()
     {
         currentTimer = 0;
-        timerRunning = true;
+        isTimerRunning = true;
     }
 }

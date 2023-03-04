@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequiredState, IActionHasUpdateAction
+public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequiredState, IActionHasUpdateAction, IActionHasStateCompletion
 {
     private BotMove botMove;
-
+    private bool completed = false;
     private void Awake()
     {
         botMove = GetComponent<BotMove>();
@@ -42,25 +42,31 @@ public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequir
         }
         else
         {
-            botMove.MoveRandom();
+            completed = true;
         }
     }
 
     public void ExecuteAction()
     {
-        if (botMove.destinationReached)
+        if (botMove.destinationReached && !completed)
         {
-            CollectItem();
+            completed = true;
         }
     }
 
     public void ExecuteInitialAction()
     {
+        completed = false;
         CollectItem();
     }
 
     public List<ActionState> GetActionStates()
     {
         return new List<ActionState>() { ActionState.CollectItem };
+    }
+
+    public bool IsStateComplete()
+    {
+        return completed;
     }
 }

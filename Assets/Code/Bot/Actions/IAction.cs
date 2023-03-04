@@ -38,6 +38,15 @@ public interface IActionHasActionChance : IAction
     public float GetActionChance();
 }
 
+public interface IActionHasStateCompletion : IAction
+{
+    /// <summary>
+    /// Returns true if the state actions are complete and indicates state should change
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStateComplete();
+}
+
 public interface IActionRequiredState : IAction
 {
     /// <summary>

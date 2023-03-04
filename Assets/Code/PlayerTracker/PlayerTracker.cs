@@ -18,6 +18,7 @@ public class PlayerTracker : MonoBehaviour
     public double AverageDistance = 0.0f;
     public double CurrentDistance = 0.0f;
 
+    // Difficulty
     public int PlayerHitsLanded = 0;
     public int PlayerHitsMissed = 0;
 

@@ -35,6 +35,13 @@ public class Health : MonoBehaviour, IResettable
         bar.current = health;
     }
 
+    public void Kill()
+    {
+        health = 0;
+        bar.current = health;
+        Global.gamemanager.UpdateGM();
+    }
+
     public void UpdateHealth(int hp)
     {
         health += hp;

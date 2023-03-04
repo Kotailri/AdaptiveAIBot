@@ -21,7 +21,6 @@ public class BotWander : MonoBehaviour, IActionHasInitialAction, IActionRequired
         {
             if (bulletCollision.playerType == PlayerType.Player)
             {
-                print("HIT DURING WANDER");
                 Global.playertracker.PlayerHitsDuringWander++;
             }
         }

@@ -15,6 +15,8 @@ public enum MoveState
 public class BotMove : MonoBehaviour, IResettable
 {
     public bool Debug_NoMove;
+    public LayerMask dodgeLayer;
+    public LayerMask wallLayer;
 
     private Transform target;
     private NavMeshAgent agent;
@@ -24,6 +26,8 @@ public class BotMove : MonoBehaviour, IResettable
     private Vector2 destination;
     private Vector2 currentSetMoveDestination;
     private bool canMove = true;
+    private Vector2 currentVelocity;
+    private Rigidbody2D RB;
 
     [HideInInspector]
     public bool destinationReached = false;
@@ -41,20 +45,20 @@ public class BotMove : MonoBehaviour, IResettable
             agent.SetDestination(currentSetMoveDestination);
     }
 
-    public void SetMove(float x, float y)
+    public void SetMove(float x, float y, float variance = 0.0f)
     {
         destinationReached = false;
         moveState = MoveState.Move;
         currentSetMoveDestination = new Vector2(x, y);
+
+        if (variance >= 0.0f)
+            currentSetMoveDestination = AddMoveVariance(currentSetMoveDestination, positionVariance: variance);
+
         agent.SetDestination(currentSetMoveDestination);
     }
 
-    public Vector2 AddMoveVariance(Vector2 original)
+    public Vector2 AddMoveVariance(Vector2 original, int maxIterations = 10, float positionVariance = 7.0f)
     {
-        int maxIterations = 10;
-        float positionVariance = 7.0f;
-
-        Bounds worldBounds = GameConfig.c_WorldBounds;
         for (int i = 0; i < maxIterations; i++)
         {
             Vector2 position = Math.RandomInRadius(original, positionVariance);
@@ -80,6 +84,7 @@ public class BotMove : MonoBehaviour, IResettable
     public void Stop()
     {
         moveState = MoveState.None;
+        destinationReached = true;
     }
 
     public void MoveRandom()
@@ -105,6 +110,7 @@ public class BotMove : MonoBehaviour, IResettable
     void Start()
     {
         InitResettable();
+        RB = GetComponent<Rigidbody2D>();
         Physics2D.IgnoreLayerCollision(6, 7);
         Physics2D.IgnoreLayerCollision(7, 6);
         target = GameObject.Find("Player").transform;
@@ -116,38 +122,84 @@ public class BotMove : MonoBehaviour, IResettable
         destination = target.transform.position;
     }
 
+    private void DodgeObstacles(Collider2D[] obstacles)
+    {
+        // Calculate the dodge direction based on the average of all unobstructed obstacle normals
+        Vector2 dodgeDirection = Vector2.zero;
+        int validObstacles = 0;
+        for (int i = 0; i < obstacles.Length; i++)
+        {
+            // Check if the obstacle is obstructed by a wall
+            Vector2 obstacleDirection = obstacles[i].transform.position - transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, obstacleDirection, obstacleDirection.magnitude, wallLayer);
+            if (hit.collider == null)
+            {
+                dodgeDirection += Vector2.Perpendicular(obstacleDirection.normalized);
+                validObstacles++;
+            }
+        }
+        if (validObstacles > 0)
+        {
+            dodgeDirection /= validObstacles;
+
+            // Calculate the steering force for the dodge
+            Vector2 steeringForce = dodgeDirection.normalized * 25f;
+
+            // Add the dodge steering force to the current velocity
+            currentVelocity += steeringForce * Time.deltaTime;
+
+            // Limit the current velocity to the agent's maximum speed
+            currentVelocity = Vector2.ClampMagnitude(currentVelocity, agent.speed);
+
+            // Set the agent's velocity to the current velocity
+            agent.velocity = currentVelocity / 5;
+        }
+    }
+
     void Update()
     {
         if (!canMove || Debug_NoMove)
         {
             agent.SetDestination(transform.position);
+            RB.velocity = Vector2.zero;
             return;
         }
 
         agent.speed = GameConfig.c_BotMovespeed + Global.botSpeedBoost;
 
-        switch (moveState)
+        // Detect all obstacles within the avoid distance
+        Collider2D[] obstacles = Physics2D.OverlapCircleAll(transform.position, 5f, dodgeLayer);
+        if (obstacles.Length > 0)
         {
-            case MoveState.Move:
-                if (Math.IsInRadius(currentSetMoveDestination, 3.0f, transform.position))
-                {
-                    destinationReached = true;
-                }
-                break;
-
-            case MoveState.Follow:
-                agent.SetDestination(target.transform.position);
-                break;
-
-            case MoveState.Flee:
-                agent.SetDestination((transform.position - target.position).normalized * 15.0f);
-                break;
-
-            case MoveState.None:
-                agent.SetDestination(transform.position);
-                break;
+            agent.SetDestination(transform.position);
+            DodgeObstacles(obstacles);
         }
-        
+        else
+        {
+            switch (moveState)
+            {
+                case MoveState.Move:
+                    if (Math.IsInRadius(currentSetMoveDestination, 3.0f, transform.position))
+                    {
+                        destinationReached = true;
+                    }
+                    break;
+
+                case MoveState.Follow:
+                    agent.SetDestination(target.transform.position);
+                    break;
+
+                case MoveState.Flee:
+                    agent.SetDestination((transform.position - target.position).normalized * 15.0f);
+                    break;
+
+                case MoveState.None:
+                    agent.SetDestination(transform.position);
+                    break;
+            }
+            RB.velocity = agent.velocity/5;
+            currentVelocity = agent.velocity;
+        }
     }
     public void ResetObject()
     {
