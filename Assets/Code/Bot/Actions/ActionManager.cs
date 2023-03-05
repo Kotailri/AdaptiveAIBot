@@ -21,7 +21,7 @@ public class ActionManager : MonoBehaviour, IResettable
 
     public void ChangeStates(ActionState newState)
     {
-        print("State Change: " + newState);
+        //print("State Change: " + newState);
         foreach (IAction action in actions)
         {
             if (action is IActionHasCleanup cleanupAction)
@@ -109,8 +109,11 @@ public class ActionManager : MonoBehaviour, IResettable
             if (action is IActionHasActionChance actionWithChance)
             {
                 float actionChance = Random.Range(0f, 1f);
-                if (actionChance < (1.0f - actionWithChance.GetActionChance()))
+                if (actionWithChance.GetActionChance() < actionChance)
+                {
                     continue;
+                }
+                    
             }
 
             if (action is IActionHasUpdateAction actionWithUpdate)

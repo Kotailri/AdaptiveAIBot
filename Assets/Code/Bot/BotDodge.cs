@@ -2,67 +2,93 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class BotDodge : MonoBehaviour
 {
-    public float dodgeDistance;
+    private float scanDistance = 8.0f;
+    private float dodgeRadius = 0.5f;
+    private float dodgeDistance = 2.0f;
+    private float dodgeSpeed = 15.0f;
 
     private List<GameObject> incomingBullets = new List<GameObject> ();
     public LayerMask bulletLayer;
+    public LayerMask dodgeLayer;
 
     private BotAreaScanner scanner;
+    private Rigidbody2D RB;
+
+    [HideInInspector]
+    public bool isDodging = false;
 
     private void Awake()
     {
         scanner = GetComponent<BotAreaScanner>();
+        RB = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    public void Dodge()
     {
-        //StartCoroutine(UpdateScan());
-    }
-
-    private IEnumerator UpdateScan() 
-    {
-        GetIncomingBullets();
-        yield return new WaitForSecondsRealtime(1.0f);
-        StartCoroutine(UpdateScan());
-    }
-
-    private void FixedUpdate()
-    {
-        if (!GetIncomingBullets())
+        bool dodgeChance = Global.difficultyLevel >= Random.Range(0.0f, 5.0f);
+        if (!dodgeChance)
         {
             return;
         }
 
-        // Calculate the vector from the current object to the approaching object
-        Vector2 toTarget = GetNearestBullet().transform.position - transform.position;
+        if (!GetIncomingBullets() || !isDodging)
+        {
+            return;
+        }
 
-        // Calculate a vector that is perpendicular to the toTarget vector
+        // Modify difficulty
+        scanDistance = Mathf.Clamp(Global.difficultyLevel + 1.0f, 2.0f, 8.0f);
+        dodgeSpeed = Mathf.Clamp(Global.difficultyLevel + 2.5f, 1.0f, 20.0f);
+
+        Vector2 toTarget = GetNearestBullet().transform.position - transform.position;
         Vector2 perpendicular = Vector2.Perpendicular(toTarget);
 
-        // Use the dot product to determine the direction of the perpendicular vector
-        float dot = Vector2.Dot(perpendicular, toTarget);
+        RaycastHit2D hit;
+        RB.velocity = Vector2.zero;
+
+        float dot = Vector3.Dot(perpendicular, toTarget);
         if (dot < 0)
         {
             perpendicular = -perpendicular;
         }
 
-        // The perpendicular vector is now perpendicular to the toTarget vector and points in the direction of the perpendicular approach
-        UnityEngine.Debug.DrawRay(transform.position, perpendicular, Color.green);
-        Time.timeScale = 0;
+        // move perpendicular
+        hit = Physics2D.CircleCast(transform.position, dodgeRadius, perpendicular, dodgeDistance, dodgeLayer);
+        if (hit.collider == null)
+        {
+            RB.velocity = perpendicular.normalized * dodgeSpeed;
+            
+        }
+        // move back
+        else
+        {
+            RB.velocity = -toTarget.normalized * dodgeSpeed;
+        }
     }
 
-    private GameObject GetNearestBullet()
+    private void Update()
     {
-        return incomingBullets[0];
+        GetIncomingBullets();
+        Dodge();
+    }
+
+    public GameObject GetNearestBullet()
+    {
+        if (incomingBullets.Count > 0)
+        {
+            return incomingBullets[0];
+        }
+        return null;
     }
 
     private bool GetIncomingBullets()
     {
         incomingBullets.Clear ();
-        foreach (GameObject bullet in scanner.GetScannedPlayerBullets(dodgeDistance))
+        foreach (GameObject bullet in scanner.GetScannedPlayerBullets(scanDistance))
         {
             if (!bullet.activeSelf)
                 continue;

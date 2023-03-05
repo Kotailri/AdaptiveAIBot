@@ -11,6 +11,7 @@ public class ItemSpawner : MonoBehaviour, IResettable
         public int chance;
     }
 
+    public LayerMask noSpawn;
     public List<SpawnItem> spawnItems;
     public List<GameObject> currentItems;
     private int totalChance = 0;
@@ -68,25 +69,14 @@ public class ItemSpawner : MonoBehaviour, IResettable
 
     private Vector2 GetSpawnLocation()
     {
-        float minDistanceToPlayer = 5.0f;
         Bounds worldBounds = GameConfig.c_WorldBounds;
 
         while (true)
         {
             Vector2 position = worldBounds.GenerateRandomPositionInBounds();
 
-            bool isSpawnOnBot = Math.IsInRadius(Global.playertracker.GetBotPosition(), minDistanceToPlayer, position);
-            bool isSpawnOnPlayer = Math.IsInRadius(Global.playertracker.GetPlayerPosition(), minDistanceToPlayer, position);
-
-            bool isSpawnOnItem = false;
-            foreach (GameObject obj in currentItems)
-            {
-                if (Math.IsInRadius(obj.transform.position, 0.4f, position))
-                    isSpawnOnItem = true;
-            }
-
-            Collider2D WallCollision = Physics2D.OverlapCircle(position, 0.4f, LayerMask.GetMask("Walls"));
-            if (WallCollision == null && !isSpawnOnBot && !isSpawnOnPlayer && !isSpawnOnItem)
+            Collider2D WallCollision = Physics2D.OverlapCircle(position, 0.6f, noSpawn);
+            if (WallCollision == null)
             {
                 return new Vector2(position.x, position.y);
             }

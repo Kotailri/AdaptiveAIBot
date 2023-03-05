@@ -33,6 +33,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     {
         Vector2 origin = transform.position;
         Vector2 direction = -transform.up;
+
         RaycastHit2D hit = Physics2D.CircleCast(origin, radius, direction, Mathf.Infinity, AimTargets);
         if (debug) lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
         if (hit.collider == null)
@@ -58,6 +59,11 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
             return;
         }
         CurrentShootTimer = 0;
+
+        float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
+        float randomAngle = Random.Range(-angleVariance, angleVariance);
+
+        transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
@@ -86,6 +92,11 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1,0.36f, 0.315f, 1);
         GetComponent<BotMove>().ToggleCanMove(true);
 
+        float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
+        float randomAngle = Random.Range(-angleVariance, angleVariance);
+
+        transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
+
         GameObject proj = Instantiate(projectile_big, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
@@ -108,7 +119,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     {
         // compare distances, decide small or big shoot
         float shootChance = Random.Range(0f, 1f);
-        if (shootChance > 0.3f)
+        if (shootChance > 0.2f)
             ShootSmall();
         else
             ShootBig();
@@ -116,9 +127,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     public float GetActionChance()
     {
-        // always shoot
-        // TODO get chance depending on difficulty level
-        return 1;
+        return Mathf.Clamp(Global.difficultyLevel / 10.0f, 0.01f, 1.0f);
     }
 
     public void Cleanup()

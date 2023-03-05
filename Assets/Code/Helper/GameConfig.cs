@@ -5,7 +5,7 @@ using UnityEngine;
 public static class GameConfig
 {
     public static float c_PlayerMovespeed = 6.0f;
-    public static float c_BotMovespeed = 4.0f;
+    public static float c_BotMovespeed = 3.0f;
 
     #region Shooting
     // Cooldown
@@ -46,7 +46,7 @@ public static class GameConfig
 
     // Poison
     public static KeyCode c_PoisonKeyCode = KeyCode.Q;
-    public static float c_PoisonTimer = 1.0f;
+    public static float c_PoisonTimer = 0.25f;
     public static int c_PoisonTickDamage = 5;
     public static int c_PoisonEnterDamage = 10;
     public static float c_PoisonExpireTime = 15.0f;

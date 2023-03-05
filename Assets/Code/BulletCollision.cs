@@ -12,10 +12,15 @@ public class BulletCollision : MonoBehaviour, IResettable
     public PlayerType playerType = PlayerType.None;
 
     public int damageBoost = 0;
+    private GameObject projectileObstacle;
 
     private void Start()
     {
         InitResettable();
+        if (TryGetComponent(out CreateProjectileObstacle proj) && playerType == PlayerType.Player)
+        {
+            projectileObstacle = proj.SpawnObstacle();
+        }
     }
 
     private void OnEnable()
@@ -73,6 +78,7 @@ public class BulletCollision : MonoBehaviour, IResettable
 
     private void OnDestroy()
     {
+        Destroy(projectileObstacle);
         OnDestroyAction();
     }
 

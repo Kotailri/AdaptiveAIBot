@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1684244122985416241}
   - component: {fileID: -3358491900931986350}
   - component: {fileID: -1221283862181177619}
+  - component: {fileID: -1022193904099891459}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Bullet
@@ -203,3 +204,23 @@ PolygonCollider2D:
       - {x: 0.12, y: -0.75}
       - {x: 0.16, y: -0.72999996}
       - {x: 0.19, y: -0.68}
+--- !u!114 &-1022193904099891459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954510310927499159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aff700a942bcb64983ea8403e35a536, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacle: {fileID: 4655365723246179199, guid: 1f253a634da7cbf49a25cf7842440903, type: 3}
+  width: 1
+  height: 1
+  direction: {x: 1, y: 0}
+  size: {x: 1, y: 1}
+  botLayer:
+    serializedVersion: 2
+    m_Bits: 128

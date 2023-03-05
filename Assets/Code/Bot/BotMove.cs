@@ -28,9 +28,15 @@ public class BotMove : MonoBehaviour, IResettable
     private bool canMove = true;
     private Vector2 currentVelocity;
     private Rigidbody2D RB;
+    private BotDodge dodge;
 
     [HideInInspector]
     public bool destinationReached = false;
+
+    private void Awake()
+    {
+        dodge = GetComponent<BotDodge>();
+    }
 
     private void OnDrawGizmos()
     {
@@ -122,60 +128,30 @@ public class BotMove : MonoBehaviour, IResettable
         destination = target.transform.position;
     }
 
-    private void DodgeObstacles(Collider2D[] obstacles)
-    {
-        // Calculate the dodge direction based on the average of all unobstructed obstacle normals
-        Vector2 dodgeDirection = Vector2.zero;
-        int validObstacles = 0;
-        for (int i = 0; i < obstacles.Length; i++)
-        {
-            // Check if the obstacle is obstructed by a wall
-            Vector2 obstacleDirection = obstacles[i].transform.position - transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, obstacleDirection, obstacleDirection.magnitude, wallLayer);
-            if (hit.collider == null)
-            {
-                dodgeDirection += Vector2.Perpendicular(obstacleDirection.normalized);
-                validObstacles++;
-            }
-        }
-        if (validObstacles > 0)
-        {
-            dodgeDirection /= validObstacles;
-
-            // Calculate the steering force for the dodge
-            Vector2 steeringForce = dodgeDirection.normalized * 25f;
-
-            // Add the dodge steering force to the current velocity
-            currentVelocity += steeringForce * Time.deltaTime;
-
-            // Limit the current velocity to the agent's maximum speed
-            currentVelocity = Vector2.ClampMagnitude(currentVelocity, agent.speed);
-
-            // Set the agent's velocity to the current velocity
-            agent.velocity = currentVelocity / 5;
-        }
-    }
-
     void Update()
     {
-        if (!canMove || Debug_NoMove)
-        {
-            agent.SetDestination(transform.position);
-            RB.velocity = Vector2.zero;
-            return;
-        }
-
-        agent.speed = GameConfig.c_BotMovespeed + Global.botSpeedBoost;
-
+        
         // Detect all obstacles within the avoid distance
-        Collider2D[] obstacles = Physics2D.OverlapCircleAll(transform.position, 5f, dodgeLayer);
-        if (obstacles.Length > 0)
+        if (dodge.GetNearestBullet() != null)
         {
-            agent.SetDestination(transform.position);
-            DodgeObstacles(obstacles);
+            agent.isStopped = true;
+            dodge.isDodging = true;
         }
         else
         {
+            dodge.isDodging = false;
+            agent.isStopped = false;
+            agent.enabled = true;
+
+            if (!canMove || Debug_NoMove)
+            {
+                agent.SetDestination(transform.position);
+                RB.velocity = Vector2.zero;
+                return;
+            }
+
+            agent.speed = GameConfig.c_BotMovespeed + (Global.botSpeedBoost/2);
+
             switch (moveState)
             {
                 case MoveState.Move:
@@ -186,7 +162,10 @@ public class BotMove : MonoBehaviour, IResettable
                     break;
 
                 case MoveState.Follow:
-                    agent.SetDestination(target.transform.position);
+                    float offsetDistance = 2.2f;
+                    Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
+                    Vector3 targetPosition = target.transform.position - (directionToTarget * offsetDistance);
+                    agent.SetDestination(targetPosition);
                     break;
 
                 case MoveState.Flee:
@@ -197,7 +176,7 @@ public class BotMove : MonoBehaviour, IResettable
                     agent.SetDestination(transform.position);
                     break;
             }
-            RB.velocity = agent.velocity/5;
+            RB.velocity = agent.velocity/5f;
             currentVelocity = agent.velocity;
         }
     }
