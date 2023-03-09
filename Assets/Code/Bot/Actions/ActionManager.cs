@@ -6,29 +6,30 @@ using UnityEngine;
 public class ActionManager : MonoBehaviour, IResettable
 {
     private List<IAction> actions = new List<IAction>();
-    public ActionState currentState = ActionState.Wander;
 
-    private Inventory inv;
+    [HideInInspector]
+    public StateManager stateManager;
+    
     public bool isPaused = false;
 
     void Awake()
     {
         actions.AddRange(GetComponents<IAction>());
-        inv = GetComponent<Inventory>();
+        
+        stateManager = GetComponent<StateManager>();
         InitResettable();
         ExecuteActions();
     }
 
-    public void ChangeStates(ActionState newState)
+    private void StateChangeActions(ActionState newState)
     {
-        //print("State Change: " + newState);
         foreach (IAction action in actions)
         {
             if (action is IActionHasCleanup cleanupAction)
             {
                 cleanupAction.Cleanup();
             }
-                
+
             if (action is IActionHasInitialAction initialAction)
             {
                 if (initialAction.GetActionStates().Contains(newState))
@@ -36,51 +37,7 @@ public class ActionManager : MonoBehaviour, IResettable
                     initialAction.ExecuteInitialAction();
                 }
             }
-                
-        }
-        currentState = newState;
-    }
 
-    private float stateSwapTimer = 0.0f;
-    private float stateSwapTime = 5.0f;
-
-    private ActionState SelectNewState()
-    {
-        float stateChance = Random.Range(0f, 1f);
-        if (stateChance > 0.6)
-        {
-            return ActionState.Attack;
-        }
-
-        else if (inv.HasItem(ItemName.PoisonConsumable))
-        {
-            return ActionState.UseItem;
-        }
-
-        else if (stateChance > 0.4 && Global.playertracker.CurrentDistance <= 10)
-        {
-            return ActionState.Flee;
-        }
-
-        else if (stateChance > 0.2)
-        {
-            return ActionState.CollectItem;
-        }
-
-        else
-        {
-            return ActionState.Wander;
-        }
-    }
-
-    private void UpdateState()
-    {
-        stateSwapTimer += Time.deltaTime;
-
-        if (stateSwapTimer >= stateSwapTime)
-        {
-            ChangeStates(SelectNewState());
-            stateSwapTimer = 0;
         }
     }
 
@@ -90,13 +47,13 @@ public class ActionManager : MonoBehaviour, IResettable
         {
             if (action is IActionRequiredState actionRequiredState)
             {
-                if (!actionRequiredState.GetActionStates().Contains(currentState))
+                if (!actionRequiredState.GetActionStates().Contains(stateManager.GetCurrentState()))
                     continue;
             }
 
             if (action is IActionExcludeState actionExcludeState)
             {
-                if (actionExcludeState.GetExcludedActionStates().Contains(currentState))
+                if (actionExcludeState.GetExcludedActionStates().Contains(stateManager.GetCurrentState()))
                     continue;
             }
 
@@ -125,8 +82,7 @@ public class ActionManager : MonoBehaviour, IResettable
             {
                 if (actionWithCompletion.IsStateComplete())
                 {
-                    ChangeStates(SelectNewState());
-                    stateSwapTimer = 0;
+                    StateChangeActions(stateManager.ChangeStates());   
                 }
                     
             }
@@ -137,8 +93,6 @@ public class ActionManager : MonoBehaviour, IResettable
     {
         if (isPaused)
             return;
-
-        UpdateState();
         ExecuteActions();
     }
 

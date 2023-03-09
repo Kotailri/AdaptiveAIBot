@@ -13,7 +13,7 @@ public class BotWander : MonoBehaviour, IActionHasInitialAction, IActionRequired
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Global.playertracker.Bot.GetComponent<ActionManager>().currentState != ActionState.Wander)
+        if (Global.playertracker.Bot.GetComponent<ActionManager>().stateManager.GetCurrentState() != ActionState.Wander)
             return;
 
         BulletCollision bulletCollision;

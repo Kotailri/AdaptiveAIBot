@@ -113,10 +113,6 @@ public class ConsoleController : MonoBehaviour
                 FillItems(tokens);
                 break;
 
-            case "state":
-                State(tokens);
-                break;
-
             case "difficulty":
                 Difficulty(tokens);
                 break;
@@ -140,50 +136,6 @@ public class ConsoleController : MonoBehaviour
         tracker.Bot.GetComponent<Inventory>().AddItems(ItemName.BurstConsumable, 64);
         tracker.Bot.GetComponent<Inventory>().AddItems(ItemName.PoisonConsumable, 64);
         Utility.PrintCol("Filled items", "00FF00");
-    }
-
-    private void State(string[] tokens)
-    {
-        if (tokens.Length > 1)
-        {
-            ActionManager am = tracker.Bot.GetComponent<ActionManager>();
-            switch (tokens[1])
-            {
-                case "wander":
-                    am.ChangeStates(ActionState.Wander);
-                    Utility.PrintCol("Updated state to " + tokens[1], "00FF00");
-                    break;
-
-                case "attack":
-                    am.ChangeStates(ActionState.Attack);
-                    Utility.PrintCol("Updated state to " + tokens[1], "00FF00");
-                    break;
-
-                case "flee":
-                    am.ChangeStates(ActionState.Flee);
-                    Utility.PrintCol("Updated state to " + tokens[1], "00FF00");
-                    break;
-
-                case "useItem":
-                    am.ChangeStates(ActionState.UseItem);
-                    Utility.PrintCol("Updated state to " + tokens[1], "00FF00");
-                    break;
-
-                case "collectItem":
-                    am.ChangeStates(ActionState.CollectItem);
-                    Utility.PrintCol("Updated state to " + tokens[1], "00FF00");
-                    break;
-
-                default:
-                    Utility.PrintCol("State not found: " + tokens[1], "ff0000");
-                    break;
-            }
-
-        }
-        else
-        {
-            Utility.PrintCol("Current state: " + tracker.Bot.GetComponent<ActionManager>().currentState, "00FF00");
-        }
     }
 
     private void Difficulty(string[] tokens)

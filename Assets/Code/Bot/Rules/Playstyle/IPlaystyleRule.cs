@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlaystyleName
+public enum PlaystyleRule
 { 
     Aggression,
     PlayerPositionCounter,
@@ -13,8 +13,6 @@ public enum PlaystyleName
 
 public interface IPlaystyleRule
 {
-    public string GetPlaystyleName();
-    public int GetPlaystyleChance();
-    public int GetPlaystyleLevel();
-    public void UpdatePlaystyleLevel(int levelUp);
+    public PlaystyleRule GetPlaystyleName();
+    public void UpdatePlaystyleLevel(PlayerType winner);
 }
