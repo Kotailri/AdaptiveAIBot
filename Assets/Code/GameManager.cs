@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour
         {
             BotScore++;
             botScoreText.text = BotScore.ToString();
-            ResetObjects();
             Global.ruleManager.UpdateDifficulty(PlayerType.Bot);
         }
 
@@ -75,8 +74,13 @@ public class GameManager : MonoBehaviour
         {
             PlayerScore++;
             playerScoreText.text = PlayerScore.ToString();
-            ResetObjects();
             Global.ruleManager.UpdateDifficulty(PlayerType.Player);
+        }
+
+        if (BotWin || PlayerWin)
+        {
+            ResetObjects();
+            Global.ruleManager.UpdatePlaystyle();
         }
     }
 

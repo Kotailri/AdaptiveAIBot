@@ -74,10 +74,10 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         }
         CurrentShootTimer = 0;
 
-        //float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
-        //float randomAngle = Random.Range(-angleVariance, angleVariance);
+        float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
+        float randomAngle = Random.Range(-angleVariance, angleVariance);
 
-        //transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
+        transform.rotation *= Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
@@ -106,10 +106,10 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1,0.36f, 0.315f, 1);
         GetComponent<BotMove>().ToggleCanMove(true);
 
-        //float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
-        //float randomAngle = Random.Range(-angleVariance, angleVariance);
+        float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
+        float randomAngle = Random.Range(-angleVariance, angleVariance);
 
-        //transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
+        transform.rotation *= Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile_big, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
@@ -163,8 +163,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     public float GetActionChance()
     {
-        return 1;
-        //return Mathf.Clamp(Global.difficultyLevel / 8.0f, 0.01f, 1.0f);
+        return Mathf.Clamp(Global.difficultyLevel / 8.0f, 0.01f, 1.0f);
     }
 
     public void Cleanup()

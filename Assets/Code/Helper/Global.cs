@@ -91,7 +91,7 @@ public static class Global
     public static int botDamageBoost = 0;
     public static int botDamageBoost_big = 0;
 
-    public static float difficultyLevel = 10.0f;
+    public static float difficultyLevel = 0.0f;
 
     // Playstyle rules
     public static int playerItemCounterLevel = 0;

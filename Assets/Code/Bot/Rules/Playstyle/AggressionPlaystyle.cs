@@ -7,9 +7,9 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
     private PlayerTracker playerTracker;
     private float approachTimer = 0.0f;
 
-    private void Awake()
+    private void Start()
     {
-        playerTracker = GetComponent<PlayerTracker>();
+        playerTracker = Global.playertracker;
     }
 
     private void Update()
@@ -24,7 +24,6 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
         else
         {
             approachTimer -= Time.deltaTime;
-
         }
     }
 

@@ -38,7 +38,7 @@ public class RuleManager : MonoBehaviour
             {
                 difficultyChange = GameConfig.c_MaxDifficultyIncrease;
             }
-            print(rule.GetDifficultyActionName() + ": " + difficultyChange);
+            //print(rule.GetDifficultyActionName() + ": " + difficultyChange);
             Global.difficultyLevel += difficultyChange;
         }
         Utility.PrintCol("NEW DIFFICULTY: " + Global.difficultyLevel, "00FF00");

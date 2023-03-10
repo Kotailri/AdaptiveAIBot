@@ -9,7 +9,8 @@ public class ProjectileObstacle : MonoBehaviour
     {
         if (Global.difficultyLevel < Random.Range(0.5f, 8.0f))
         {
-            GetComponent<NavMeshObstacle>().enabled = false;
+            if (TryGetComponent(out NavMeshObstacle nav))
+                nav.enabled = false;
         }
     }
 }
