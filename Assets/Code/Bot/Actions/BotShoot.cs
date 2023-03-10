@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAction, IActionHasActionChance, IActionHasCleanup, IActionExcludeState
 {
@@ -21,28 +22,41 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     public bool canShoot = true;
     public bool canShoot_big = true;
 
-    [Header("Debug")]
-    public bool debug = true;
+    [Header("Leading Shots")]
+    public GameObject player;
+    public float leadAmount = 0.25f;
 
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    private bool Aim()
+    private bool Aim(bool enhancedAim = false)
     {
+        Vector2 dir = (player.transform.position - transform.position).normalized;
+
+        if (enhancedAim && Vector2.Distance(player.transform.position, transform.position) < 5.0f)
+        {
+            Vector3 velocity = player.GetComponent<Rigidbody2D>().velocity * 0.5f;
+            dir = (player.transform.position + velocity - transform.position).normalized;
+        }
+        
+        float rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotation), (enhancedAim ? 10.0f : 5.0f)  * Time.deltaTime);
+
         Vector2 origin = transform.position;
-        Vector2 direction = -transform.up;
+        Vector2 direction = (player.transform.position - transform.position).normalized;
 
         RaycastHit2D hit = Physics2D.CircleCast(origin, radius, direction, Mathf.Infinity, AimTargets);
-        if (debug) lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
+        if (Global.debugMode) lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
         if (hit.collider == null)
         {
-            if (debug) lineRenderer.SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
+            if (Global.debugMode) lineRenderer.SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
             return false;
         }
 
-        if (debug) lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
+        if (Global.debugMode) lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
 
         if (hit.collider.CompareTag("Player"))
         {
@@ -60,10 +74,10 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         }
         CurrentShootTimer = 0;
 
-        float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
-        float randomAngle = Random.Range(-angleVariance, angleVariance);
+        //float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
+        //float randomAngle = Random.Range(-angleVariance, angleVariance);
 
-        transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
+        //transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
@@ -92,10 +106,10 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1,0.36f, 0.315f, 1);
         GetComponent<BotMove>().ToggleCanMove(true);
 
-        float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
-        float randomAngle = Random.Range(-angleVariance, angleVariance);
+        //float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
+        //float randomAngle = Random.Range(-angleVariance, angleVariance);
 
-        transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
+        //transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile_big, transform.position, transform.rotation);
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
@@ -112,22 +126,45 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     public bool CheckAction()
     {
-        return Aim();
+        if (Global.difficultyLevel > Random.Range(3.0f, 8.0f))
+        {
+            return Aim(enhancedAim: true);
+        }
+        else
+        {
+            return Aim();
+        }
+            
     }
 
     public void ExecuteAction()
     {
-        // compare distances, decide small or big shoot
-        float shootChance = Random.Range(0f, 1f);
-        if (shootChance > 0.2f)
-            ShootSmall();
+        float shootChance = Random.Range(0f, 8f);
+        if (Global.difficultyLevel > shootChance)
+        {
+            if (Global.playertracker && Global.playertracker.playerStopped)
+            {
+                ShootBig();
+                Invoke(nameof(ShootSmall), 1.0f);
+            }
+            else
+            {
+                ShootSmall();
+            }
+        }
         else
-            ShootBig();
+        {
+            if (shootChance > 1.5f)
+                ShootSmall();
+            else
+                ShootBig();
+        }
     }
 
     public float GetActionChance()
     {
-        return Mathf.Clamp(Global.difficultyLevel / 10.0f, 0.01f, 1.0f);
+        return 1;
+        //return Mathf.Clamp(Global.difficultyLevel / 8.0f, 0.01f, 1.0f);
     }
 
     public void Cleanup()

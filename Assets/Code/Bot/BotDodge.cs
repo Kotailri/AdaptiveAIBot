@@ -6,10 +6,10 @@ using static UnityEngine.UI.Image;
 
 public class BotDodge : MonoBehaviour
 {
-    private float scanDistance = 8.0f;
-    private float dodgeRadius = 0.5f;
-    private float dodgeDistance = 2.0f;
-    private float dodgeSpeed = 15.0f;
+    private float scanDistance = 18.0f;
+    private float dodgeRadius = 0.7f;
+    private float dodgeDistance = 1.2f;
+    private float dodgeSpeed = 8.0f;
 
     private List<GameObject> incomingBullets = new List<GameObject> ();
     public LayerMask bulletLayer;
@@ -17,6 +17,7 @@ public class BotDodge : MonoBehaviour
 
     private BotAreaScanner scanner;
     private Rigidbody2D RB;
+    private BotMove botMove;
 
     [HideInInspector]
     public bool isDodging = false;
@@ -24,6 +25,7 @@ public class BotDodge : MonoBehaviour
     private void Awake()
     {
         scanner = GetComponent<BotAreaScanner>();
+        botMove = GetComponent<BotMove>();
         RB = GetComponent<Rigidbody2D>();
     }
 
@@ -35,19 +37,20 @@ public class BotDodge : MonoBehaviour
             return;
         }
 
-        if (!GetIncomingBullets() || !isDodging)
+        if (!GetIncomingBullets() || !isDodging || !botMove.GetCanMove())
         {
             return;
         }
 
         // Modify difficulty
-        scanDistance = Mathf.Clamp(Global.difficultyLevel + 1.0f, 2.0f, 8.0f);
-        dodgeSpeed = Mathf.Clamp(Global.difficultyLevel + 2.5f, 1.0f, 20.0f);
+        //scanDistance = Mathf.Clamp(Global.difficultyLevel + 1.0f, 2.0f, 10.0f);
+        //dodgeSpeed = Mathf.Clamp(Global.difficultyLevel + 2.5f, 1.0f, 20.0f);
 
         Vector2 toTarget = GetNearestBullet().transform.position - transform.position;
         Vector2 perpendicular = Vector2.Perpendicular(toTarget);
 
         RaycastHit2D hit;
+        RaycastHit2D hit2;
         RB.velocity = Vector2.zero;
 
         float dot = Vector3.Dot(perpendicular, toTarget);
@@ -58,12 +61,18 @@ public class BotDodge : MonoBehaviour
 
         // move perpendicular
         hit = Physics2D.CircleCast(transform.position, dodgeRadius, perpendicular, dodgeDistance, dodgeLayer);
+        hit2 = Physics2D.CircleCast(transform.position, dodgeRadius, -perpendicular, dodgeDistance, dodgeLayer);
+
         if (hit.collider == null)
         {
             RB.velocity = perpendicular.normalized * dodgeSpeed;
             
         }
-        // move back
+        else if (hit2.collider == null)
+        {
+            RB.velocity = -perpendicular.normalized * dodgeSpeed;
+
+        }
         else
         {
             RB.velocity = -toTarget.normalized * dodgeSpeed;
@@ -85,7 +94,7 @@ public class BotDodge : MonoBehaviour
         return null;
     }
 
-    private bool GetIncomingBullets()
+    public bool GetIncomingBullets()
     {
         incomingBullets.Clear ();
         foreach (GameObject bullet in scanner.GetScannedPlayerBullets(scanDistance))

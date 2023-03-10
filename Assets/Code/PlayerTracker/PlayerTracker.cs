@@ -26,6 +26,7 @@ public class PlayerTracker : MonoBehaviour
     public int BotHitsMissed = 0;
 
     public int PlayerHitsDuringWander = 0;
+    public bool playerStopped = false;
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class PlayerTracker : MonoBehaviour
         #endregion
 
         CurrentDistance = DistanceBetween();
+        playerStopped = (Player.GetComponent<Rigidbody2D>().velocity == Vector2.zero);
     }
 
     #region Distance between Player and Bot

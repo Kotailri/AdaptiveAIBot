@@ -20,6 +20,15 @@ public class RuleManager : MonoBehaviour
         playstyleRules.AddRange(PlaystyleManager.GetComponents<IPlaystyleRule>());
     }
 
+    public void UpdatePlaystyle()
+    {
+        foreach (IPlaystyleRule rule in playstyleRules)
+        {
+            rule.UpdatePlaystyleLevel();
+            print(rule.GetPlaystyleName() + ": " + rule.GetPlaystyleLevel());
+        }
+    }
+
     public void UpdateDifficulty(PlayerType winner)
     {
         foreach (IDifficultyRule rule in difficultyRules)
@@ -32,6 +41,6 @@ public class RuleManager : MonoBehaviour
             print(rule.GetDifficultyActionName() + ": " + difficultyChange);
             Global.difficultyLevel += difficultyChange;
         }
-        print("NEW DIFFICULTY: " + Global.difficultyLevel);
+        Utility.PrintCol("NEW DIFFICULTY: " + Global.difficultyLevel, "00FF00");
     }
 }

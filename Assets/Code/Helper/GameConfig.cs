@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class GameConfig
 {
-    public static float c_PlayerMovespeed = 6.0f;
+    public static float c_PlayerMovespeed = 5.0f;
     public static float c_BotMovespeed = 3.0f;
 
     #region Shooting
@@ -64,4 +64,10 @@ public static class GameConfig
     // Difficulty Rule
     public static int c_WinTimeRoundCount = 2;
     public static int c_ScoreDifferenceRoundCount = 2;
+
+    public static float c_OvertimeTime = 30.0f;
+    public static int c_OvertimeDamage = 4;
+
+    // Playstyle Rule
+    public static float c_AggroApproachDist = 5f;
 }

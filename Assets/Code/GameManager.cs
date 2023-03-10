@@ -18,13 +18,46 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI playerScoreText;
     public TextMeshProUGUI botScoreText;
 
+    [Space(5.0f)]
+    public float matchTime = 0.0f;
+    private bool overtime = false;
+
     public void RestartGame()
     {
         PlayerScore = 0;
         BotScore = 0;
+
+        matchTime = 0.0f;
+        overtime = false;
+        
         ResetObjects();
     }
-    
+
+    private void Update()
+    {
+        
+        if (matchTime < GameConfig.c_OvertimeTime)
+        {
+            matchTime += Time.deltaTime;
+        }
+        else if (!overtime)
+        {
+            overtime = true;
+            StartCoroutine(OvertimeDamage());
+        }
+    }
+
+    private IEnumerator OvertimeDamage()
+    {
+        PlayerHealth.UpdateHealth(-GameConfig.c_OvertimeDamage);
+        BotHealth.UpdateHealth(-GameConfig.c_OvertimeDamage);
+        UpdateGM();
+        if (overtime)
+            yield return new WaitForSeconds(1.0f);
+        if (overtime)
+            StartCoroutine(OvertimeDamage());
+    }
+
     public void UpdateGM()
     {
         bool BotWin = PlayerHealth.CheckDead();
@@ -49,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     private void ResetObjects()
     {
+        matchTime = 0.0f;
+        overtime = false;
         foreach (IResettable res in Global.resettables)
         {
             res.ResetObject();

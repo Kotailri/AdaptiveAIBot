@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BotBurst : MonoBehaviour, IActionHasUpdateAction
 {
-    public bool debug;
 
     [Space(5.0f)]
     public GameObject burst;
@@ -51,7 +50,7 @@ public class BotBurst : MonoBehaviour, IActionHasUpdateAction
             CreateBurst();
         }
 
-        else if (Global.playertracker.CurrentDistance <= 3)
+        else if (Global.playertracker && Global.playertracker.CurrentDistance <= 3)
         {
             CreateBurst();
         }
@@ -78,14 +77,14 @@ public class BotBurst : MonoBehaviour, IActionHasUpdateAction
 
             RaycastHit2D hit = Physics2D.CircleCast(origin, 0.3f, direction, Mathf.Infinity, AimTargets);
 
-            if (debug) GetComponent<LineRenderer>().SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
+            if (Global.debugMode) GetComponent<LineRenderer>().SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
             if (hit.collider == null)
             {
-                if (debug) GetComponent<LineRenderer>().SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
+                if (Global.debugMode) GetComponent<LineRenderer>().SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
                 continue;
             }
 
-            if (debug) GetComponent<LineRenderer>().SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
+            if (Global.debugMode) GetComponent<LineRenderer>().SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
 
             if (hit.collider.CompareTag("Bot"))
             {

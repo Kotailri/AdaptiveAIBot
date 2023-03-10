@@ -91,7 +91,7 @@ public static class Global
     public static int botDamageBoost = 0;
     public static int botDamageBoost_big = 0;
 
-    public static float difficultyLevel = 0.0f;
+    public static float difficultyLevel = 10.0f;
 
     // Playstyle rules
     public static int playerItemCounterLevel = 0;
@@ -99,6 +99,9 @@ public static class Global
     public static int playerAttackCounterLevel = 0;
     public static int aggressionLevel = 0;
     public static int playerPositionCounterLevel = 0;
+
+    // Debug
+    public static bool debugMode = false;
 }
 
 

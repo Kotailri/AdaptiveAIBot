@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public enum MoveState
 {
@@ -49,6 +48,11 @@ public class BotMove : MonoBehaviour, IResettable
         canMove = enabled;
         if (moveState == MoveState.Move)
             agent.SetDestination(currentSetMoveDestination);
+    }
+
+    public bool GetCanMove()
+    {
+        return canMove;
     }
 
     public void SetMove(float x, float y, float variance = 0.0f)
@@ -130,9 +134,7 @@ public class BotMove : MonoBehaviour, IResettable
 
     void Update()
     {
-        
-        // Detect all obstacles within the avoid distance
-        if (dodge.GetNearestBullet() != null)
+        if (dodge.GetIncomingBullets())
         {
             agent.isStopped = true;
             dodge.isDodging = true;

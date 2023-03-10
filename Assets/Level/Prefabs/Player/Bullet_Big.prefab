@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacle: {fileID: 4655365723246179199, guid: 1f253a634da7cbf49a25cf7842440903, type: 3}
+  obstacle2: {fileID: 3074672487173634659, guid: 4ca50e72e2a8d6041876f004b7967905, type: 3}
   botLayer:
     serializedVersion: 2
     m_Bits: 128

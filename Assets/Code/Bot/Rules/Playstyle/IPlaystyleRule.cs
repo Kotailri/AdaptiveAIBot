@@ -14,5 +14,6 @@ public enum PlaystyleRule
 public interface IPlaystyleRule
 {
     public PlaystyleRule GetPlaystyleName();
-    public void UpdatePlaystyleLevel(PlayerType winner);
+    public void UpdatePlaystyleLevel();
+    public int GetPlaystyleLevel();
 }
