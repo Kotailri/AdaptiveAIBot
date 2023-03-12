@@ -70,4 +70,5 @@ public static class GameConfig
 
     // Playstyle Rule
     public static float c_AggroApproachDist = 5f;
+    public static float c_CounterAttackTime = 1f;
 }

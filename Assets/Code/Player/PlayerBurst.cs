@@ -20,6 +20,7 @@ public class PlayerBurst : MonoBehaviour
             {
                 GameObject b = Instantiate(burst, transform.position, Quaternion.identity);
                 b.GetComponent<Burst>().SetFollow(gameObject);
+                Global.playertracker.PlayerItemsUsed++;
             }
         }
     }

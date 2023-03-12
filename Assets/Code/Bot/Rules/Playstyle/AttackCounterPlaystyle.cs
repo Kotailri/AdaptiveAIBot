@@ -16,12 +16,16 @@ public class AttackCounterPlaystyle : MonoBehaviour, IPlaystyleRule
 
     public void UpdatePlaystyleLevel()
     {
+        PlayerTracker tracker = Global.playertracker;
+        if (tracker.PlayerCounterHits == 0)
+        {
+            Global.playerAttackCounterLevel--;
+        }
+        else
+        {
+            Global.playerAttackCounterLevel += tracker.PlayerCounterHits;
+        }
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        tracker.PlayerCounterHits = 0;
     }
 }

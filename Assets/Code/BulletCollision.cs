@@ -64,6 +64,14 @@ public class BulletCollision : MonoBehaviour, IResettable
         {
             if (playerType == PlayerType.Player)
             {
+                if (collision.gameObject.TryGetComponent(out BotShoot botShoot))
+                {
+                    if (botShoot.detectHits)
+                    {
+                        Global.playertracker.PlayerCounterHits++;
+                    }
+                        
+                }
                 Global.playertracker.PlayerHitsLanded++;
             }
 

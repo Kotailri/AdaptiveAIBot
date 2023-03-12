@@ -26,6 +26,10 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     public GameObject player;
     public float leadAmount = 0.25f;
 
+    private float currentCounterAttackTimer = 0.0f;
+    [HideInInspector]
+    public bool detectHits = false;
+
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -73,7 +77,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
             return;
         }
         CurrentShootTimer = 0;
-
+        DetectCounterAttacks();
         float angleVariance = Mathf.Clamp(Global.difficultyLevel * 5, -40.0f, 0.0f);
         float randomAngle = Random.Range(-angleVariance, angleVariance);
 
@@ -92,7 +96,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
             return;
         }
         CurrentShootTimer_big = 0;
-
+        DetectCounterAttacks();
         StartCoroutine(WindUpShoot());
     }
 
@@ -118,10 +122,24 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         proj.GetComponent<BulletCollision>().damageBoost = Global.botDamageBoost_big;
     }
 
+    public void DetectCounterAttacks()
+    {
+        detectHits = true;
+        currentCounterAttackTimer = 0;
+    }
+
     private void Update()
     {
         CurrentShootTimer += Time.deltaTime;
         CurrentShootTimer_big += Time.deltaTime;
+
+        if (detectHits)
+        {
+            currentCounterAttackTimer += Time.deltaTime;
+            if (currentCounterAttackTimer >= GameConfig.c_CounterAttackTime)
+                detectHits = false;
+        }
+        
     }
 
     public bool CheckAction()

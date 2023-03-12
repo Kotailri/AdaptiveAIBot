@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Unity.VisualScripting.Metadata;
 
-public class PlayerDetector : MonoBehaviour
+public class PlayerDetector : MonoBehaviour, IResettable
 {
     private float timeSpent = 0.0f;
     private List<GameObject> optimalPoisonPositions = new List<GameObject>();
 
     private void Start()
     {
+        InitResettable();
         foreach (Transform child in transform)
         {
             optimalPoisonPositions.Add(child.gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        OnDestroyAction();
     }
 
     public List<GameObject> GetPoisonPositionList()
@@ -37,5 +43,20 @@ public class PlayerDetector : MonoBehaviour
     public float GetTimeSpent()
     {
         return timeSpent;
+    }
+
+    public void ResetObject()
+    {
+        timeSpent = 0.0f;
+    }
+
+    public void InitResettable()
+    {
+        Global.resettables.Add(this);
+    }
+
+    public void OnDestroyAction()
+    {
+        Global.resettables.Remove(this);
     }
 }

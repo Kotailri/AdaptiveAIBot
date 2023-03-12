@@ -28,6 +28,15 @@ public class PlayerTracker : MonoBehaviour
     public int PlayerHitsDuringWander = 0;
     public bool playerStopped = false;
 
+    public int PlayerCounterHits = 0;
+
+    // Items
+    public int BotItemsCollected = 0;
+    public int PlayerItemsCollected = 0;
+
+    public int BotItemsUsed = 0;
+    public int PlayerItemsUsed = 0;
+
     private void Awake()
     {
         Global.playertracker = this;

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DetectorManager : MonoBehaviour
 {
-
     public List <PlayerDetector> detectors = new List <PlayerDetector> ();
 
     private void Awake()

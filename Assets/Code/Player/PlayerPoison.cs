@@ -19,6 +19,7 @@ public class PlayerPoison : MonoBehaviour
             if (inv.ConsumeItem(ItemName.PoisonConsumable))
             {
                 Instantiate(poison, transform.position, Quaternion.identity);
+                Global.playertracker.PlayerItemsUsed++;
             }
         }
     }

@@ -27,6 +27,7 @@ public class RuleManager : MonoBehaviour
             rule.UpdatePlaystyleLevel();
             print(rule.GetPlaystyleName() + ": " + rule.GetPlaystyleLevel());
         }
+        Utility.PrintCol("==========================", "00FF00");
     }
 
     public void UpdateDifficulty(PlayerType winner)
@@ -41,6 +42,6 @@ public class RuleManager : MonoBehaviour
             //print(rule.GetDifficultyActionName() + ": " + difficultyChange);
             Global.difficultyLevel += difficultyChange;
         }
-        Utility.PrintCol("NEW DIFFICULTY: " + Global.difficultyLevel, "00FF00");
+        //Utility.PrintCol("NEW DIFFICULTY: " + Global.difficultyLevel, "00FF00");
     }
 }

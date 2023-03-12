@@ -16,12 +16,9 @@ public class ItemStratPlaystyle : MonoBehaviour, IPlaystyleRule
 
     public void UpdatePlaystyleLevel()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayerTracker tracker = Global.playertracker;
+        Global.itemStrategyLevel += (tracker.PlayerItemsCollected - tracker.BotItemsCollected);
+        tracker.PlayerItemsCollected = 0;
+        tracker.BotItemsCollected = 0;
     }
 }

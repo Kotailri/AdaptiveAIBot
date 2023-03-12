@@ -16,12 +16,9 @@ public class ItemCounterPlaystyle : MonoBehaviour, IPlaystyleRule
 
     public void UpdatePlaystyleLevel()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayerTracker tracker = Global.playertracker;
+        Global.playerItemCounterLevel += (tracker.PlayerItemsUsed - tracker.BotItemsUsed);
+        tracker.BotItemsUsed = 0;
+        tracker.PlayerItemsUsed = 0;
     }
 }
