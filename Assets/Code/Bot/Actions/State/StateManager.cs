@@ -40,6 +40,7 @@ public class StateManager : MonoBehaviour
         {
             if (state.PassesCriteria())
             {
+                stateSwapTime = state.StateStayTime();
                 return state.ActionState();
             }
         }

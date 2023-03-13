@@ -23,6 +23,12 @@ public class UseItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableSta
     {
         return priorityLevel;
     }
+
+    public float StateStayTime()
+    {
+        return 5.0f;
+    }
+
     public void UpdatePriorityLevel()
     {
         

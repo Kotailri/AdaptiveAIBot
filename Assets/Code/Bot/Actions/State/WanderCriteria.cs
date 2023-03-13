@@ -12,6 +12,12 @@ public class WanderCriteria : MonoBehaviour, ActionStateCriteria
     {
         return true;
     }
+
+    public float StateStayTime()
+    {
+        return 5.0f;
+    }
+
     public int PriorityLevel()
     {
         return -2;

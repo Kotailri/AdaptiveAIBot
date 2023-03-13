@@ -25,6 +25,11 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
         return priorityLevel;
     }
 
+    public float StateStayTime()
+    {
+        return 5.0f;
+    }
+
     public void UpdatePriorityLevel()
     {
         

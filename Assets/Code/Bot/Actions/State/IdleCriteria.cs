@@ -12,6 +12,12 @@ public class IdleCriteria : MonoBehaviour, ActionStateCriteria
     {
         return Global.difficultyLevel < 0;
     }
+
+    public float StateStayTime()
+    {
+        return 5.0f;
+    }
+
     public int PriorityLevel()
     {
         return -1;

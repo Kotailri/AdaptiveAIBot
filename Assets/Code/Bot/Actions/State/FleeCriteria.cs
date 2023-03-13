@@ -18,6 +18,11 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
     {
         return priorityLevel;
     }
+
+    public float StateStayTime()
+    {
+        return 5.0f;
+    }
     public void UpdatePriorityLevel()
     {
         
