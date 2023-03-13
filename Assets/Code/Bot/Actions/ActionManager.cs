@@ -105,6 +105,7 @@ public class ActionManager : MonoBehaviour, IResettable
                 cleanupAction.Cleanup();
             }
         }
+        stateManager.UpdateStatePriorities();
     }
 
     public void InitResettable()

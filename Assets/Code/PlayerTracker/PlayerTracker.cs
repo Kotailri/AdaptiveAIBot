@@ -31,6 +31,9 @@ public class PlayerTracker : MonoBehaviour
     public int PlayerCounterHits = 0;
 
     // Items
+    public Inventory botInventory;
+    public Inventory playerInventory;
+
     public int BotItemsCollected = 0;
     public int PlayerItemsCollected = 0;
 
@@ -42,6 +45,9 @@ public class PlayerTracker : MonoBehaviour
         Global.playertracker = this;
         DistanceTrackingTimer = GameConfig.c_DistanceTrackingTimer;
         UpdateAverageDistance();
+
+        botInventory = Bot.GetComponent<Inventory>();
+        playerInventory = Player.GetComponent<Inventory>();
     }
 
     private void Update()

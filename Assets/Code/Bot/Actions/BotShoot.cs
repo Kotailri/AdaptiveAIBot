@@ -72,7 +72,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     private void ShootSmall()
     {
-        if (CurrentShootTimer < GameConfig.c_PlayerShootCooldown)
+        if (CurrentShootTimer < (GameConfig.c_PlayerShootCooldown-(Global.difficultyLevel/10)))
         {
             return;
         }
@@ -91,7 +91,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     private void ShootBig()
     {
-        if (CurrentShootTimer_big < GameConfig.c_PlayerShootCooldown_big)
+        if (CurrentShootTimer_big < (GameConfig.c_PlayerShootCooldown_big - (Global.difficultyLevel / 10)))
         {
             return;
         }
