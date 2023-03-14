@@ -18,6 +18,21 @@ public class Inventory : MonoBehaviour, IResettable
         UpdateInventoryUI();
     }
 
+    public int GetItemCount()
+    {
+        return consumables.Count + statBoosts.Count;
+    }
+
+    public int GetConsumableCount()
+    {
+        return consumables.Count;
+    }
+
+    public int GetStatBoostCount()
+    {
+        return statBoosts.Count;
+    }
+
     void OnDestroy()
     {
         OnDestroyAction();

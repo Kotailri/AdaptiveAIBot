@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public class BotAreaScanner : MonoBehaviour
@@ -17,5 +18,40 @@ public class BotAreaScanner : MonoBehaviour
             }
         }
         return new List<GameObject>(playerBullets);
+    }
+
+    public List<GameObject> GetNearbyItems(float maxDistance)
+    {
+        List<GameObject> nearbyItems = new List<GameObject>(); 
+        foreach (GameObject gameObject in Global.itemSpawner.currentItems)
+        {
+            float distance = Vector2.Distance(gameObject.transform.position, transform.position);
+            if (Vector2.Distance(gameObject.transform.position, transform.position) <= maxDistance)
+            {
+                nearbyItems.Add(gameObject);
+            }
+        }
+        return nearbyItems;
+    }
+
+    public Vector2 LocateNearestItem()
+    {
+        GameObject closest = null;
+        float minDistance = float.MaxValue;
+        foreach (GameObject gameObject in Global.itemSpawner.currentItems)
+        {
+            float distance = Vector2.Distance(gameObject.transform.position, transform.position);
+            if (distance < minDistance)
+            {
+                closest = gameObject;
+                minDistance = distance;
+            }
+        }
+        return closest.transform.position;
+    }
+
+    public float DistanceToNearestItem()
+    {
+        return Vector2.Distance(gameObject.transform.position, LocateNearestItem());
     }
 }

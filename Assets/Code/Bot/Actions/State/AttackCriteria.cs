@@ -31,7 +31,7 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
         {
             float playerStats = Global.playerSpeedBoost + Global.playerDamageBoost;
             float botStats = Global.botSpeedBoost + Global.botDamageBoost;
-            if (playerStats > botStats) return true;
+            if (playerStats < botStats) return true;
         }
 
         return 4.0f > Random.Range(0f, 5.0f);

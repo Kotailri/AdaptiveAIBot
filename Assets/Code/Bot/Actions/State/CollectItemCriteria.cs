@@ -5,6 +5,21 @@ using UnityEngine;
 public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStatePriority
 {
     private int priorityLevel = 0;
+
+    private PlayerTracker tracker;
+    private BotAreaScanner scanner;
+
+    private Inventory botInv;
+    private Inventory playerInv;
+
+    private void Start()
+    {
+        tracker = Global.playertracker;
+        botInv = tracker.botInventory;
+        playerInv = tracker.playerInventory;
+        scanner = tracker.Bot.GetComponent<BotAreaScanner>();
+    }
+
     public ActionState ActionState()
     {
         return global::ActionState.CollectItem;
@@ -12,12 +27,19 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
 
     public bool PassesCriteria()
     {
-        if (!Global.playertracker.botInventory.HasItem(ItemName.PoisonConsumable)
-            && !Global.playertracker.botInventory.HasItem(ItemName.BurstConsumable))
+        if (botInv.GetItemCount() == 0)
         {
-            return true;
+            float p = 1f - Mathf.Lerp(0f, 1f, scanner.DistanceToNearestItem());
+            return Random.value < p;
         }
-        return false;
+
+        if (playerInv.GetItemCount() > botInv.GetItemCount())
+        {
+            float p = Mathf.Lerp(0f, 1f, playerInv.GetItemCount() - botInv.GetItemCount());
+            return Random.value < p;
+        }
+
+        return 4.0f > Random.Range(0f, 5.0f);
     }
 
     public int PriorityLevel()
@@ -27,11 +49,11 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
 
     public float StateStayTime()
     {
-        return 5.0f;
+        return Mathf.Clamp(playerInv.GetItemCount() - botInv.GetItemCount(), 1.0f, 5.0f);
     }
 
     public void UpdatePriorityLevel()
     {
-        
+        priorityLevel = Global.playerItemCounterLevel % 2;
     }
 }

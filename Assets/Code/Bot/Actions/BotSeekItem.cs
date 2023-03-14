@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequiredState, IActionHasUpdateAction, IActionHasStateCompletion
 {
     private BotMove botMove;
+    private BotAreaScanner scanner;
     private bool completed = false;
     private void Awake()
     {
         botMove = GetComponent<BotMove>();
+        scanner = GetComponent<BotAreaScanner>();
     }
 
     private bool ItemsAvailable()
@@ -17,27 +18,11 @@ public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequir
         return Global.itemSpawner.currentItems.Count > 0;
     }
 
-    private Vector2 LocateNearestItem()
-    {
-        GameObject closest = null;
-        float minDistance = float.MaxValue;
-        foreach (GameObject gameObject in Global.itemSpawner.currentItems)
-        {
-            float distance = Vector2.Distance(gameObject.transform.position, transform.position);
-            if (distance < minDistance)
-            {
-                closest = gameObject;
-                minDistance = distance;
-            }
-        }
-        return closest.transform.position;
-    }
-
     private void CollectItem()
     {
         if (ItemsAvailable())
         {
-            Vector2 itemLocation = LocateNearestItem();
+            Vector2 itemLocation = scanner.LocateNearestItem();
             botMove.SetMove(itemLocation.x, itemLocation.y);
         }
         else
