@@ -80,6 +80,7 @@ public static class Global
     public static DetectorManager playerDetectorManager;
     public static StatTrackerUI statTrackerUI;
     public static ItemTrackerUI itemTrackerUI;
+    public static GameInfoUI gameInfoUI;
     public static RuleManager ruleManager;
     public static TimerManager timerManager;
 

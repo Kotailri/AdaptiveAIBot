@@ -20,11 +20,11 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
         if (playerTracker.CurrentDistance < GameConfig.c_AggroApproachDist 
             && playerTracker.Bot.GetComponent<ActionManager>().stateManager.GetCurrentState() != ActionState.Attack)
         {
-            approachTimer += Time.deltaTime;
+            approachTimer -= Time.deltaTime;
         }
         else
         {
-            approachTimer -= Time.deltaTime;
+            approachTimer += Time.deltaTime;
         }
     }
 

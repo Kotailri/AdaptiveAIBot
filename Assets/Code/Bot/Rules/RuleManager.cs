@@ -27,6 +27,8 @@ public class RuleManager : MonoBehaviour
             rule.UpdatePlaystyleLevel();
             print(rule.GetPlaystyleName() + ": " + rule.GetPlaystyleLevel());
         }
+
+        Global.gameInfoUI.UpdateGameInfo();
         Utility.PrintCol("==========================", "00FF00");
     }
 

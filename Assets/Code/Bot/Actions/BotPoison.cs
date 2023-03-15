@@ -42,7 +42,13 @@ public class BotPoison : MonoBehaviour, IActionRequiredState, IActionHasInitialA
     public void ExecuteInitialAction()
     {
         completed = false;
-        Transform poisonPos = detectorManager.GetSortedDetectorList()[0].GetPoisonPosition();
+        
+        List<PlayerDetector> detectorList = detectorManager.GetSortedDetectorList();
+        detectorList.Reverse();
+
+        int index = Mathf.FloorToInt(Mathf.Clamp((float)Global.playerPositionCounterLevel/2.0f, 0.0f, 5.0f));
+
+        Transform poisonPos = detectorList[index].GetPoisonPosition();
         float variance = (Global.difficultyLevel - 5) / 2;
         botMove.SetMove(poisonPos.position.x, poisonPos.position.y, variance: -variance);
     }

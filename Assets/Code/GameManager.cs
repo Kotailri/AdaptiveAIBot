@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
         overtime = false;
         
         ResetObjects();
+        Global.gameInfoUI.UpdateGameInfo();
     }
 
     private void Update()
