@@ -14,6 +14,11 @@ public class AttackCounterPlaystyle : MonoBehaviour, IPlaystyleRule
         return PlaystyleRule.PlayerAttackCounter;
     }
 
+    public void SetPlaystyleLevel(int level)
+    {
+        Global.playerAttackCounterLevel = level;
+    }
+
     public void UpdatePlaystyleLevel()
     {
         PlayerTracker tracker = Global.playertracker;

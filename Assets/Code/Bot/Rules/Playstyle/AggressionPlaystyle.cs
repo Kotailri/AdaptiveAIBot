@@ -12,6 +12,11 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
         playerTracker = Global.playertracker;
     }
 
+    public void SetPlaystyleLevel(int level)
+    {
+        Global.aggressionLevel = level;
+    }
+    
     private void Update()
     {
         if (!playerTracker)

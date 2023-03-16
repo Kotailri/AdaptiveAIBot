@@ -5,6 +5,7 @@ using static Unity.VisualScripting.Metadata;
 
 public class PlayerDetector : MonoBehaviour, IResettable
 {
+    public bool isSpawnDetector;
     private float timeSpent = 0.0f;
     private List<GameObject> optimalPoisonPositions = new List<GameObject>();
 
@@ -15,6 +16,7 @@ public class PlayerDetector : MonoBehaviour, IResettable
         {
             optimalPoisonPositions.Add(child.gameObject);
         }
+
     }
 
     private void OnDestroy()
@@ -48,6 +50,8 @@ public class PlayerDetector : MonoBehaviour, IResettable
     public void ResetObject()
     {
         timeSpent = 0.0f;
+        if (isSpawnDetector)
+            timeSpent -= 1.0f;
     }
 
     public void InitResettable()

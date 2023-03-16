@@ -14,6 +14,11 @@ public class ItemStratPlaystyle : MonoBehaviour, IPlaystyleRule
         return PlaystyleRule.ItemStrategy;
     }
 
+    public void SetPlaystyleLevel(int level)
+    {
+        Global.itemStrategyLevel = level;
+    }
+
     public void UpdatePlaystyleLevel()
     {
         PlayerTracker tracker = Global.playertracker;

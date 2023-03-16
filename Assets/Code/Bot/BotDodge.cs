@@ -7,9 +7,9 @@ using static UnityEngine.UI.Image;
 public class BotDodge : MonoBehaviour
 {
     private float scanDistance = 18.0f;
-    private float dodgeRadius = 0.7f;
-    private float dodgeDistance = 1.2f;
-    private float dodgeSpeed = 8.0f;
+    public float dodgeRadius = 0.3f;
+    public float dodgeDistance = 1.0f;
+    public float dodgeSpeed = 8.0f;
 
     private List<GameObject> incomingBullets = new List<GameObject> ();
     public LayerMask bulletLayer;
@@ -43,8 +43,8 @@ public class BotDodge : MonoBehaviour
         }
 
         // Modify difficulty
-        //scanDistance = Mathf.Clamp(Global.difficultyLevel + 1.0f, 2.0f, 10.0f);
-        //dodgeSpeed = Mathf.Clamp(Global.difficultyLevel + 2.5f, 1.0f, 20.0f);
+        scanDistance = Mathf.Clamp(Global.difficultyLevel + 1.0f, 2.0f, 10.0f);
+        dodgeSpeed = Mathf.Clamp(Global.difficultyLevel + 2.5f, 1.0f, 20.0f);
 
         Vector2 toTarget = GetNearestBullet().transform.position - transform.position;
         Vector2 perpendicular = Vector2.Perpendicular(toTarget);

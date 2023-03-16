@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public float matchTime = 0.0f;
     private bool overtime = false;
 
+    [Space(5.0f)]
+    public Canvas pauseCanvas;
+
     public void RestartGame()
     {
         PlayerScore = 0;
@@ -36,7 +39,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) && pauseCanvas.enabled)
+        {
+            TogglePause(false);
+        }
+
         if (matchTime < GameConfig.c_OvertimeTime)
         {
             matchTime += Time.deltaTime;
@@ -93,7 +100,8 @@ public class GameManager : MonoBehaviour
         {
             res.ResetObject();
         }
-        Invoke("ResetHealth", 0.5f);   
+        Invoke("ResetHealth", 0.5f);
+        TogglePause(true);
     }
 
     private void ResetHealth()
@@ -105,5 +113,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Global.gamemanager = this;
+        TogglePause(true);
+    }
+
+    public void TogglePause(bool isPaused)
+    {
+        pauseCanvas.enabled = isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
     }
 }

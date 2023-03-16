@@ -10,6 +10,11 @@ public class PositionCounterPlaystyle : MonoBehaviour, IPlaystyleRule
         return Global.playerPositionCounterLevel;
     }
 
+    public void SetPlaystyleLevel(int level)
+    {
+        Global.playerPositionCounterLevel = level;
+    }
+
     public PlaystyleRule GetPlaystyleName()
     {
         return PlaystyleRule.PlayerPositionCounter;
@@ -27,17 +32,7 @@ public class PositionCounterPlaystyle : MonoBehaviour, IPlaystyleRule
         }
 
         float timeDifference = timeSpentMost - timeSpentOther;
+        Global.playerPositionCounterLevel += Mathf.CeilToInt(timeDifference/5.0f);
 
-        if (timeDifference > 0.0f)
-        {
-            timeDifference = (timeDifference - 1.0f) / 11.0f;
-        }
-        else
-        {
-            timeDifference = (timeDifference + 9.0f) / 10.0f;
-        }
-
-
-        Global.playerPositionCounterLevel += (int) timeDifference;
     }
 }

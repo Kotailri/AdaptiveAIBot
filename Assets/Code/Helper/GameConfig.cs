@@ -62,6 +62,9 @@ public static class GameConfig
     public static float c_AccracyDiffDifficultyScaling = 1.0f;
 
     // Difficulty Rule
+    public static float maxDifficultyLevel = 10.0f;
+    public static float minDifficultyLevel = -10.0f;
+
     public static int c_WinTimeRoundCount = 2;
     public static int c_ScoreDifferenceRoundCount = 2;
 
@@ -69,6 +72,10 @@ public static class GameConfig
     public static int c_OvertimeDamage = 4;
 
     // Playstyle Rule
+    public static int maxPlaystyleLevel = 10;
+    public static int minPlaystyleLevel = 0;
+    
     public static float c_AggroApproachDist = 5f;
     public static float c_CounterAttackTime = 1f;
+
 }

@@ -9,6 +9,11 @@ public class ItemCounterPlaystyle : MonoBehaviour, IPlaystyleRule
         return Global.playerItemCounterLevel;
     }
 
+    public void SetPlaystyleLevel(int level)
+    {
+        Global.playerItemCounterLevel = level;
+    }
+
     public PlaystyleRule GetPlaystyleName()
     {
         return PlaystyleRule.PlayerItemCounter;

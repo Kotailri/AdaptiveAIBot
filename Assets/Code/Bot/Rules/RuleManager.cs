@@ -25,11 +25,15 @@ public class RuleManager : MonoBehaviour
         foreach (IPlaystyleRule rule in playstyleRules)
         {
             rule.UpdatePlaystyleLevel();
-            print(rule.GetPlaystyleName() + ": " + rule.GetPlaystyleLevel());
+            rule.SetPlaystyleLevel(Mathf.Clamp(rule.GetPlaystyleLevel(), GameConfig.minPlaystyleLevel, GameConfig.maxPlaystyleLevel));
+
+            if (Global.debugMode)
+                print(rule.GetPlaystyleName() + ": " + rule.GetPlaystyleLevel());
         }
 
         Global.gameInfoUI.UpdateGameInfo();
-        Utility.PrintCol("==========================", "00FF00");
+        if (Global.debugMode)
+            Utility.PrintCol("==========================", "00FF00");
     }
 
     public void UpdateDifficulty(PlayerType winner)
@@ -41,9 +45,12 @@ public class RuleManager : MonoBehaviour
             {
                 difficultyChange = GameConfig.c_MaxDifficultyIncrease;
             }
-            //print(rule.GetDifficultyActionName() + ": " + difficultyChange);
+            if (Global.debugMode)
+                print(rule.GetDifficultyActionName() + ": " + difficultyChange);
             Global.difficultyLevel += difficultyChange;
         }
-        //Utility.PrintCol("NEW DIFFICULTY: " + Global.difficultyLevel, "00FF00");
+        Global.difficultyLevel = Mathf.Clamp(Global.difficultyLevel, GameConfig.minDifficultyLevel, GameConfig.maxDifficultyLevel);
+        if (Global.debugMode)
+            Utility.PrintCol("NEW DIFFICULTY: " + Global.difficultyLevel, "00FF00");
     }
 }

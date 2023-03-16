@@ -20,6 +20,7 @@ public class GameInfoUI : MonoBehaviour
     private void Awake()
     {
         Global.gameInfoUI = this;
+        UpdateGameInfo();
     }
 
     private void Start()
