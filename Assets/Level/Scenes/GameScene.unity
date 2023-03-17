@@ -10427,7 +10427,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -17711,6 +17711,7 @@ GameObject:
   - component: {fileID: 2092360360}
   - component: {fileID: 2092360361}
   - component: {fileID: 2092360362}
+  - component: {fileID: 2092360363}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -17852,6 +17853,79 @@ MonoBehaviour:
   resetButton: {fileID: 1991103814}
   lockToggle: {fileID: 100161537}
   lockToggleBg: {fileID: 1445635882}
+--- !u!114 &2092360363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092360355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27d548d076de1e418d1206711887960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: bad_ding
+    clip: {fileID: 8300000, guid: 25a05abd7557d2d44a0f027ed8de0c09, type: 3}
+    volume: 0.1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: bubbles
+    clip: {fileID: 8300000, guid: 8fe94d31659f2e14cbc8c3999d990508, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: ding
+    clip: {fileID: 8300000, guid: 3b9782a3da3ef8647be7e5548fb95741, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: punch
+    clip: {fileID: 8300000, guid: 7251d4b8c1adf6840afac74cbe3f1045, type: 3}
+    volume: 0.01
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: unlock
+    clip: {fileID: 8300000, guid: 67fb4ac413ba00941980aac0bb9af09f, type: 3}
+    volume: 0.01
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: lock
+    clip: {fileID: 8300000, guid: 0efb2504198bec14a871c911726dff39, type: 3}
+    volume: 0.01
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: click
+    clip: {fileID: 8300000, guid: 89ed74643ea9d2b4eb78c2286303a2e2, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.279
+    randomPitch: 0.281
+  - name: boom
+    clip: {fileID: 8300000, guid: 3d709aba87aeccb4380aa63facec7c82, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: zap
+    clip: {fileID: 8300000, guid: 12be103f4e479df49a88394f60f1eecc, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+  - name: pop
+    clip: {fileID: 8300000, guid: 9cc628f48a12ef046a359f49f7108b01, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
 --- !u!1 &2092371524
 GameObject:
   m_ObjectHideFlags: 0

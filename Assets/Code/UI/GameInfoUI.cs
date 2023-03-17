@@ -101,12 +101,17 @@ public class GameInfoUI : MonoBehaviour
             Global.gamemanager.RestartGame();
             stateManager.UpdateStatePriorities();
             UpdateGameInfo();
+            AudioManager.instance.PlaySound("click");
         });
 
         lockToggle.onValueChanged.AddListener((bool call) =>
         {
             Global.isLevelupLocked = call;
             lockToggleBg.color = call ? Color.red : Color.white;
+            if (call)
+                AudioManager.instance.PlaySound("lock");
+            else
+                AudioManager.instance.PlaySound("unlock");
         });
     }
 

@@ -28,6 +28,7 @@ public class Burst : MonoBehaviour, IResettable
     public void SetFollow(GameObject toFollow)
     {
         follow = toFollow;
+        AudioManager.instance.PlaySound("zap");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

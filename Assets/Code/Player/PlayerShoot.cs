@@ -21,6 +21,7 @@ public class PlayerShoot : MonoBehaviour
             CurrentShootTimer = 0;
             GameObject proj = Instantiate(projectile, transform.position, GunRotation.GetAngleFacing());
             proj.GetComponent<BulletCollision>().playerType = PlayerType.Player;
+            AudioManager.instance.PlaySound("boom");
             proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
             proj.GetComponent<BulletCollision>().damageBoost = Global.playerDamageBoost;
         }
@@ -45,6 +46,7 @@ public class PlayerShoot : MonoBehaviour
         GameObject proj = Instantiate(projectile_big, transform.position, GunRotation.GetAngleFacing());
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Player;
         proj.GetComponent<BulletCollision>().isBig = true;
+        AudioManager.instance.PlaySound("boom");
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed_big;
         proj.GetComponent<BulletCollision>().damageBoost = Global.playerDamageBoost_big;
     }

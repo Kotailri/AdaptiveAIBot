@@ -78,5 +78,5 @@ public static class GameConfig
     public static float c_AggroApproachDist = 4f;
     public static float c_CounterAttackTime = 1f;
 
-    public static float soundVolume = 1f;
+    public static float soundVolume = 10f;
 }

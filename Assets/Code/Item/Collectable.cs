@@ -19,6 +19,7 @@ public class Collectable : MonoBehaviour
         if (collision.CompareTag("Player") || collision.CompareTag("Bot"))
         {
             collision.GetComponent<Inventory>().AddItem(GetComponent<IItem>(), collision.tag);
+            AudioManager.instance.PlaySound("pop");
             Destroy(gameObject);
         }
     }

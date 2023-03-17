@@ -16,6 +16,7 @@ public class Poison : MonoBehaviour, IResettable
                 GetComponent<NavMeshObstacle>().enabled = false;
             }
         }
+        AudioManager.instance.PlaySound("bubbles");
     }
 
     private void Start()

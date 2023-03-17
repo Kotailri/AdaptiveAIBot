@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && pauseCanvas.enabled)
         {
+            AudioManager.instance.PlaySound("click");
             TogglePause(false);
         }
 
@@ -72,13 +73,16 @@ public class GameManager : MonoBehaviour
 
         if (BotWin)
         {
+            AudioManager.instance.PlaySound("bad_ding");
             BotScore++;
             botScoreText.text = BotScore.ToString();
             Global.ruleManager.UpdateDifficulty(PlayerType.Bot);
+
         }
 
         else if (PlayerWin)
         {
+            AudioManager.instance.PlaySound("ding");
             PlayerScore++;
             playerScoreText.text = PlayerScore.ToString();
             Global.ruleManager.UpdateDifficulty(PlayerType.Player);
@@ -93,6 +97,7 @@ public class GameManager : MonoBehaviour
 
     private void ResetObjects()
     {
+        Time.timeScale = 0;
         matchTime = 0.0f;
         overtime = false;
         foreach (IResettable res in Global.resettables)
@@ -101,6 +106,7 @@ public class GameManager : MonoBehaviour
         }
         Global.ruleManager.UpdatePlaystyle();
         Global.gameInfoUI.UpdateGameInfo();
+        Time.timeScale = 1;
         TogglePause(true);
     }
 

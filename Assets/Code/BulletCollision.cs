@@ -51,7 +51,7 @@ public class BulletCollision : MonoBehaviour, IResettable
                 Global.playertracker.PlayerHitsMissed++;
             }
 
-            if (playerType == PlayerType.Bot)
+            else if (playerType == PlayerType.Bot)
             {
                 Global.playertracker.BotHitsMissed++;
             }
@@ -75,11 +75,12 @@ public class BulletCollision : MonoBehaviour, IResettable
                 Global.playertracker.PlayerHitsLanded++;
             }
 
-            if (playerType == PlayerType.Bot)
+            else if (playerType == PlayerType.Bot)
             {
                 Global.playertracker.BotHitsLanded++;
             }
 
+            AudioManager.instance.PlaySound("punch");
             collision.gameObject.GetComponent<Health>().UpdateHealth(isBig? -GameConfig.c_BulletDamage_big : - GameConfig.c_BulletDamage);
             collision.gameObject.GetComponent<Health>().UpdateHealth(-damageBoost);
             Destroy(gameObject);

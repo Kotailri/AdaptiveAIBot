@@ -84,6 +84,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         transform.rotation *= Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile, transform.position, transform.rotation);
+        AudioManager.instance.PlaySound("boom");
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
         proj.GetComponent<BulletCollision>().damageBoost = Global.botDamageBoost;
@@ -116,6 +117,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         transform.rotation *= Quaternion.Euler(0f, 0f, randomAngle);
 
         GameObject proj = Instantiate(projectile_big, transform.position, transform.rotation);
+        AudioManager.instance.PlaySound("boom");
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
         proj.GetComponent<BulletCollision>().isBig = true;
