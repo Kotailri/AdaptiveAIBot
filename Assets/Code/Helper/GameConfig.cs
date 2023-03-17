@@ -75,7 +75,8 @@ public static class GameConfig
     public static int maxPlaystyleLevel = 10;
     public static int minPlaystyleLevel = 0;
     
-    public static float c_AggroApproachDist = 5f;
+    public static float c_AggroApproachDist = 4f;
     public static float c_CounterAttackTime = 1f;
 
+    public static float soundVolume = 1f;
 }

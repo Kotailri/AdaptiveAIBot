@@ -39,7 +39,7 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
             return Random.value < p;
         }
 
-        return 4.0f > Random.Range(0f, 5.0f);
+        return 4.0f < Random.Range(0f, 5.0f);
     }
 
     public int PriorityLevel()
@@ -54,6 +54,6 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
 
     public void UpdatePriorityLevel()
     {
-        priorityLevel = Global.playerItemCounterLevel % 2;
+        priorityLevel = Global.playerItemCounterLevel / 2;
     }
 }

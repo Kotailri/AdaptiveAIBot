@@ -9,8 +9,8 @@ public class Inventory : MonoBehaviour, IResettable
 
     public void Awake()
     {
-        consumables.Add(ItemName.PoisonConsumable, 10);
-        consumables.Add(ItemName.BurstConsumable, 10);
+        consumables.Add(ItemName.PoisonConsumable, 0);
+        consumables.Add(ItemName.BurstConsumable, 0);
 
         statBoosts.Add(ItemName.SpeedStat, 0);
         statBoosts.Add(ItemName.DamageStat, 0);

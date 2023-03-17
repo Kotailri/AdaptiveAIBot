@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
         overtime = false;
         
         ResetObjects();
-        Global.gameInfoUI.UpdateGameInfo();
     }
 
     private void Update()
@@ -78,7 +77,7 @@ public class GameManager : MonoBehaviour
             Global.ruleManager.UpdateDifficulty(PlayerType.Bot);
         }
 
-        if (PlayerWin)
+        else if (PlayerWin)
         {
             PlayerScore++;
             playerScoreText.text = PlayerScore.ToString();
@@ -87,8 +86,8 @@ public class GameManager : MonoBehaviour
 
         if (BotWin || PlayerWin)
         {
+            Invoke(nameof(ResetDelay), 0.5f);
             ResetObjects();
-            Global.ruleManager.UpdatePlaystyle();
         }
     }
 
@@ -100,11 +99,12 @@ public class GameManager : MonoBehaviour
         {
             res.ResetObject();
         }
-        Invoke("ResetHealth", 0.5f);
+        Global.ruleManager.UpdatePlaystyle();
+        Global.gameInfoUI.UpdateGameInfo();
         TogglePause(true);
     }
 
-    private void ResetHealth()
+    private void ResetDelay()
     {
         PlayerHealth.ResetObject();
         BotHealth.ResetObject();

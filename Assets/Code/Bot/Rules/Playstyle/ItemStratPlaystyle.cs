@@ -22,7 +22,7 @@ public class ItemStratPlaystyle : MonoBehaviour, IPlaystyleRule
     public void UpdatePlaystyleLevel()
     {
         PlayerTracker tracker = Global.playertracker;
-        Global.itemStrategyLevel += (tracker.PlayerItemsCollected - tracker.BotItemsCollected);
+        Global.itemStrategyLevel += (int)Mathf.Clamp(tracker.PlayerItemsCollected - tracker.BotItemsCollected, -2.0f, 2.0f);
         tracker.PlayerItemsCollected = 0;
         tracker.BotItemsCollected = 0;
     }

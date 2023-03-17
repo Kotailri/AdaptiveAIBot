@@ -45,7 +45,7 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
 
     public void UpdatePlaystyleLevel()
     {
-        Global.aggressionLevel += (int) Mathf.Clamp(approachTimer, -3.0f, 3.0f);
+        Global.aggressionLevel += (int) Mathf.Clamp(approachTimer/10.0f, -2.0f, 2.0f);
         approachTimer = 0.0f;
     }
 }

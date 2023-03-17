@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStatePriority
 {
-    private int priorityLevel = 0;
+    private int priorityLevel = 1;
 
     private PlayerTracker tracker;
 
@@ -20,6 +20,9 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
 
     public bool PassesCriteria()
     {
+        if (1.0f > Random.Range(0f, 5.0f))
+            return false;
+
         // is the bot far away
         if (tracker.CurrentDistance >= 8.0f)
         {
@@ -34,7 +37,7 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
             if (playerStats < botStats) return true;
         }
 
-        return 4.0f > Random.Range(0f, 5.0f);
+        return false;
     }
 
     public int PriorityLevel()
@@ -49,13 +52,13 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
 
     public void UpdatePriorityLevel()
     {
-        if (Global.aggressionLevel >= 0)
+        if (Global.aggressionLevel > 5)
         {
-            priorityLevel = Global.aggressionLevel % 5;
+            priorityLevel = 1;
         }
         else
         {
-            priorityLevel = -(Mathf.Abs(Global.aggressionLevel) % 5);
+            priorityLevel = 0;
         }
     }
 }

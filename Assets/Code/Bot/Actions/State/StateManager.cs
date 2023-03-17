@@ -22,7 +22,6 @@ public class StateManager : MonoBehaviour
 
     public ActionState ChangeStates()
     {
-        stateSwapTimer = 0;
         ActionState newState = SelectNewState();
         return newState;
     }
@@ -34,14 +33,16 @@ public class StateManager : MonoBehaviour
 
     private ActionState SelectNewState()
     {
-        states = states.OrderBy(state => -state.PriorityLevel()).ToList();
-
-        foreach (ActionStateCriteria state in states)
+        states = states.OrderBy(state => state.PriorityLevel()).ToList();
+        states.Reverse();
+        for (int i = 0; i < states.Count; i++)
         {
-            if (state.PassesCriteria())
+            if (states[i].PassesCriteria())
             {
-                stateSwapTime = state.StateStayTime();
-                return state.ActionState();
+                stateSwapTime = states[i].StateStayTime();
+                stateSwapTimer = 0;
+                print(states[i].ActionState() + ": " + states[i].PriorityLevel());
+                return states[i].ActionState();
             }
         }
         Utility.PrintCol("Error: No State Selected", "FF0000");
@@ -65,8 +66,7 @@ public class StateManager : MonoBehaviour
 
         if (stateSwapTimer >= stateSwapTime)
         {
-            ChangeStates();
-            stateSwapTimer = 0;
+            currentState = ChangeStates();
         }
     }
 

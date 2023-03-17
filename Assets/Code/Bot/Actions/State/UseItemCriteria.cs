@@ -52,6 +52,6 @@ public class UseItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableSta
 
     public void UpdatePriorityLevel()
     {
-        priorityLevel = Global.itemStrategyLevel % 2;
+        priorityLevel = Global.itemStrategyLevel / 2;
     }
 }

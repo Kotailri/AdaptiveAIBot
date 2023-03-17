@@ -32,7 +32,7 @@ public class PositionCounterPlaystyle : MonoBehaviour, IPlaystyleRule
         }
 
         float timeDifference = timeSpentMost - timeSpentOther;
-        Global.playerPositionCounterLevel += Mathf.CeilToInt(timeDifference/5.0f);
+        Global.playerPositionCounterLevel += Mathf.CeilToInt(timeDifference/2.0f);
 
     }
 }

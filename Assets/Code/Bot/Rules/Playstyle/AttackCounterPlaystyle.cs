@@ -28,7 +28,7 @@ public class AttackCounterPlaystyle : MonoBehaviour, IPlaystyleRule
         }
         else
         {
-            Global.playerAttackCounterLevel += tracker.PlayerCounterHits;
+            Global.playerAttackCounterLevel += (int)Mathf.Clamp(tracker.PlayerCounterHits/5, 1.0f, 2.0f);
         }
         
         tracker.PlayerCounterHits = 0;

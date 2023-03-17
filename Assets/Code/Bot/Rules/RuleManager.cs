@@ -22,6 +22,13 @@ public class RuleManager : MonoBehaviour
 
     public void UpdatePlaystyle()
     {
+        if (Global.isLevelupLocked)
+        {
+            if (Global.debugMode)
+                print("Playstyle Locked");
+            return;
+        }
+
         foreach (IPlaystyleRule rule in playstyleRules)
         {
             rule.UpdatePlaystyleLevel();
@@ -31,13 +38,19 @@ public class RuleManager : MonoBehaviour
                 print(rule.GetPlaystyleName() + ": " + rule.GetPlaystyleLevel());
         }
 
-        Global.gameInfoUI.UpdateGameInfo();
         if (Global.debugMode)
             Utility.PrintCol("==========================", "00FF00");
     }
 
     public void UpdateDifficulty(PlayerType winner)
     {
+        if (Global.isLevelupLocked)
+        {
+            if (Global.debugMode)
+                print("Difficulty Locked");
+            return;
+        }
+
         foreach (IDifficultyRule rule in difficultyRules)
         {
             float difficultyChange = rule.GetDifficultyLevelChange(winner);

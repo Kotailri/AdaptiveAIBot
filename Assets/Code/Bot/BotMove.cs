@@ -29,6 +29,8 @@ public class BotMove : MonoBehaviour, IResettable
     private Rigidbody2D RB;
     private BotDodge dodge;
 
+    private float timeSinceLastFleeUpdate = 0.0f;
+
     [HideInInspector]
     public bool destinationReached = false;
 
@@ -79,11 +81,6 @@ public class BotMove : MonoBehaviour, IResettable
             }
         }
         return original;
-    }
-
-    public void Flee()
-    {
-        moveState = MoveState.Flee;
     }
 
     public void Attack()
@@ -170,10 +167,6 @@ public class BotMove : MonoBehaviour, IResettable
                     agent.SetDestination(targetPosition);
                     break;
 
-                case MoveState.Flee:
-                    agent.SetDestination((transform.position - target.position).normalized * 15.0f);
-                    break;
-
                 case MoveState.None:
                     agent.SetDestination(transform.position);
                     break;
@@ -182,6 +175,7 @@ public class BotMove : MonoBehaviour, IResettable
             currentVelocity = agent.velocity;
         }
     }
+
     public void ResetObject()
     {
         transform.position = GameConfig.c_BotSpawnPosition;

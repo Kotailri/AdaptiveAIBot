@@ -98,8 +98,10 @@ public static class Global
     public static int playerItemCounterLevel = 0;
     public static int itemStrategyLevel = 0;
     public static int playerAttackCounterLevel = 0;
-    public static int aggressionLevel = 0;
+    public static int aggressionLevel = 5;
     public static int playerPositionCounterLevel = 0;
+
+    public static bool isLevelupLocked = false;
 
     // Debug
     public static bool debugMode = false;
