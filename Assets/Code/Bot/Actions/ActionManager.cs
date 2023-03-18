@@ -21,7 +21,7 @@ public class ActionManager : MonoBehaviour, IResettable
         ExecuteActions();
     }
 
-    private void StateChangeActions(ActionState newState)
+    public void StateChangeActions(ActionState newState)
     {
         foreach (IAction action in actions)
         {
@@ -80,11 +80,12 @@ public class ActionManager : MonoBehaviour, IResettable
 
             if (action is IActionHasStateCompletion actionWithCompletion)
             {
-                if (actionWithCompletion.IsStateComplete())
+                if (actionWithCompletion is IActionRequiredState actionRequiredState2)
                 {
-                    StateChangeActions(stateManager.ChangeStates());   
+                    if (actionRequiredState2.GetActionStates().Contains(stateManager.GetCurrentState()))
+                        StateChangeActions(stateManager.ChangeStates());
                 }
-                    
+
             }
         }
     }

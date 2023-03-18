@@ -25,13 +25,16 @@ public class UseItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableSta
 
     public bool PassesCriteria()
     {
-        if (botInv.GetItemCount() >= 0)
+        if (!botInv.HasItem(ItemName.PoisonConsumable))
+            return false;
+
+        if (botInv.GetConsumableCount() >= 0)
         {
             float p = Mathf.Lerp(0f, 1f, botInv.GetItemCount());
             return Random.value < p;
         }
 
-        if (botInv.GetItemCount() > playerInv.GetItemCount())
+        if (botInv.GetConsumableCount() > playerInv.GetConsumableCount())
         {
             float p = Mathf.Lerp(0f, 1f, botInv.GetItemCount() - playerInv.GetItemCount());
             return Random.value < p;

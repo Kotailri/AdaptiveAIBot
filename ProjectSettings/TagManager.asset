@@ -8,6 +8,8 @@ TagManager:
   - Bot
   - Bullet
   - InvisObstacle
+  - Hazard
+  - TestObject
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Bot
   - Bullet
   - InvisObstacle
-  - 
+  - Hazard
   - 
   - 
   - 

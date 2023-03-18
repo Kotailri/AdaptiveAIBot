@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,8 +29,6 @@ public class BotMove : MonoBehaviour, IResettable
     private Vector2 currentVelocity;
     private Rigidbody2D RB;
     private BotDodge dodge;
-
-    private float timeSinceLastFleeUpdate = 0.0f;
 
     [HideInInspector]
     public bool destinationReached = false;
@@ -65,7 +64,7 @@ public class BotMove : MonoBehaviour, IResettable
 
         if (variance >= 0.0f)
             currentSetMoveDestination = AddMoveVariance(currentSetMoveDestination, positionVariance: variance);
-
+        Instantiate(Global.gamemanager.testMarker, currentSetMoveDestination, Quaternion.identity);
         agent.SetDestination(currentSetMoveDestination);
     }
 
@@ -86,6 +85,11 @@ public class BotMove : MonoBehaviour, IResettable
     public void Attack()
     {
         moveState = MoveState.Follow;
+    }
+
+    public void Flee()
+    {
+        moveState = MoveState.Flee;
     }
 
     public void Stop()
@@ -165,6 +169,10 @@ public class BotMove : MonoBehaviour, IResettable
                     Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
                     Vector3 targetPosition = target.transform.position - (directionToTarget * offsetDistance);
                     agent.SetDestination(targetPosition);
+                    break;
+
+                case MoveState.Flee:
+                    agent.SetDestination(-(target.transform.position - (((target.transform.position - transform.position).normalized) * 2.2f)));
                     break;
 
                 case MoveState.None:

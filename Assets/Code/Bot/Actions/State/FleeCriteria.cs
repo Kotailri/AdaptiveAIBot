@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStatePriority
 {
-    private int priorityLevel = 1;
+    private int priorityLevel = -100;
 
     private PlayerTracker tracker;
 
@@ -18,9 +18,21 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
         return global::ActionState.Flee;
     }
 
+    private bool IsInLineOfSight()
+    {
+        GameObject player = Global.playertracker.Player;
+        GameObject bot = Global.playertracker.Bot;
+
+        Vector2 directionToPlayer = (Vector2)player.transform.position - (Vector2)bot.transform.position;
+        float distanceToPlayer = Vector2.Distance(player.transform.position, bot.transform.position);
+
+        RaycastHit2D visionBlockers = Physics2D.Raycast(player.transform.position, -directionToPlayer, distanceToPlayer, Global.gamemanager.wallLayer);
+        return visionBlockers.collider == null;
+    }
+
     public bool PassesCriteria()
     {
-        if (1.0f > Random.Range(0f, 5.0f))
+        if (tracker.Bot.GetComponent<BotFlee>().GetClosestSafePosition() == Vector2.zero)
             return false;
 
         // is bot close
@@ -37,7 +49,7 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
             if (playerStats > botStats) return true;
         }
 
-        return (1.0f > Random.Range(0f, 5.0f));
+        return IsInLineOfSight();
     }
 
     public int PriorityLevel()
@@ -47,7 +59,7 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
 
     public float StateStayTime()
     {
-        return 3.0f + (Mathf.Clamp(-Global.aggressionLevel / 2.0f, 0.0f, 2.0f));
+        return Mathf.Infinity;
     }
 
     public void UpdatePriorityLevel()

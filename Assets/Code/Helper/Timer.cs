@@ -3,10 +3,12 @@ public class Timer
     private float maxTimer;
     private float currentTimer;
     private bool isTimerRunning;
+    private bool isTimerPaused;
     
     public Timer(float time)
     {
         maxTimer = time;
+        isTimerPaused = false;
         ResetTimer();
         Global.timerManager.AddTimer(this);
     }
@@ -26,12 +28,17 @@ public class Timer
 
     public void IncrementTime(float time)
     {
-        if (!isTimerRunning)
+        if (!isTimerRunning || isTimerPaused)
             return;
 
         currentTimer += time;
         if (currentTimer >= maxTimer)
             isTimerRunning = false;
+    }
+
+    public void PauseTimer(bool isPaused)
+    {
+        isTimerPaused = isPaused;
     }
 
     public void ResetTimer()

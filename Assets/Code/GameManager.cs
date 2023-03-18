@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
     [Space(5.0f)]
     public Canvas pauseCanvas;
 
+    [Space(5.0f)]
+    public LayerMask wallLayer;
+    public GameObject testMarker;
+
     public void RestartGame()
     {
         PlayerScore = 0;
