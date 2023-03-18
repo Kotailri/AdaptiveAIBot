@@ -38,6 +38,7 @@ public class BotAreaScanner : MonoBehaviour
     {
         GameObject closest = null;
         float minDistance = float.MaxValue;
+
         foreach (GameObject gameObject in Global.itemSpawner.currentItems)
         {
             float distance = Vector2.Distance(gameObject.transform.position, transform.position);

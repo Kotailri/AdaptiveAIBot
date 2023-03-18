@@ -61,7 +61,9 @@ public class ItemSpawner : MonoBehaviour, IResettable
             cumulativeChance += spawnItems[i].chance;
             if (randomResult < cumulativeChance)
             {
-                Instantiate(spawnItems[i].item, GetSpawnLocation(), Quaternion.identity);
+                Vector2 loc = GetSpawnLocation();
+                if (loc != Vector2.zero)
+                    Instantiate(spawnItems[i].item, GetSpawnLocation(), Quaternion.identity);
                 return;
             }
         }
@@ -71,15 +73,19 @@ public class ItemSpawner : MonoBehaviour, IResettable
     {
         Bounds worldBounds = GameConfig.c_WorldBounds;
 
+        int maxIterations = 50;
         while (true)
         {
+            maxIterations--;
             Vector2 position = worldBounds.GenerateRandomPositionInBounds();
 
-            Collider2D WallCollision = Physics2D.OverlapCircle(position, 0.6f, noSpawn);
+            Collider2D WallCollision = Physics2D.OverlapCircle(position, 1.6f, noSpawn);
             if (WallCollision == null)
             {
                 return new Vector2(position.x, position.y);
             }
+            if (maxIterations <= 0)
+                return Vector2.zero;
         }
     }
 

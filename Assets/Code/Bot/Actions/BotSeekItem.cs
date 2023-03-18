@@ -36,6 +36,7 @@ public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequir
         if (botMove.destinationReached && !completed)
         {
             completed = true;
+            print("done!");
         }
     }
 

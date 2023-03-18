@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStatePriority
 {
-    private int priorityLevel = 0;
+    private int priorityLevel = 100;
 
     private PlayerTracker tracker;
     private BotAreaScanner scanner;
@@ -27,6 +27,11 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
 
     public bool PassesCriteria()
     {
+        if (Global.itemSpawner.currentItems.Count == 0)
+            return false;
+        return true;
+
+
         if (botInv.GetItemCount() == 0)
         {
             float p = 1f - Mathf.Lerp(0f, 1f, scanner.DistanceToNearestItem());
@@ -49,7 +54,7 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
 
     public float StateStayTime()
     {
-        return Mathf.Clamp(playerInv.GetItemCount() - botInv.GetItemCount(), 1.0f, 5.0f);
+        return Mathf.Infinity;//Mathf.Clamp(playerInv.GetItemCount() - botInv.GetItemCount(), 1.0f, 5.0f);
     }
 
     public void UpdatePriorityLevel()

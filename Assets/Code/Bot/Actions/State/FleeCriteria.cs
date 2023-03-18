@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStatePriority
 {
-    private int priorityLevel = -100;
+    private int priorityLevel = 0;
 
     private PlayerTracker tracker;
 
@@ -32,6 +32,7 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
 
     public bool PassesCriteria()
     {
+
         if (tracker.Bot.GetComponent<BotFlee>().GetClosestSafePosition() == Vector2.zero)
             return false;
 

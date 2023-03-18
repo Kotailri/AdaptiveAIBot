@@ -22,7 +22,9 @@ public class StateManager : MonoBehaviour
 
     public ActionState ChangeStates()
     {
+        stateSwapTimer = 0;
         ActionState newState = SelectNewState();
+        currentState = newState;
         return newState;
     }
 
@@ -37,11 +39,11 @@ public class StateManager : MonoBehaviour
         states.Reverse();
         for (int i = 0; i < states.Count; i++)
         {
-            if (states[i].PassesCriteria() && states[i].ActionState() != currentState)
+            if (states[i].PassesCriteria())
             {
                 stateSwapTime = states[i].StateStayTime();
-                stateSwapTimer = 0;
-                //print(states[i].ActionState() + ": " + states[i].PriorityLevel());
+                
+                print(states[i].ActionState() + ": " + states[i].PriorityLevel());
                 return states[i].ActionState();
             }
         }
@@ -66,8 +68,9 @@ public class StateManager : MonoBehaviour
 
         if (stateSwapTimer >= stateSwapTime)
         {
+            stateSwapTimer = 0;
             currentState = ChangeStates();
-            //Global.playertracker.Bot.GetComponent<ActionManager>().StateChangeActions(currentState);
+            Global.playertracker.Bot.GetComponent<ActionManager>().StateChangeActions(currentState);
         }
     }
 
