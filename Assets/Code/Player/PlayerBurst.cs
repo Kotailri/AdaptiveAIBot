@@ -14,7 +14,7 @@ public class PlayerBurst : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(GameConfig.c_BurstKeyCode))
+        if (Input.GetKeyDown(GameConfig.c_BurstKeyCode) && Time.timeScale == 1)
         {
             if (inv.ConsumeItem(ItemName.BurstConsumable))
             {

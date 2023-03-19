@@ -64,17 +64,22 @@ public class BotMove : MonoBehaviour, IResettable
 
         if (variance >= 0.0f)
             currentSetMoveDestination = AddMoveVariance(currentSetMoveDestination, positionVariance: variance);
-        Instantiate(Global.gamemanager.testMarker, currentSetMoveDestination, Quaternion.identity);
+
+        if (Global.debugMode == true)
+        {
+            Instantiate(Global.gamemanager.testMarker, currentSetMoveDestination, Quaternion.identity);
+        }
+            
         agent.SetDestination(currentSetMoveDestination);
     }
 
-    public Vector2 AddMoveVariance(Vector2 original, int maxIterations = 10, float positionVariance = 7.0f)
+    public Vector2 AddMoveVariance(Vector2 original, int maxIterations = 50, float positionVariance = 7.0f)
     {
         for (int i = 0; i < maxIterations; i++)
         {
             Vector2 position = Math.RandomInRadius(original, positionVariance);
-            Collider2D wall = Physics2D.OverlapCircle(position, 0.3f, LayerMask.GetMask("Walls"));
-            if (wall == null)
+            Collider2D[] wall = Physics2D.OverlapCircleAll(position, 0.6f, Global.gamemanager.wallLayer);
+            if (wall.Length == 0)
             {
                 return position;
             }
@@ -104,8 +109,8 @@ public class BotMove : MonoBehaviour, IResettable
         while (true)
         {
             Vector2 position = worldBounds.GenerateRandomPositionInBounds();
-            Collider2D wall = Physics2D.OverlapCircle(position, 0.1f, LayerMask.GetMask("Walls"));
-            if (wall == null)
+            Collider2D[] wall = Physics2D.OverlapCircleAll(position, 0.1f, Global.gamemanager.wallLayer);
+            if (wall.Length == 0)
             {
                 SetMove(position.x, position.y);
                 return;
@@ -158,7 +163,7 @@ public class BotMove : MonoBehaviour, IResettable
             switch (moveState)
             {
                 case MoveState.Move:
-                    if (Math.IsInRadius(currentSetMoveDestination, 3.0f, transform.position))
+                    if (Math.IsInRadius(currentSetMoveDestination, 1.0f, transform.position))
                     {
                         destinationReached = true;
                     }

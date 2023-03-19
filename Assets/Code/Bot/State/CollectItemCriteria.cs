@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStatePriority
 {
-    private int priorityLevel = 100;
+    private int priorityLevel = 0;
 
     private PlayerTracker tracker;
     private BotAreaScanner scanner;
@@ -29,7 +29,6 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
     {
         if (Global.itemSpawner.currentItems.Count == 0)
             return false;
-        return true;
 
 
         if (botInv.GetItemCount() == 0)
@@ -60,5 +59,10 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
     public void UpdatePriorityLevel()
     {
         priorityLevel = Global.playerItemCounterLevel / 2;
+    }
+
+    public Color GetStateColor()
+    {
+        return Color.yellow;
     }
 }

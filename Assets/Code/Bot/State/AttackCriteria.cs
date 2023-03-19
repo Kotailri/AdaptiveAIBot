@@ -20,11 +20,14 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
 
     public bool PassesCriteria()
     {
+        if (Global.aggressionLevel == 0)
+            return false;
+
         if (1.0f > Random.Range(0f, 5.0f))
             return false;
 
         // is the bot far away
-        if (tracker.CurrentDistance >= 8.0f)
+        if (tracker.CurrentDistance >= 10.0f)
         {
             return true;
         }
@@ -60,5 +63,10 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
         {
             priorityLevel = 0;
         }
+    }
+
+    public Color GetStateColor()
+    {
+        return Color.red;
     }
 }

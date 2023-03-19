@@ -7,9 +7,9 @@ using static UnityEngine.UI.Image;
 public class BotDodge : MonoBehaviour
 {
     private float scanDistance = 18.0f;
-    public float dodgeRadius = 0.3f;
-    public float dodgeDistance = 1.0f;
-    public float dodgeSpeed = 8.0f;
+    private float dodgeRadius = 0.2f;
+    private float dodgeDistance = 2f;
+    private float dodgeSpeed = 6.0f;
 
     private List<GameObject> incomingBullets = new List<GameObject> ();
     public LayerMask bulletLayer;
@@ -31,6 +31,7 @@ public class BotDodge : MonoBehaviour
 
     public void Dodge()
     {
+        
         bool dodgeChance = Global.difficultyLevel >= Random.Range(0.0f, 5.0f);
         if (!dodgeChance)
         {
@@ -66,17 +67,20 @@ public class BotDodge : MonoBehaviour
         if (hit.collider == null)
         {
             RB.velocity = perpendicular.normalized * dodgeSpeed;
-            
+            UnityEngine.Debug.DrawLine(transform.position, (Vector2)transform.position + perpendicular.normalized * dodgeDistance, Color.red);
+            //Time.timeScale = 0;
         }
         else if (hit2.collider == null)
         {
             RB.velocity = -perpendicular.normalized * dodgeSpeed;
-
+            UnityEngine.Debug.DrawLine(transform.position, (Vector2)transform.position + -perpendicular.normalized * dodgeDistance, Color.red);
+            //Time.timeScale = 0;
         }
-        else
+        else if (Global.difficultyLevel >= Random.Range(0,9))
         {
             RB.velocity = -toTarget.normalized * dodgeSpeed;
         }
+        
     }
 
     private void Update()
@@ -99,6 +103,7 @@ public class BotDodge : MonoBehaviour
         incomingBullets.Clear ();
         foreach (GameObject bullet in scanner.GetScannedPlayerBullets(scanDistance))
         {
+            
             if (!bullet.activeSelf)
                 continue;
 

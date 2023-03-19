@@ -63,7 +63,7 @@ public class ItemSpawner : MonoBehaviour, IResettable
             {
                 Vector2 loc = GetSpawnLocation();
                 if (loc != Vector2.zero)
-                    Instantiate(spawnItems[i].item, GetSpawnLocation(), Quaternion.identity);
+                    Instantiate(spawnItems[i].item, loc, Quaternion.identity);
                 return;
             }
         }
@@ -79,8 +79,8 @@ public class ItemSpawner : MonoBehaviour, IResettable
             maxIterations--;
             Vector2 position = worldBounds.GenerateRandomPositionInBounds();
 
-            Collider2D WallCollision = Physics2D.OverlapCircle(position, 1.6f, noSpawn);
-            if (WallCollision == null)
+            Collider2D[] WallCollision = Physics2D.OverlapCircleAll(position, 1.0f, noSpawn);
+            if (WallCollision.Length == 0)
             {
                 return new Vector2(position.x, position.y);
             }

@@ -22,17 +22,12 @@ public class BotFlee : MonoBehaviour, IActionHasInitialAction, IActionRequiredSt
 
     public void ExecuteAction()
     {
-        /*if (!findingSafeSpot)
+        if (!findingSafeSpot)
         {
-            isActionCompleted = false;
             GetComponent<BotMove>().Flee();
         }
             
         else if (GetComponent<BotMove>().destinationReached)
-        {
-            isActionCompleted = true;
-        }*/
-        if (GetComponent<BotMove>().destinationReached)
         {
             isActionCompleted = true;
         }
@@ -46,27 +41,14 @@ public class BotFlee : MonoBehaviour, IActionHasInitialAction, IActionRequiredSt
 
     public void ExecuteInitialAction()
     {
-        print("Fleeing");
         isActionCompleted = false;
-
-
+        findingSafeSpot = true;
 
         Vector2 safePosition = GetClosestSafePosition();
-        if (safePosition == Vector2.zero)
-        {
-            isActionCompleted = true;
-        }
-
-        findingSafeSpot = true;
         GetComponent<BotMove>().SetMove(safePosition.x, safePosition.y);
-        /*if (Random.Range(0,1) == 0)
-        {
-            Vector2 safePosition = GetClosestSafePosition();
-            if (safePosition == Vector2.zero)
-            {
-                isActionCompleted = true;
-            }
 
+        if (Random.Range(0,2) == 0 && safePosition != Vector2.zero)
+        {
             findingSafeSpot = true;
             GetComponent<BotMove>().SetMove(safePosition.x, safePosition.y);
         }
@@ -74,21 +56,21 @@ public class BotFlee : MonoBehaviour, IActionHasInitialAction, IActionRequiredSt
         {
             fleeTimer = new Timer(2.0f);
             findingSafeSpot = false;
-        }*/
+        }
 
     }
 
     private void Update()
     {
-        /*if (!findingSafeSpot && fleeTimer != null)
+        if (!findingSafeSpot && fleeTimer != null)
         {
             fleeTimer.IncrementTime(Time.deltaTime);
-            if (fleeTimer.IsAvailable())
+            if (fleeTimer.IsAvailable() && !isActionCompleted)
             {
                 fleeTimer.PauseTimer(true);
                 isActionCompleted = true;
             }
-        }*/
+        }
     }
 
     public Vector2 GetClosestSafePosition()
@@ -118,7 +100,7 @@ public class BotFlee : MonoBehaviour, IActionHasInitialAction, IActionRequiredSt
                 {
                     if (!hazard.CompareTag("Hazard"))
                     {
-                        Collider2D wall = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Walls"));
+                        Collider2D wall = Physics2D.OverlapCircle(transform.position, 1.2f, Global.gamemanager.wallLayer);
                         if (wall == null)
                             return safePosition;
                     }

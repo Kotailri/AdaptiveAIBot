@@ -82,7 +82,7 @@ public class ActionManager : MonoBehaviour, IResettable
             {
                 if (actionWithCompletion is IActionRequiredState actionRequiredState2)
                 {
-                    if (actionRequiredState2.GetActionStates().Contains(stateManager.GetCurrentState()))
+                    if (actionRequiredState2.GetActionStates().Contains(stateManager.GetCurrentState()) && actionWithCompletion.IsStateComplete())
                     {
                         StateChangeActions(stateManager.ChangeStates());
                     }

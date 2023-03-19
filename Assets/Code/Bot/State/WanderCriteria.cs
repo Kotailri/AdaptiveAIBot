@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleCriteria : MonoBehaviour, ActionStateCriteria
+public class WanderCriteria : MonoBehaviour, ActionStateCriteria
 {
     public ActionState ActionState()
     {
-        return global::ActionState.Idle;
+        return global::ActionState.Wander;
     }
     public bool PassesCriteria()
     {
-        return Global.difficultyLevel < 0;
+        return true;
     }
 
     public float StateStayTime()
@@ -20,6 +20,11 @@ public class IdleCriteria : MonoBehaviour, ActionStateCriteria
 
     public int PriorityLevel()
     {
-        return -1;
+        return -2;
+    }
+
+    public Color GetStateColor()
+    {
+        return Color.blue;
     }
 }

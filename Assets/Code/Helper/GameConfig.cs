@@ -34,8 +34,8 @@ public static class GameConfig
     public static Bounds c_WorldBounds = new Bounds(new Vector2(-12.4f, -6.4f), new Vector2(12.4f, 4.5f));
 
     // Items
-    public static float c_ItemSpawnTime = 1.0f;
-    public static int c_MaxItemCount = 6;
+    public static float c_ItemSpawnTime = 3f;
+    public static int c_MaxItemCount = 3;
 
     // Burst Shield
     public static KeyCode c_BurstKeyCode = KeyCode.E;
@@ -68,7 +68,7 @@ public static class GameConfig
     public static int c_WinTimeRoundCount = 2;
     public static int c_ScoreDifferenceRoundCount = 2;
 
-    public static float c_OvertimeTime = 30.0f;
+    public static float c_OvertimeTime = 300.0f;
     public static int c_OvertimeDamage = 4;
 
     // Playstyle Rule

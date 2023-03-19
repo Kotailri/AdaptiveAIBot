@@ -14,7 +14,7 @@ public class PlayerPoison : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(GameConfig.c_PoisonKeyCode))
+        if (Input.GetKeyDown(GameConfig.c_PoisonKeyCode) && Time.timeScale == 1)
         {
             if (inv.ConsumeItem(ItemName.PoisonConsumable))
             {

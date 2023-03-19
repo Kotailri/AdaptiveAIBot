@@ -13,11 +13,13 @@ public class StateManager : MonoBehaviour
     public GameObject statesCollection;
 
     private List<ActionStateCriteria> states = new List<ActionStateCriteria>();
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         states = new List<ActionStateCriteria>();
         states.AddRange(statesCollection.GetComponents<ActionStateCriteria>());
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public ActionState ChangeStates()
@@ -41,13 +43,14 @@ public class StateManager : MonoBehaviour
         {
             if (states[i].PassesCriteria())
             {
+                stateSwapTimer = 0;
                 stateSwapTime = states[i].StateStayTime();
-                
-                print(states[i].ActionState() + ": " + states[i].PriorityLevel());
+                spriteRenderer.color = states[i].GetStateColor();
                 return states[i].ActionState();
             }
         }
         Utility.PrintCol("Error: No State Selected", "FF0000");
+        spriteRenderer.color = Color.white;
         return ActionState.None;
     }
 

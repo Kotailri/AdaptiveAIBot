@@ -30,7 +30,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     [HideInInspector]
     public bool detectHits = false;
 
-    private void Start()
+    private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
     }
@@ -47,20 +47,16 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         
         float rotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotation), (enhancedAim ? 10.0f : 5.0f)  * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotation), (enhancedAim ? 10.0f : 5.0f)  * Time.deltaTime * 10);
 
         Vector2 origin = transform.position;
         Vector2 direction = (player.transform.position - transform.position).normalized;
 
         RaycastHit2D hit = Physics2D.CircleCast(origin, radius, direction, Mathf.Infinity, AimTargets);
-        if (Global.debugMode) lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -0.1f));
         if (hit.collider == null)
         {
-            if (Global.debugMode) lineRenderer.SetPosition(1, transform.position + (Vector3)direction * Mathf.Infinity);
             return false;
         }
-
-        if (Global.debugMode) lineRenderer.SetPosition(1, new Vector3(hit.point.x, hit.point.y, -0.1f));
 
         if (hit.collider.CompareTag("Player"))
         {

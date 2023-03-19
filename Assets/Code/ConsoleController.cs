@@ -116,6 +116,10 @@ public class ConsoleController : MonoBehaviour
                 Difficulty(tokens);
                 break;
 
+            case "debug":
+                ToggleDebug(tokens);
+                break;
+
             case "kill":
                 Kill(tokens);
                 break;
@@ -127,6 +131,26 @@ public class ConsoleController : MonoBehaviour
     }
 
     #region Command Functions
+    private void ToggleDebug(string[] tokens)
+    {
+        if (tokens.Length > 1)
+        {
+            if (tokens[1] == "true")
+            {
+                Global.debugMode = true;
+            }
+
+            else if (tokens[1] == "false")
+            {
+                Global.debugMode = false;
+            }
+            Utility.PrintCol("Updated debug mode to " + tokens[1], "00FF00");
+        }
+        else
+        {
+            Utility.PrintCol("Invalid Command", "FF0000");
+        }
+    }
     private void FillItems(string[] tokens)
     {
         tracker.Player.GetComponent<Inventory>().AddItems(ItemName.BurstConsumable, 64);

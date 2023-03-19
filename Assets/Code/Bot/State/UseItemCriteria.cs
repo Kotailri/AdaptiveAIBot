@@ -57,4 +57,9 @@ public class UseItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableSta
     {
         priorityLevel = Global.itemStrategyLevel / 2;
     }
+
+    public Color GetStateColor()
+    {
+        return new Color(1.0f, 0.647f, 0f, 1f);
+    }
 }

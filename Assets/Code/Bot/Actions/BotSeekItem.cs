@@ -23,7 +23,10 @@ public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequir
         if (ItemsAvailable())
         {
             Vector2 itemLocation = scanner.LocateNearestItem();
-            botMove.SetMove(itemLocation.x, itemLocation.y);
+            if (itemLocation != null)
+                botMove.SetMove(itemLocation.x, itemLocation.y);
+            else
+                completed = true;
         }
         else
         {
@@ -36,7 +39,6 @@ public class BotSeekItem : MonoBehaviour, IActionHasInitialAction, IActionRequir
         if (botMove.destinationReached && !completed)
         {
             completed = true;
-            print("done!");
         }
     }
 

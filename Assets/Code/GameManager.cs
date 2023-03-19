@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [Space(5.0f)]
     public LayerMask wallLayer;
     public GameObject testMarker;
+    public bool DebugModeToggle;
 
     public void RestartGame()
     {
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
 
         if (BotWin || PlayerWin)
         {
-            Invoke(nameof(ResetDelay), 0.5f);
+            Invoke(nameof(ResetDelay), 0.1f);
             ResetObjects();
         }
     }
@@ -118,6 +119,10 @@ public class GameManager : MonoBehaviour
     {
         PlayerHealth.ResetObject();
         BotHealth.ResetObject();
+
+        Global.playertracker.Bot.transform.position = GameConfig.c_BotSpawnPosition;
+        Global.playertracker.Player.transform.position = GameConfig.c_PlayerSpawnPosition;
+        
     }
 
     private void Awake()
@@ -128,6 +133,21 @@ public class GameManager : MonoBehaviour
 
     public void TogglePause(bool isPaused)
     {
+        if (isPaused)
+        {
+            // Reset keys
+            Input.GetKeyUp(KeyCode.Space);
+            Input.GetKeyUp(KeyCode.W);
+            Input.GetKeyUp(KeyCode.A);
+            Input.GetKeyUp(KeyCode.S);
+            Input.GetKeyUp(KeyCode.D);
+            Input.GetKeyUp(KeyCode.E);
+            Input.GetKeyUp(KeyCode.Q);
+            Input.GetMouseButtonUp(0);
+            Input.GetMouseButtonUp(1);
+
+        }
+
         pauseCanvas.enabled = isPaused;
         Time.timeScale = isPaused ? 0 : 1;
     }

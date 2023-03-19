@@ -32,15 +32,8 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
 
     public bool PassesCriteria()
     {
-
-        if (tracker.Bot.GetComponent<BotFlee>().GetClosestSafePosition() == Vector2.zero)
-            return false;
-
-        // is bot close
-        if (tracker.CurrentDistance <= 3.0f)
-        {
+        if (IsInLineOfSight())
             return true;
-        }
 
         // if bot has less stats (high diff)
         if (Global.difficultyLevel > Random.Range(0.0f, 5.0f))
@@ -50,7 +43,14 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
             if (playerStats > botStats) return true;
         }
 
-        return IsInLineOfSight();
+        // is bot close
+        if (tracker.CurrentDistance <= 3.0f)
+        {
+            return true;
+        }
+
+        return Global.aggressionLevel < Random.Range(5, 10);
+
     }
 
     public int PriorityLevel()
@@ -73,5 +73,10 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
         {
             priorityLevel = 1;
         }
+    }
+
+    public Color GetStateColor()
+    {
+        return Color.cyan;
     }
 }
