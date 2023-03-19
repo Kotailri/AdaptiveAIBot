@@ -147,6 +147,10 @@ public class GameManager : MonoBehaviour
             Input.GetMouseButtonUp(1);
 
         }
+        else
+        {
+            matchTime = 0.0f;
+        }
 
         pauseCanvas.enabled = isPaused;
         Time.timeScale = isPaused ? 0 : 1;

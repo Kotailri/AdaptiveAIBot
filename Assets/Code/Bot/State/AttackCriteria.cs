@@ -23,6 +23,9 @@ public class AttackCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStat
         if (Global.aggressionLevel == 0)
             return false;
 
+        if (Global.aggressionLevel >= 8)
+            return true;
+
         if (1.0f > Random.Range(0f, 5.0f))
             return false;
 

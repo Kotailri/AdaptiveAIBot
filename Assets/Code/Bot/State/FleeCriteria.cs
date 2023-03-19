@@ -32,6 +32,9 @@ public class FleeCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableStateP
 
     public bool PassesCriteria()
     {
+        if (Global.aggressionLevel <= 2)
+            return true;
+
         if (IsInLineOfSight())
             return true;
 
