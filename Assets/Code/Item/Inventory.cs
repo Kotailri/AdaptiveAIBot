@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour, IResettable
         statBoosts.Add(ItemName.SpeedStat, 0);
         statBoosts.Add(ItemName.DamageStat, 0);
 
+        statBoosts.Add(ItemName.HealStat, 0);
+
         UpdateInventoryUI();
     }
 
@@ -40,7 +42,17 @@ public class Inventory : MonoBehaviour, IResettable
 
     public bool HasItem(ItemName itemName)
     {
-        return consumables[itemName] > 0;
+        if (consumables.ContainsKey(itemName))
+        {
+            return consumables[itemName] > 0;
+        }
+
+        if (statBoosts.ContainsKey(itemName))
+        {
+            return statBoosts[itemName] > 0;
+        }
+
+        return false;
     }
 
     public bool ConsumeItem(ItemName itemName)

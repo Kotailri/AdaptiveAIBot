@@ -25,9 +25,8 @@ public class StateManager : MonoBehaviour
     public ActionState ChangeStates()
     {
         stateSwapTimer = 0;
-        ActionState newState = SelectNewState();
-        currentState = newState;
-        return newState;
+        currentState = SelectNewState();
+        return currentState;
     }
 
     public ActionState GetCurrentState()
@@ -46,6 +45,8 @@ public class StateManager : MonoBehaviour
                 stateSwapTimer = 0;
                 stateSwapTime = states[i].StateStayTime();
                 spriteRenderer.color = states[i].GetStateColor();
+                if (Global.debugMode)
+                    print("Swapping state to " + states[i].ActionState());
                 return states[i].ActionState();
             }
         }
@@ -72,7 +73,7 @@ public class StateManager : MonoBehaviour
         if (stateSwapTimer >= stateSwapTime)
         {
             stateSwapTimer = 0;
-            currentState = ChangeStates();
+            ChangeStates();
             Global.playertracker.Bot.GetComponent<ActionManager>().StateChangeActions(currentState);
         }
     }

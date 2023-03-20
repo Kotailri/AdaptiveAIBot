@@ -39,14 +39,18 @@ public class Health : MonoBehaviour, IResettable
     {
         health = 0;
         bar.current = health;
-        Global.gamemanager.UpdateGM();
+        if (Global.gamemanager)
+            Global.gamemanager.UpdateGM();
     }
 
     public void UpdateHealth(int hp)
     {
         health += hp;
+        if (health > 100)
+            health = 100;
         bar.current = health;
-        Global.gamemanager.UpdateGM();
+        if (Global.gamemanager)
+            Global.gamemanager.UpdateGM();
     }
 
     public void OnDestroyAction()

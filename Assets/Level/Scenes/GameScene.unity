@@ -6958,12 +6958,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb5827c8bc25e348b8a5553fb2c72bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletLayer:
+  bulletCollisionLayer:
     serializedVersion: 2
     m_Bits: 136
   dodgeLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 264
   isDodging: 0
 --- !u!114 &761895678
 MonoBehaviour:
@@ -14514,7 +14514,7 @@ SpriteRenderer:
   m_SortingLayerID: -943742417
   m_SortingLayer: -1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 842a9f8c552db2344896bfb5a4ab6238, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d44fddf858c0d284ca87541958b65a1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -14533,8 +14533,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524705218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.384, y: 5.384, z: 5.384}
+  m_LocalPosition: {x: 0, y: -0.91, z: 0}
+  m_LocalScale: {x: 1.9272416, y: 1.9272416, z: 1.9272416}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -15687,12 +15687,14 @@ MonoBehaviour:
     m_Bits: 200
   spawnItems:
   - item: {fileID: 5062088970403340211, guid: 3086595f840be2a4fa39f0e313cf1e28, type: 3}
-    chance: 20
+    chance: 10
   - item: {fileID: 35683543025840151, guid: 842e0d31696acef47a95828ba104495e, type: 3}
-    chance: 20
+    chance: 15
   - item: {fileID: 35683543025840151, guid: 31da2bf87d75eb549bc38c32ca731a26, type: 3}
-    chance: 40
+    chance: 15
   - item: {fileID: 35683543025840151, guid: bc7bfe39e7b976440b53fcd410498ecf, type: 3}
+    chance: 30
+  - item: {fileID: 35683543025840151, guid: 3a9b4db5ebc5b3741a555861ddb43b86, type: 3}
     chance: 10
   currentItems: []
 --- !u!4 &1864021509
@@ -16519,7 +16521,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.14311142, g: 0.32472467, b: 0.4528302, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.17539907, b: 0.3018868, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -17762,7 +17764,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2092360357}
-  - component: {fileID: 2092360356}
   - component: {fileID: 2092360358}
   - component: {fileID: 2092360359}
   - component: {fileID: 2092360360}
@@ -17776,31 +17777,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2092360356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092360355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa7fa6efb953ad54f9f82f22692baf46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerScore: 0
-  BotScore: 0
-  PlayerHealth: {fileID: 606889597}
-  BotHealth: {fileID: 761895661}
-  playerScoreText: {fileID: 718383947}
-  botScoreText: {fileID: 1383566467}
-  matchTime: 0
-  pauseCanvas: {fileID: 1378743578}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  testMarker: {fileID: 691214910273940963, guid: 6da0acd9cfdd65b49b8d678924d5296e, type: 3}
-  DebugModeToggle: 0
 --- !u!4 &2092360357
 Transform:
   m_ObjectHideFlags: 0

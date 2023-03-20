@@ -7,12 +7,12 @@ using static UnityEngine.UI.Image;
 public class BotDodge : MonoBehaviour
 {
     private float scanDistance = 18.0f;
-    private float dodgeRadius = 0.2f;
+    private float dodgeRadius = 0.6f;
     private float dodgeDistance = 2f;
     private float dodgeSpeed = 6.0f;
 
     private List<GameObject> incomingBullets = new List<GameObject> ();
-    public LayerMask bulletLayer;
+    public LayerMask bulletCollisionLayer;
     public LayerMask dodgeLayer;
 
     private BotAreaScanner scanner;
@@ -68,15 +68,13 @@ public class BotDodge : MonoBehaviour
         {
             RB.velocity = perpendicular.normalized * dodgeSpeed;
             UnityEngine.Debug.DrawLine(transform.position, (Vector2)transform.position + perpendicular.normalized * dodgeDistance, Color.red);
-            //Time.timeScale = 0;
         }
         else if (hit2.collider == null)
         {
             RB.velocity = -perpendicular.normalized * dodgeSpeed;
             UnityEngine.Debug.DrawLine(transform.position, (Vector2)transform.position + -perpendicular.normalized * dodgeDistance, Color.red);
-            //Time.timeScale = 0;
         }
-        else if (Global.difficultyLevel >= Random.Range(0,9))
+        else
         {
             RB.velocity = -toTarget.normalized * dodgeSpeed;
         }
@@ -110,7 +108,7 @@ public class BotDodge : MonoBehaviour
             Vector2 direction = bullet.GetComponent<Rigidbody2D>().velocity.normalized;
             Vector2 origin = bullet.transform.position;
 
-            RaycastHit2D hit = Physics2D.CircleCast(origin, 0.4f, direction, Mathf.Infinity, bulletLayer);
+            RaycastHit2D hit = Physics2D.CircleCast(origin, 0.4f, direction, Mathf.Infinity, bulletCollisionLayer);
 
             if (hit.collider == null)
             {

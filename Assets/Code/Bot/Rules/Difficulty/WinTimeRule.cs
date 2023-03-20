@@ -46,12 +46,12 @@ public class WinTimeRule : MonoBehaviour, IDifficultyRule
             if (averagePlayerTime == 0.0f)
                 averagePlayerTime = float.MaxValue;
 
-            if (averagePlayerTime > averageBotTime)
+            if (averagePlayerTime > averageBotTime && winner == PlayerType.Player)
             {
                 // decrease diff
                 return -(Mathf.Abs(averageTimeDifference)) * GameConfig.c_WinTimeDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;
             }
-            else
+            else if (winner == PlayerType.Bot)
             {
                 // increase diff
                 return (Mathf.Abs(averageTimeDifference)) * GameConfig.c_WinTimeDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;

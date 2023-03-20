@@ -32,7 +32,8 @@ public enum ItemName
     PoisonConsumable,
     BurstConsumable,
     SpeedStat,
-    DamageStat
+    DamageStat,
+    HealStat
 }
 
 public class Bounds

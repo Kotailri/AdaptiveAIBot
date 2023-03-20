@@ -49,6 +49,7 @@ public class BotFlee : MonoBehaviour, IActionHasInitialAction, IActionRequiredSt
 
         if (Random.Range(0,2) == 0 && safePosition != Vector2.zero)
         {
+            print(safePosition);
             findingSafeSpot = true;
             GetComponent<BotMove>().SetMove(safePosition.x, safePosition.y);
         }
