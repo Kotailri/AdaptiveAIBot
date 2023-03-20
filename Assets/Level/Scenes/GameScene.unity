@@ -6203,6 +6203,7 @@ GameObject:
   - component: {fileID: 707991442}
   - component: {fileID: 707991441}
   - component: {fileID: 707991440}
+  - component: {fileID: 707991444}
   m_Layer: 5
   m_Name: GameInfoUI
   m_TagString: Untagged
@@ -6294,6 +6295,18 @@ RectTransform:
   m_AnchoredPosition: {x: 4.81, y: -1.97}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &707991444
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707991439}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &718383945
 GameObject:
   m_ObjectHideFlags: 0
@@ -17875,7 +17888,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   testMarker: {fileID: 691214910273940963, guid: 6da0acd9cfdd65b49b8d678924d5296e, type: 3}
-  DebugModeToggle: 1
+  DebugModeToggle: 0
 --- !u!114 &2092360362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17888,6 +17901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4336355a7ee849f41a488868b89ab984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameInfoUICanvas: {fileID: 707991444}
   difficultyLevel: {fileID: 1322805526}
   difficultyLevelSlider: {fileID: 333911887}
   aggressionLevel: {fileID: 1114515269}

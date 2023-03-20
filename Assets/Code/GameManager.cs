@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public GameObject testMarker;
     public bool DebugModeToggle;
 
+    private GameInfoUI gameInfo;
+
     public void RestartGame()
     {
         PlayerScore = 0;
@@ -66,7 +68,7 @@ public class GameManager : MonoBehaviour
         BotHealth.UpdateHealth(-GameConfig.c_OvertimeDamage);
         UpdateGM();
         if (overtime)
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1.5f);
         if (overtime)
             StartCoroutine(OvertimeDamage());
     }
@@ -128,6 +130,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Global.gamemanager = this;
+        gameInfo = GetComponent<GameInfoUI>();
         TogglePause(true);
     }
 
@@ -145,14 +148,17 @@ public class GameManager : MonoBehaviour
             Input.GetKeyUp(KeyCode.Q);
             Input.GetMouseButtonUp(0);
             Input.GetMouseButtonUp(1);
-
+            gameInfo.EnableUIElements(true);
+            Time.timeScale = 0;
         }
         else
         {
             matchTime = 0.0f;
+            gameInfo.EnableUIElements(false);
+            Time.timeScale = 1;
         }
 
         pauseCanvas.enabled = isPaused;
-        Time.timeScale = isPaused ? 0 : 1;
+        
     }
 }

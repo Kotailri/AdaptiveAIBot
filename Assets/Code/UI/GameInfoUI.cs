@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameInfoUI : MonoBehaviour
 {
+    public CanvasGroup GameInfoUICanvas;
+
+    [Space(10.0f)]
     public TextMeshProUGUI difficultyLevel;
     public Slider difficultyLevelSlider;
 
@@ -42,6 +45,34 @@ public class GameInfoUI : MonoBehaviour
     {
         Global.gameInfoUI = this;
         UpdateGameInfo();
+    }
+
+    public void EnableUIElements(bool enabled)
+    {
+        if (enabled)
+        {
+            difficultyLevelSlider.interactable = true;
+            aggressionLevelSlider.interactable = true;
+            counterLevelSlider.interactable = true;
+            itemCollectLevelSlider.interactable = true;
+            itemUsageLevelSlider.interactable = true;
+            positionalLevelSlider.interactable = true;
+            resetButton.interactable = true;
+            lockToggle.interactable = true;
+            GameInfoUICanvas.alpha = 1;
+        }
+        else
+        {
+            difficultyLevelSlider.interactable = false;
+            aggressionLevelSlider.interactable = false;
+            counterLevelSlider.interactable = false;
+            itemCollectLevelSlider.interactable = false;
+            itemUsageLevelSlider.interactable = false;
+            positionalLevelSlider.interactable = false;
+            resetButton.interactable = false;
+            lockToggle.interactable = false;
+            GameInfoUICanvas.alpha = 0.5f;
+        }
     }
 
     private void Start()

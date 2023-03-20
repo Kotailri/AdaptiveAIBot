@@ -16,6 +16,9 @@ public class PlayerShoot : MonoBehaviour
         CurrentShootTimer += Time.deltaTime;
         CurrentShootTimer_big += Time.deltaTime;
 
+        if (!GameConfig.c_MouseAimBounds.IsPointInBounds((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position)))
+            return;
+
         if (Input.GetMouseButton(0) && CurrentShootTimer >= GameConfig.c_PlayerShootCooldown)
         {
             CurrentShootTimer = 0;

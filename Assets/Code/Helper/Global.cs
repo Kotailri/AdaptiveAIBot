@@ -74,7 +74,7 @@ public static class Global
     public static List<IResettable> resettables = new List<IResettable>();
 
     // Debug
-    public static bool debugMode = true;
+    public static bool debugMode = false;
 
     public static GameManager gamemanager;
     public static ItemSpawner itemSpawner;
@@ -94,7 +94,7 @@ public static class Global
     public static int botDamageBoost = 0;
     public static int botDamageBoost_big = 0;
 
-    public static float difficultyLevel = 10.0f;
+    public static float difficultyLevel = 5.0f;
 
     // Playstyle rules
     public static int playerItemCounterLevel = 0;

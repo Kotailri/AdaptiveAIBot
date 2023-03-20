@@ -33,6 +33,8 @@ public static class GameConfig
     public static Vector3 c_BotSpawnPosition = new Vector3(11.5200005f, 3.333f, 0);
     public static Bounds c_WorldBounds = new Bounds(new Vector2(-12.4f, -6.4f), new Vector2(12.4f, 4.5f));
 
+    public static Bounds c_MouseAimBounds = new Bounds(new Vector2(-16, -10), new Vector2(16, 8));
+
     // Items
     public static float c_ItemSpawnTime = 3f;
     public static int c_MaxItemCount = 3;
@@ -68,8 +70,8 @@ public static class GameConfig
     public static int c_WinTimeRoundCount = 2;
     public static int c_ScoreDifferenceRoundCount = 2;
 
-    public static float c_OvertimeTime = 300.0f;
-    public static int c_OvertimeDamage = 4;
+    public static float c_OvertimeTime = 60.0f;
+    public static int c_OvertimeDamage = 2;
 
     // Playstyle Rule
     public static int maxPlaystyleLevel = 10;
