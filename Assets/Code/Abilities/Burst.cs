@@ -36,6 +36,7 @@ public class Burst : MonoBehaviour, IResettable
         BulletCollision collidingBullet;
         if (collision.TryGetComponent<BulletCollision>(out collidingBullet))
         {
+            AudioManager.instance.PlaySound("zap2");
             if (collidingBullet.playerType == PlayerType.Bot && owner == PlayerType.Player)
                 DeflectBullet(collidingBullet.gameObject, collidingBullet.isBig? playerBullet_big : playerBullet);
 

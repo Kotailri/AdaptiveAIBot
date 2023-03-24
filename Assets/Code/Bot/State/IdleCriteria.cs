@@ -20,7 +20,7 @@ public class IdleCriteria : MonoBehaviour, ActionStateCriteria
 
     public int PriorityLevel()
     {
-        return -1;
+        return -5;
     }
 
     public Color GetStateColor()

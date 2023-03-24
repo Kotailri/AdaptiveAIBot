@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.VersionControl.Asset;
 
 public class StateManager : MonoBehaviour
 {
@@ -34,13 +33,34 @@ public class StateManager : MonoBehaviour
         return currentState;
     }
 
+    public void ForceState(ActionState state, float time=0.0f)
+    {
+        for (int i = 0; i < states.Count; i++)
+        {
+            if (states[i].ActionState() == state)
+            {
+                stateSwapTimer = 0;
+                if (time == 0.0f)
+                    stateSwapTime = states[i].StateStayTime();
+                else
+                    stateSwapTime = time;
+                spriteRenderer.color = states[i].GetStateColor();
+                if (Global.debugMode)
+                    print("Forced state to " + state);
+                currentState = state;
+                break;
+            }
+        }
+        Global.playertracker.Bot.GetComponent<ActionManager>().StateChangeActions(currentState);
+    }
+
     private ActionState SelectNewState()
     {
         states = states.OrderBy(state => state.PriorityLevel()).ToList();
         states.Reverse();
         for (int i = 0; i < states.Count; i++)
         {
-            if (states[i].PassesCriteria())
+            if (states[i].PassesCriteria() && Random.Range(0f, 1f) >= 0.1)
             {
                 stateSwapTimer = 0;
                 stateSwapTime = states[i].StateStayTime();
@@ -50,9 +70,12 @@ public class StateManager : MonoBehaviour
                 return states[i].ActionState();
             }
         }
-        Utility.PrintCol("Error: No State Selected", "FF0000");
-        spriteRenderer.color = Color.white;
-        return ActionState.None;
+        stateSwapTimer = 0;
+        stateSwapTime = states[0].StateStayTime();
+        spriteRenderer.color = states[0].GetStateColor();
+        if (Global.debugMode)
+            print("Swapping state to " + states[0].ActionState());
+        return states[0].ActionState();
     }
 
     public void UpdateStatePriorities()

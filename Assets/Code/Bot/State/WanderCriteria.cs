@@ -10,17 +10,17 @@ public class WanderCriteria : MonoBehaviour, ActionStateCriteria
     }
     public bool PassesCriteria()
     {
-        return true;
+        return Random.Range(0, 5) > 1;
     }
 
     public float StateStayTime()
     {
-        return 5.0f;
+        return -(int)Global.difficultyLevel;
     }
 
     public int PriorityLevel()
     {
-        return -2;
+        return -(int)Global.difficultyLevel;
     }
 
     public Color GetStateColor()

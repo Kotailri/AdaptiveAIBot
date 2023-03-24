@@ -103,9 +103,11 @@ public static class Global
     public static int aggressionLevel = 0;
     public static int playerPositionCounterLevel = 0;
 
+    // Loadoptions
     public static bool isLevelupLocked = false;
-
-    
+    public static bool difficultyLocked = false;
+    public static bool playstyleLocked = false;
+    public static bool UILocked = false;
 }
 
 

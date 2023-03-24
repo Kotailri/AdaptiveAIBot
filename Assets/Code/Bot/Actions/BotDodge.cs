@@ -32,7 +32,7 @@ public class BotDodge : MonoBehaviour
     public void Dodge()
     {
         
-        bool dodgeChance = Global.difficultyLevel >= Random.Range(0.0f, 5.0f);
+        bool dodgeChance = Global.difficultyLevel >= Random.Range(0.0f, 8.0f);
         if (!dodgeChance)
         {
             return;

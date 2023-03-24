@@ -9,9 +9,45 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Level/Scenes/Menu.unity
+    guid: ac2c45764e4b7cc4a9d428ccfed31925
+  - enabled: 1
     path: Assets/Level/Scenes/GameScene.unity
     guid: c0aaf7c26a47d7d47961b8afbd6fc593
   - enabled: 1
     path: Assets/Level/Scenes/TestScenes/TestScene0.unity
     guid: c851e0c25617aad4a896f7bd923a4bb4
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_Difficulty1.unity
+    guid: fd07048d6917f3940a86cb93be531eec
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_Positional1.unity
+    guid: acc20aa6c92a131488fff37a77658b8f
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_CollectItem1.unity
+    guid: cc9853fabeb6ccc489b69b14b141ce58
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_Difficulty0.unity
+    guid: 5bbbd2e00eaff2b429dbd05174ab8ee8
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_Counter1.unity
+    guid: cf7738e729619d744918ce2145c45fcd
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_Aggression1.unity
+    guid: 125486061174a584b8bc0918f7b4de51
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_0.unity
+    guid: ea97bd82b2bea624b8cbb3db61bd16c1
+  - enabled: 0
+    path: Assets/Level/Scenes/DemoScenes/Demo_UseItem1.unity
+    guid: b32dc28ae8c8fb24194a4334de081f20
+  - enabled: 1
+    path: Assets/Level/Scenes/GameScene_Demo.unity
+    guid: e0eca6b3abc9e38459e9dbb5b37e320e
   m_configObjects: {}

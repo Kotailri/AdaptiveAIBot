@@ -106,14 +106,29 @@ public class BotMove : MonoBehaviour, IResettable
     public void MoveRandom()
     {
         Bounds worldBounds = GameConfig.c_WorldBounds;
-        while (true)
+        for (int i = 0; i < 265; i++)
         {
             Vector2 position = worldBounds.GenerateRandomPositionInBounds();
             Collider2D[] wall = Physics2D.OverlapCircleAll(position, 0.1f, Global.gamemanager.wallLayer);
+            Collider2D zones = Physics2D.OverlapCircle(position, 0.2f, Global.gamemanager.detectorLayer);
             if (wall.Length == 0)
             {
-                SetMove(position.x, position.y);
-                return;
+                if (Global.playerPositionCounterLevel >= Random.Range(0,8) && zones)
+                {
+                    print(zones);
+                    print(Global.playerDetectorManager.GetSortedDetectorList()[0]);
+                    if (zones.gameObject.Equals(Global.playerDetectorManager.GetSortedDetectorList()[0]))
+                    {
+                        SetMove(position.x, position.y);
+                        return;
+                    }
+                }
+                else
+                {
+                    SetMove(position.x, position.y);
+                    return;
+                }
+                
             }
         }
     }

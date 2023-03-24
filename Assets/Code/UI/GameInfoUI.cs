@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameInfoUI : MonoBehaviour
 {
+    [Header("UI Elements")]
     public CanvasGroup GameInfoUICanvas;
 
     [Space(10.0f)]
@@ -51,19 +52,52 @@ public class GameInfoUI : MonoBehaviour
     {
         if (enabled)
         {
-            difficultyLevelSlider.interactable = true;
-            aggressionLevelSlider.interactable = true;
-            counterLevelSlider.interactable = true;
-            itemCollectLevelSlider.interactable = true;
-            itemUsageLevelSlider.interactable = true;
-            positionalLevelSlider.interactable = true;
-            resetButton.interactable = true;
-            lockToggle.interactable = true;
-            GameInfoUICanvas.alpha = 1;
+            if (!Global.difficultyLocked || !Global.UILocked)
+                difficultyLevelSlider.interactable = true;
+
+            if (!Global.playstyleLocked || !Global.UILocked)
+            {
+                aggressionLevelSlider.interactable = true;
+                counterLevelSlider.interactable = true;
+                itemCollectLevelSlider.interactable = true;
+                itemUsageLevelSlider.interactable = true;
+                positionalLevelSlider.interactable = true;
+                resetButton.interactable = true;
+                lockToggle.interactable = true;
+            }
+
+            if (!Global.difficultyLocked || !Global.playstyleLocked)
+                GameInfoUICanvas.alpha = 1;
         }
         else
         {
+            if (!Global.difficultyLocked)
+                difficultyLevelSlider.interactable = false;
+
+            if (!Global.playstyleLocked)
+            {
+                aggressionLevelSlider.interactable = false;
+                counterLevelSlider.interactable = false;
+                itemCollectLevelSlider.interactable = false;
+                itemUsageLevelSlider.interactable = false;
+                positionalLevelSlider.interactable = false;
+                resetButton.interactable = false;
+                lockToggle.interactable = false;
+            }
+            if (!Global.difficultyLocked || !Global.playstyleLocked || Global.UILocked)
+                GameInfoUICanvas.alpha = 0.5f;
+        }
+    }
+
+    private void Start()
+    {
+        if (Global.difficultyLocked || Global.UILocked)
+        {
             difficultyLevelSlider.interactable = false;
+        }
+
+        if (Global.playstyleLocked || Global.UILocked)
+        {
             aggressionLevelSlider.interactable = false;
             counterLevelSlider.interactable = false;
             itemCollectLevelSlider.interactable = false;
@@ -71,12 +105,11 @@ public class GameInfoUI : MonoBehaviour
             positionalLevelSlider.interactable = false;
             resetButton.interactable = false;
             lockToggle.interactable = false;
-            GameInfoUICanvas.alpha = 0.5f;
         }
-    }
 
-    private void Start()
-    {
+        if ((Global.difficultyLocked && Global.playstyleLocked) || Global.UILocked)
+            GameInfoUICanvas.alpha = 0.5f;
+
         stateManager = Global.playertracker.Bot.GetComponent<StateManager>();
 
         difficultyLevelSlider.onValueChanged.AddListener((float val) =>
@@ -144,6 +177,8 @@ public class GameInfoUI : MonoBehaviour
             else
                 AudioManager.instance.PlaySound("unlock");
         });
+
+        Global.gameInfoUI.UpdateGameInfo();
     }
 
     public void UpdateGameInfo()

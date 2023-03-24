@@ -50,13 +50,10 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            Debug.LogError("More than one Audio Manager found");
-        }    
-        else
+        if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -69,6 +66,7 @@ public class AudioManager : MonoBehaviour
         {
             GameObject _go = new GameObject("Sound_" + i + "_" + sounds[i].name);
             sounds[i].SetSource(_go.AddComponent<AudioSource>());
+            _go.transform.SetParent(this.gameObject.transform);
         }
     }
 

@@ -22,7 +22,7 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
         if (!playerTracker)
             return;
 
-        if (playerTracker.CurrentDistance < GameConfig.c_AggroApproachDist 
+        if (playerTracker.CurrentDistance > GameConfig.c_AggroApproachDist 
             && playerTracker.Bot.GetComponent<ActionManager>().stateManager.GetCurrentState() != ActionState.Attack)
         {
             approachTimer -= Time.deltaTime;
@@ -45,7 +45,7 @@ public class AggressionPlaystyle : MonoBehaviour, IPlaystyleRule
 
     public void UpdatePlaystyleLevel()
     {
-        Global.aggressionLevel += (int) Mathf.Clamp(approachTimer/10.0f, -2.0f, 2.0f);
+        Global.aggressionLevel += (int) Mathf.Clamp(approachTimer/15.0f, -2.0f, 2.0f);
         approachTimer = 0.0f;
     }
 }

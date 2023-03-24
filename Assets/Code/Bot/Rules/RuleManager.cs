@@ -22,7 +22,7 @@ public class RuleManager : MonoBehaviour
 
     public void UpdatePlaystyle()
     {
-        if (Global.isLevelupLocked)
+        if (Global.isLevelupLocked || Global.playstyleLocked)
         {
             if (Global.debugMode)
                 print("Playstyle Locked");
@@ -44,7 +44,7 @@ public class RuleManager : MonoBehaviour
 
     public void UpdateDifficulty(PlayerType winner)
     {
-        if (Global.isLevelupLocked)
+        if (Global.isLevelupLocked || Global.difficultyLocked)
         {
             if (Global.debugMode)
                 print("Difficulty Locked");

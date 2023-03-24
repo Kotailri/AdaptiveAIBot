@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,13 +21,15 @@ public class GameManager : MonoBehaviour
 
     [Space(5.0f)]
     public float matchTime = 0.0f;
-    private bool overtime = false;
+    public bool overtime = false;
 
     [Space(5.0f)]
     public Canvas pauseCanvas;
+    public TextMeshProUGUI winnerTMP;
 
     [Space(5.0f)]
     public LayerMask wallLayer;
+    public LayerMask detectorLayer;
     public GameObject testMarker;
     public bool DebugModeToggle;
 
@@ -51,6 +54,11 @@ public class GameManager : MonoBehaviour
             TogglePause(false);
         }
 
+        if (Input.GetKeyDown(KeyCode.Backspace) && SceneManager.GetActiveScene().name != "Menu")
+        {
+            SceneManager.LoadScene("Menu");
+        }
+
         if (matchTime < GameConfig.c_OvertimeTime)
         {
             matchTime += Time.deltaTime;
@@ -66,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerHealth.UpdateHealth(-GameConfig.c_OvertimeDamage);
         BotHealth.UpdateHealth(-GameConfig.c_OvertimeDamage);
+
         UpdateGM();
         if (overtime)
             yield return new WaitForSeconds(1.5f);
@@ -84,7 +93,7 @@ public class GameManager : MonoBehaviour
             BotScore++;
             botScoreText.text = BotScore.ToString();
             Global.ruleManager.UpdateDifficulty(PlayerType.Bot);
-
+            winnerTMP.text = "Bot Wins...";
         }
 
         else if (PlayerWin)
@@ -93,6 +102,7 @@ public class GameManager : MonoBehaviour
             PlayerScore++;
             playerScoreText.text = PlayerScore.ToString();
             Global.ruleManager.UpdateDifficulty(PlayerType.Player);
+            winnerTMP.text = "Player Wins!";
         }
 
         if (BotWin || PlayerWin)
@@ -131,23 +141,28 @@ public class GameManager : MonoBehaviour
     {
         Global.gamemanager = this;
         gameInfo = GetComponent<GameInfoUI>();
+    }
+
+    private void Start()
+    {
         TogglePause(true);
     }
 
     public void TogglePause(bool isPaused)
     {
+        // Reset keys
+        Input.GetKeyUp(KeyCode.Space);
+        Input.GetKeyUp(KeyCode.W);
+        Input.GetKeyUp(KeyCode.A);
+        Input.GetKeyUp(KeyCode.S);
+        Input.GetKeyUp(KeyCode.D);
+        Input.GetKeyUp(KeyCode.E);
+        Input.GetKeyUp(KeyCode.Q);
+        Input.GetMouseButtonUp(0);
+        Input.GetMouseButtonUp(1);
+
         if (isPaused)
         {
-            // Reset keys
-            Input.GetKeyUp(KeyCode.Space);
-            Input.GetKeyUp(KeyCode.W);
-            Input.GetKeyUp(KeyCode.A);
-            Input.GetKeyUp(KeyCode.S);
-            Input.GetKeyUp(KeyCode.D);
-            Input.GetKeyUp(KeyCode.E);
-            Input.GetKeyUp(KeyCode.Q);
-            Input.GetMouseButtonUp(0);
-            Input.GetMouseButtonUp(1);
             gameInfo.EnableUIElements(true);
             Time.timeScale = 0;
         }
@@ -155,6 +170,7 @@ public class GameManager : MonoBehaviour
         {
             matchTime = 0.0f;
             gameInfo.EnableUIElements(false);
+            Global.ruleManager.UpdatePlaystyle();
             Time.timeScale = 1;
         }
 

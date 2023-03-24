@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAction, IActionHasActionChance, IActionHasCleanup, IActionExcludeState
 {
@@ -68,7 +66,8 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     private void ShootSmall()
     {
-        if (CurrentShootTimer <= (GameConfig.c_PlayerShootCooldown - Mathf.Clamp(Global.difficultyLevel/10, 0, GameConfig.c_PlayerShootCooldown / 2)))
+        float timerDecrease = Mathf.Clamp(Global.difficultyLevel / 10, 0, GameConfig.c_PlayerShootCooldown / 3);
+        if (CurrentShootTimer <= (GameConfig.c_PlayerShootCooldown - timerDecrease))
         {
             return;
         }
@@ -84,6 +83,11 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
         proj.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         proj.GetComponent<Rigidbody2D>().velocity = (proj.transform.up).normalized * -GameConfig.c_ProjectileSpeed;
         proj.GetComponent<BulletCollision>().damageBoost = Global.botDamageBoost;
+
+        if (Global.playerAttackCounterLevel >= Random.Range(1,8))
+        {
+            GetComponent<StateManager>().ForceState(ActionState.Flee);
+        }
     }
 
     private void ShootBig()
@@ -156,7 +160,7 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
     public void ExecuteAction()
     {
         float shootChance = Random.Range(0f, 8f);
-        if (Global.difficultyLevel > shootChance)
+        if (Global.difficultyLevel > shootChance && Global.playerAttackCounterLevel >= Random.Range(0f, 7f))
         {
             if (Global.playertracker && Global.playertracker.playerStopped)
             {
@@ -179,13 +183,17 @@ public class BotShoot : MonoBehaviour, IActionHasActionCheck, IActionHasUpdateAc
 
     public float GetActionChance()
     {
-        return Mathf.Clamp(Global.difficultyLevel / 8.0f, 0.01f, 1.0f);
+        return Mathf.Clamp(Global.difficultyLevel / 8.0f, 0.03f, 1.0f);
     }
 
     public void Cleanup()
     {
-        lineRenderer.SetPosition(0, Vector3.zero);
-        lineRenderer.SetPosition(1, Vector3.zero);
+        if (lineRenderer)
+        {
+            lineRenderer.SetPosition(0, Vector3.zero);
+            lineRenderer.SetPosition(1, Vector3.zero);
+        }
+        
     }
 
     public List<ActionState> GetExcludedActionStates()

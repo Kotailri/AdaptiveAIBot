@@ -36,25 +36,23 @@ public class WinTimeRule : MonoBehaviour, IDifficultyRule
         {
             float averagePlayerTime = Math.AverageFloat(playerWinTimes);
             float averageBotTime = Math.AverageFloat(botWinTimes);
-            float averageTimeDifference = Mathf.Abs(averageBotTime - averagePlayerTime);
+            float averageTimeDifference = Mathf.Abs(Mathf.Abs(averageBotTime) - Mathf.Abs(averagePlayerTime));
+
+            if (Global.debugMode)
+                Utility.PrintCol("TIME DIFF AVG: " + averageTimeDifference, "00FF00");
 
             playerWinTimes.Clear();
             botWinTimes.Clear();
 
-            if (averageBotTime == 0.0f)
-                averageBotTime = float.MaxValue;
-            if (averagePlayerTime == 0.0f)
-                averagePlayerTime = float.MaxValue;
-
             if (averagePlayerTime > averageBotTime && winner == PlayerType.Player)
-            {
-                // decrease diff
-                return -(Mathf.Abs(averageTimeDifference)) * GameConfig.c_WinTimeDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;
-            }
-            else if (winner == PlayerType.Bot)
             {
                 // increase diff
                 return (Mathf.Abs(averageTimeDifference)) * GameConfig.c_WinTimeDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;
+            }
+            else if (winner == PlayerType.Bot)
+            {
+                // decrease diff
+                return -(Mathf.Abs(averageTimeDifference)) * GameConfig.c_WinTimeDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;
             }
         }
 

@@ -42,6 +42,7 @@ public class HealStatItem : MonoBehaviour, IItem, IResettable, IOnInventoryAddEf
         if (recieverTag == "Player")
         {
             Global.gamemanager.PlayerHealth.UpdateHealth(healAmount);
+            AudioManager.instance.PlaySound("heal");
         }
     }
 
