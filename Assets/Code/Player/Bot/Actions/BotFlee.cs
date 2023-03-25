@@ -64,7 +64,6 @@ public class BotFlee : MonoBehaviour, IActionHasInitialAction, IActionRequiredSt
     {
         if (!findingSafeSpot && fleeTimer != null)
         {
-            fleeTimer.IncrementTime(Time.deltaTime);
             if (fleeTimer.IsAvailable() && !isActionCompleted)
             {
                 fleeTimer.PauseTimer(true);

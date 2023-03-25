@@ -1,3 +1,6 @@
+/// <summary>
+/// Timer class for timed functionality.
+/// </summary>
 public class Timer
 {
     private float maxTimer;

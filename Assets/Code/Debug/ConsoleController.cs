@@ -16,6 +16,8 @@ public class ConsoleController : MonoBehaviour
 
     void Start()
     {
+        if (!Global.debugMode)
+            this.enabled = false;
         consoleCanvas.enabled = false;
         consoleText.text = "";
         tracker = Global.playertracker;
@@ -101,6 +103,10 @@ public class ConsoleController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Runs inputted command.
+    /// </summary>
+    /// <param name="command"></param>
     private void RunCommand(string command)
     {
         // Add code to run the command here
@@ -131,6 +137,10 @@ public class ConsoleController : MonoBehaviour
     }
 
     #region Command Functions
+    /// <summary>
+    /// Toggles debug mode.
+    /// </summary>
+    /// <param name="tokens"></param>
     private void ToggleDebug(string[] tokens)
     {
         if (tokens.Length > 1)
@@ -151,6 +161,11 @@ public class ConsoleController : MonoBehaviour
             Utility.PrintCol("Invalid Command", "FF0000");
         }
     }
+
+    /// <summary>
+    /// Add 64 of each consumable item to both players.
+    /// </summary>
+    /// <param name="tokens"></param>
     private void FillItems(string[] tokens)
     {
         tracker.Player.GetComponent<Inventory>().AddItems(ItemName.BurstConsumable, 64);
@@ -161,6 +176,10 @@ public class ConsoleController : MonoBehaviour
         Utility.PrintCol("Filled items", "00FF00");
     }
 
+    /// <summary>
+    /// Sets the difficulty level
+    /// </summary>
+    /// <param name="tokens"></param>
     private void Difficulty(string[] tokens)
     {
         if (tokens.Length > 1)
@@ -174,6 +193,10 @@ public class ConsoleController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Kills a player
+    /// </summary>
+    /// <param name="tokens"></param>
     private void Kill(string[] tokens)
     {
         if (tokens.Length > 1)

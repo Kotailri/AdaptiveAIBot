@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class Poison : MonoBehaviour, IResettable
 {
     public PlayerType owner;
-    private Collider2D playerInLava;
+    private Collider2D playerInPoison;
 
     private void OnEnable()
     {
@@ -29,7 +29,7 @@ public class Poison : MonoBehaviour, IResettable
         if (owner == PlayerType.Player && collision.gameObject.CompareTag("Bot") 
             || owner == PlayerType.Bot && collision.gameObject.CompareTag("Player"))
         {
-            playerInLava = collision;
+            playerInPoison = collision;
             collision.gameObject.GetComponent<Health>().UpdateHealth(-GameConfig.c_PoisonEnterDamage);
             InvokeRepeating(nameof(DamagePlayer), GameConfig.c_PoisonTimer, GameConfig.c_PoisonTimer);
         }
@@ -40,15 +40,18 @@ public class Poison : MonoBehaviour, IResettable
         if (owner == PlayerType.Player && collision.gameObject.CompareTag("Bot")
             || owner == PlayerType.Bot && collision.gameObject.CompareTag("Player"))
         {
-            playerInLava = null;
+            playerInPoison = null;
             CancelInvoke(nameof(DamagePlayer));
         }
     }
 
+    /// <summary>
+    /// Applies damage to current player in poison.
+    /// </summary>
     private void DamagePlayer()
     {
-        if (playerInLava)
-            playerInLava.gameObject.GetComponent<Health>().UpdateHealth(-GameConfig.c_PoisonTickDamage);
+        if (playerInPoison)
+            playerInPoison.gameObject.GetComponent<Health>().UpdateHealth(-GameConfig.c_PoisonTickDamage);
     }
     public void ResetObject()
     {

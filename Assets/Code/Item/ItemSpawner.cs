@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +47,9 @@ public class ItemSpawner : MonoBehaviour, IResettable
         }
     }
 
+    /// <summary>
+    /// Spawns an item on the map.
+    /// </summary>
     private void InstantiateItem()
     {
         if (currentItems.Count >= GameConfig.c_MaxItemCount)
@@ -69,6 +71,10 @@ public class ItemSpawner : MonoBehaviour, IResettable
         }
     }
 
+    /// <summary>
+    /// Gets location that item can spawn in.
+    /// </summary>
+    /// <returns></returns>
     private Vector2 GetSpawnLocation()
     {
         Bounds worldBounds = GameConfig.c_WorldBounds;

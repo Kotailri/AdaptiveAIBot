@@ -19,20 +19,6 @@ public class BotAreaScanner : MonoBehaviour
         return new List<GameObject>(playerBullets);
     }
 
-    public List<GameObject> GetNearbyItems(float maxDistance)
-    {
-        List<GameObject> nearbyItems = new List<GameObject>(); 
-        foreach (GameObject gameObject in Global.itemSpawner.currentItems)
-        {
-            float distance = Vector2.Distance(gameObject.transform.position, transform.position);
-            if (Vector2.Distance(gameObject.transform.position, transform.position) <= maxDistance)
-            {
-                nearbyItems.Add(gameObject);
-            }
-        }
-        return nearbyItems;
-    }
-
     public Vector2 LocateNearestItem()
     {
         GameObject closest = null;

@@ -25,6 +25,10 @@ public class Burst : MonoBehaviour, IResettable
         originalScale = transform.localScale;
     }
 
+    /// <summary>
+    /// Set object for burst object to attach to and follow.
+    /// </summary>
+    /// <param name="toFollow"></param>
     public void SetFollow(GameObject toFollow)
     {
         follow = toFollow;
@@ -51,6 +55,11 @@ public class Burst : MonoBehaviour, IResettable
             collision.gameObject.GetComponent<Health>().UpdateHealth(-GameConfig.c_BurstDamage);
     }
 
+    /// <summary>
+    /// Change bullet's owner and reverses bullet velocity.
+    /// </summary>
+    /// <param name="bullet"></param>
+    /// <param name="newBullet"></param>
     private void DeflectBullet(GameObject bullet, GameObject newBullet)
     {
         GameObject proj = Instantiate(newBullet, bullet.transform.position, bullet.transform.rotation);

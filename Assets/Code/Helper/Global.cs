@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
 using UnityEngine;
 
 public enum PlayerType
@@ -36,6 +34,9 @@ public enum ItemName
     HealStat
 }
 
+/// <summary>
+/// Specifies boundaries between 2 corner vectors.
+/// </summary>
 public class Bounds
 {
     public Vector2 botLeft;
@@ -47,12 +48,21 @@ public class Bounds
         topRight = topRight_;
     }
 
+    /// <summary>
+    /// Returns true if vector is within boundaries.
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     public bool IsPointInBounds(Vector2 point)
     {
         return point.x >= botLeft.x && point.x <= topRight.x &&
                point.y >= botLeft.y && point.y <= topRight.y;
     }
 
+    /// <summary>
+    /// Returns a random vector within the boundaries.
+    /// </summary>
+    /// <returns></returns>
     public Vector2 GenerateRandomPositionInBounds()
     {
         float randomX = Random.Range(botLeft.x, topRight.x);
@@ -63,6 +73,11 @@ public class Bounds
 
 public static class Utility
 {
+    /// <summary>
+    /// Prints coloured string to console
+    /// </summary>
+    /// <param name="print"></param>
+    /// <param name="hexkey"></param>
     public static void PrintCol(string print, string hexkey)
     {
         Debug.Log("<color=#" + hexkey + ">" + print + "</color>");
@@ -86,6 +101,7 @@ public static class Global
     public static RuleManager ruleManager;
     public static TimerManager timerManager;
 
+    // Player stats
     public static float playerSpeedBoost = 0.0f;
     public static float botSpeedBoost = 0.0f;
 

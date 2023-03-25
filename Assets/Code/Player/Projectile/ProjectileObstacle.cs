@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Invisible obstacle that represents a projectile's trajectory.
+/// </summary>
 public class ProjectileObstacle : MonoBehaviour
 {
     void Start()

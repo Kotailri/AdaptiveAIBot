@@ -16918,7 +16918,7 @@ GameObject:
   - component: {fileID: 1524705220}
   - component: {fileID: 1524705219}
   m_Layer: 0
-  m_Name: grass_texture
+  m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

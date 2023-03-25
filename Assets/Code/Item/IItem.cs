@@ -1,3 +1,6 @@
+/// <summary>
+/// Interface for collectable items.
+/// </summary>
 public interface IItem
 {
     public ItemName GetItemName();

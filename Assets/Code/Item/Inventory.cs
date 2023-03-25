@@ -39,6 +39,11 @@ public class Inventory : MonoBehaviour, IResettable
         OnDestroyAction();
     }
 
+    /// <summary>
+    /// Returns true if item is in the inventory.
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <returns></returns>
     public bool HasItem(ItemName itemName)
     {
         if (consumables.ContainsKey(itemName))
@@ -54,6 +59,11 @@ public class Inventory : MonoBehaviour, IResettable
         return false;
     }
 
+    /// <summary>
+    /// Checks if item is in inventory and reduces its count by 1. Returns true on success.
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <returns></returns>
     public bool ConsumeItem(ItemName itemName)
     {
         if (consumables[itemName] > 0)
@@ -65,18 +75,22 @@ public class Inventory : MonoBehaviour, IResettable
         return false;
     }
 
-    public void AddItem(ItemName itemName)
-    {
-        consumables[itemName]++;
-        UpdateInventoryUI();
-    }
-
+    /// <summary>
+    /// Adds item to inventory by ItemName.
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <param name="amount"></param>
     public void AddItems(ItemName itemName, int amount)
     {
         consumables[itemName] += amount;
         UpdateInventoryUI();
     }
 
+    /// <summary>
+    /// Adds item to inventory by IItem object.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="recieverTag"></param>
     public void AddItem(IItem item, string recieverTag)
     {
         if (item is IOnInventoryAddEffect onInvAdd)
@@ -95,6 +109,9 @@ public class Inventory : MonoBehaviour, IResettable
         UpdateInventoryUI();
     }
 
+    /// <summary>
+    /// Updates the UI that displays player inventory.
+    /// </summary>
     private void UpdateInventoryUI()
     {
         if (gameObject.tag == "Player")
