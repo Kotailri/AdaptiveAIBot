@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class BotDodge : MonoBehaviour
 {

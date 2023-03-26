@@ -50,7 +50,7 @@ public class UseItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatableSta
 
     public float StateStayTime()
     {
-        return Mathf.Infinity;//Mathf.Clamp(botInv.GetItemCount() - playerInv.GetItemCount(), 1.0f, 5.0f);
+        return Mathf.Infinity;
     }
 
     public void UpdatePriorityLevel()

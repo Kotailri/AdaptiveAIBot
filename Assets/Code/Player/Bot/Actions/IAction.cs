@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public interface IAction {}
 
@@ -64,6 +62,9 @@ public interface IActionHasCleanup : IAction
     public void Cleanup();
 }
 
+/// <summary>
+/// Returns List of ActionStates to not run on.
+/// </summary>
 public interface IActionExcludeState : IAction
 {
     public List<ActionState> GetExcludedActionStates();

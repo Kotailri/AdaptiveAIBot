@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class BotBurst : MonoBehaviour, IActionHasUpdateAction
 {
-
     [Space(5.0f)]
     public GameObject burst;
     public LayerMask AimTargets;

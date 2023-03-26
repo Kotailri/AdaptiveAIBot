@@ -53,7 +53,7 @@ public class CollectItemCriteria : MonoBehaviour, ActionStateCriteria, IUpdatabl
 
     public float StateStayTime()
     {
-        return Mathf.Infinity;//Mathf.Clamp(playerInv.GetItemCount() - botInv.GetItemCount(), 1.0f, 5.0f);
+        return Mathf.Infinity;
     }
 
     public void UpdatePriorityLevel()
