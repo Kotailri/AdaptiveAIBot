@@ -16,9 +16,6 @@ public class ConsoleController : MonoBehaviour
 
     void Start()
     {
-        if (!Global.debugMode)
-            this.enabled = false;
-        consoleCanvas.enabled = false;
         consoleText.text = "";
         tracker = Global.playertracker;
     }
@@ -184,8 +181,18 @@ public class ConsoleController : MonoBehaviour
     {
         if (tokens.Length > 1)
         {
-            Global.difficultyLevel = (float)Convert.ToDouble(tokens[1]);
-            Utility.PrintCol("Updated difficulty to " + tokens[1], "00FF00");
+            if (tokens[1] == "-")
+            {
+                Global.difficultyLevel = (float)Convert.ToDouble(tokens[2]) * -1;
+                Utility.PrintCol("Updated difficulty to -" + tokens[2], "00FF00");
+            }
+            else
+            {
+                Global.difficultyLevel = (float)Convert.ToDouble(tokens[1]);
+                Utility.PrintCol("Updated difficulty to " + tokens[1], "00FF00");
+            }
+
+            Global.gameInfoUI.UpdateGameInfo();
         }
         else
         {

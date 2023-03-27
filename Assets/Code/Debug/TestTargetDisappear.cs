@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TtestTargetDisappear : MonoBehaviour
+public class TestTargetDisappear : MonoBehaviour
 {
     public float disapearTime;
 

@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
             TogglePause(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace) && SceneManager.GetActiveScene().name != "Menu")
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "Menu")
         {
             SceneManager.LoadScene("Menu");
         }
