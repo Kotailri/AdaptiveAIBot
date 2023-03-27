@@ -44,7 +44,7 @@ public class WinTimeRule : MonoBehaviour, IDifficultyRule
             playerWinTimes.Clear();
             botWinTimes.Clear();
 
-            if (averagePlayerTime > averageBotTime && winner == PlayerType.Player)
+            if (averagePlayerTime < averageBotTime && winner == PlayerType.Player)
             {
                 // increase diff
                 return (Mathf.Abs(averageTimeDifference)) * GameConfig.c_WinTimeDifficultyScaling * GameConfig.c_GlobalDifficultyScaling;
