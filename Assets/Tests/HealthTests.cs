@@ -57,7 +57,8 @@ public class HealthTests
         GameObject bulletInstance = PrefabUtility.InstantiatePrefab(bulletPrefab) as GameObject;
         Assert.IsNotNull(bulletInstance);
 
-        bulletInstance.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 3.0f, player.transform.position.z);
+        bulletInstance.transform.position = new Vector3(player.transform.position.x, 
+            player.transform.position.y + 3.0f, player.transform.position.z);
         bulletInstance.GetComponent<BulletCollision>().playerType = PlayerType.Bot;
         bulletInstance.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -5);
 
@@ -69,7 +70,7 @@ public class HealthTests
         playerHealth.UpdateHealth(100);
 
         GameObject poisonPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Level/Prefabs/Poison_Bad.prefab");
-        GameObject poisonInstance = PrefabUtility.InstantiatePrefab(bulletPrefab) as GameObject;
+        GameObject poisonInstance = PrefabUtility.InstantiatePrefab(poisonPrefab) as GameObject;
         Assert.IsNotNull(bulletInstance);
 
         poisonInstance.transform.position = player.transform.position;
